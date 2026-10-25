@@ -700,7 +700,9 @@ The following applications are included in this local repository. Published cata
 For the new offline apps, see [installation, controls, SD storage and verification](offline-apps.md).
 For combined Wi-Fi scanning/channel/RSSI analysis, see [Wi-Fi Analyzer](wifi-tools.md).
 For BLE discovery/advertisement/RSSI analysis, see [Bluetooth Analyzer](bluetooth-tools.md).
-These local changes do not update the published catalog or application versions:
+The official catalog includes To-do List 1.1.0, Wi-Fi Analyzer 1.1.0 and
+Bluetooth Analyzer 1.0.0. See [release notes](CHANGELOG.md) for changes and
+hardware-verification limits. Further local changes do not publish updates:
 
 | App ID | Name | Category | Description |
 |---|---|---|---|

@@ -5,9 +5,9 @@ monitoring. It runs on Sticky, X4 Pro and X4 Classic with **Lua API 3**. No Wi-F
 connection, password, packet capture or firmware change is needed.
 
 For the separate BLE companion, see [Bluetooth Analyzer](bluetooth-tools.md).
-Local implementation does not authorize catalog publication or version bumps.
-The checked-in catalog still describes the previous packages; an authorized
-release must update its file lists, versions and integrity records together.
+Version **1.1.0** is included in the official catalog with complete module lists
+and integrity records. Local development still does not authorize future
+catalog publication or version bumps.
 
 ## Install and use
 
@@ -51,7 +51,7 @@ Authentication codes are raw SDK values, not inferred security guarantees.
   cannot scan the Mac's Wi-Fi or BLE hardware. Restart an already-running simulator.
 - **Saved target:** reopening starts paused. Press **Start**, or **Back → Scan**
   to discover networks. Copy the complete app folder, including all three
-  `radio_*.lua` modules; the published catalog still describes the previous app.
+  `radio_*.lua` modules; App Store version 1.1.0 includes them.
 - **Wi-Fi unavailable:** check firmware Lua API 3 and whether this is the disabled
   simulator. Installing Lua files does not add a radio backend to older firmware.
 - **Cannot scan: busy:** exit native network/BLE tools and retry. Another owner
@@ -163,8 +163,8 @@ python3 scripts/test_radio_analyzers_simulator.py
 ```
 
 Package validation builds a temporary integrity-bound catalog without altering
-`apps/catalog.json`. Full catalog checks (also included in the complete host-unit-tests gate) remain
-pending until the separately authorized release updates the catalog.
+`apps/catalog.json`. Full catalog checks (also included in the complete host-unit-tests
+gate) verify the released package metadata and integrity records.
 Native tests cover scan/history bounds, BSSID identity, terminal ordering,
 cancellation, gaps/statistics, CSV safety, failed writes, saved targets, button
 controls and landscape layouts. Simulator replay requires `RADIO_SIMULATION=1`

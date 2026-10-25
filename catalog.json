@@ -1068,9 +1068,9 @@
     {
       "id": "wifi_analyzer",
       "name": "Wi-Fi Analyzer",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "PUNRI",
-      "description": "Scan nearby Wi-Fi networks, compare RSSI and channels, and export observations to SD.",
+      "description": "Wi-Fi discovery, channel charts, selected-BSSID RSSI monitoring, signal history and SD-card CSV exports.",
       "entry": "main.lua",
       "min_api": 3,
       "capabilities": [
@@ -1080,6 +1080,9 @@
       "files": [
         "manifest.json",
         "main.lua",
+        "radio_app.lua",
+        "radio_scan.lua",
+        "radio_ui.lua",
         "wifi_scan.lua",
         "wifi_ui.lua",
         "icon.raw"
@@ -1087,13 +1090,28 @@
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 286,
-          "sha256": "ce835f928a62d2b47869e7142e6b8cd157b93fd2d4438da6489aebeda0b60d60"
+          "size": 305,
+          "sha256": "3d9968670177ca41390f6280af3b2ab3d9b29173f92a5368698f1fa872711759"
         },
         {
           "path": "main.lua",
-          "size": 6626,
-          "sha256": "f0404020ff8e5a8de1e8b20cd6505611fa630fa4721595f54722bf1e7c049580"
+          "size": 135,
+          "sha256": "9be66dab0168b234a93971dc0dd29d852d580faf9acd49b3caa1a3530ae4809f"
+        },
+        {
+          "path": "radio_app.lua",
+          "size": 22431,
+          "sha256": "9b3a49f0a25734256c0e2eec769a85786e010b86da4998ed4327012cb0429627"
+        },
+        {
+          "path": "radio_scan.lua",
+          "size": 7417,
+          "sha256": "4035a92311ee41d43a4555f3f88f5ef07ee5731c2dd8eb891a98ee1fd3190e37"
+        },
+        {
+          "path": "radio_ui.lua",
+          "size": 5672,
+          "sha256": "9efa7d7d13213c21e26ef24017c483740a2d30ba4d54c33d9f0d93e84f3233b8"
         },
         {
           "path": "wifi_scan.lua",
@@ -1109,6 +1127,59 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "c7031b1bf221520585e6fb7cbe9a122500c24700a8f6a8cab4b0188325b4a419"
+        }
+      ]
+    },
+    {
+      "id": "bluetooth_analyzer",
+      "name": "Bluetooth Analyzer",
+      "version": "1.0.0",
+      "author": "PUNRI",
+      "description": "BLE discovery, advertisement details, RSSI monitoring, graphs and SD-card CSV exports. Requires BLE-enabled firmware (X4 Pro).",
+      "entry": "main.lua",
+      "min_api": 3,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "radio_app.lua",
+        "radio_scan.lua",
+        "radio_ui.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 336,
+          "sha256": "c254dd96b005ea045ba28d36e022a5f5628ccde39ed9c53d226454006062812f"
+        },
+        {
+          "path": "main.lua",
+          "size": 138,
+          "sha256": "f525b9d60d8dc20de3d3690bc0baea95053889b2825442f384224e44c7ed6dd5"
+        },
+        {
+          "path": "radio_app.lua",
+          "size": 22431,
+          "sha256": "9b3a49f0a25734256c0e2eec769a85786e010b86da4998ed4327012cb0429627"
+        },
+        {
+          "path": "radio_scan.lua",
+          "size": 7417,
+          "sha256": "4035a92311ee41d43a4555f3f88f5ef07ee5731c2dd8eb891a98ee1fd3190e37"
+        },
+        {
+          "path": "radio_ui.lua",
+          "size": 5672,
+          "sha256": "9efa7d7d13213c21e26ef24017c483740a2d30ba4d54c33d9f0d93e84f3233b8"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "c372a57fb2397441bfd682514da75ed8f26b3ffc4bdcfe1c3c8d32e0d85063ba"
         }
       ]
     },
@@ -1196,8 +1267,8 @@
         },
         {
           "path": "organizer.lua",
-          "size": 17987,
-          "sha256": "ea16e5d8ced0afe02b3e88852cddd9f60eb7d43763425f7a79b9594af2bbe267"
+          "size": 21442,
+          "sha256": "b205fb15369849bbbe3d53338d11a4c2c7f84483e7037376fab1e7d87fbcbada"
         },
         {
           "path": "text_editor.lua",
@@ -1278,9 +1349,9 @@
     {
       "id": "todo",
       "name": "To-do List",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "PUNRI",
-      "description": "Offline tasks with on-device text entry, completion filters and SD-card saving.",
+      "description": "Offline tasks with quick actions, completion counts, on-device text entry and SD-card saving.",
       "entry": "main.lua",
       "min_api": 1,
       "capabilities": [
@@ -1297,8 +1368,8 @@
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 267,
-          "sha256": "75fd5c5872d822f0f3b08528e59325aeaba1f58c421a5534f9c8111c3a4683cf"
+          "size": 281,
+          "sha256": "f394afadd4b7bea3c5f8cfb1a773aff59942009d6078ef78cd965cc187ed1bfd"
         },
         {
           "path": "main.lua",
@@ -1312,8 +1383,8 @@
         },
         {
           "path": "organizer.lua",
-          "size": 17987,
-          "sha256": "ea16e5d8ced0afe02b3e88852cddd9f60eb7d43763425f7a79b9594af2bbe267"
+          "size": 21442,
+          "sha256": "b205fb15369849bbbe3d53338d11a4c2c7f84483e7037376fab1e7d87fbcbada"
         },
         {
           "path": "text_editor.lua",

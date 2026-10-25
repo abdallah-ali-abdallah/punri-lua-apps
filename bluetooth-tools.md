@@ -7,9 +7,9 @@ enabled on **X4 Pro** firmware (`x4-pro`/`x4-pro-debug`), not Sticky or X4 Class
 Those builds show `BLE unavailable`; the app never silently scans Wi-Fi instead.
 Bluetooth Classic, UWB, connections, writes and background tracking are not used.
 
-For the combined Wi-Fi tool, see [Wi-Fi Analyzer](wifi-tools.md). This is a local
-package, not a published catalog entry. Versions/catalog publication require a
-separate explicit release instruction.
+For the combined Wi-Fi tool, see [Wi-Fi Analyzer](wifi-tools.md). Version
+**1.0.0** is included in the official catalog. Future versions/catalog
+publication still require a separate explicit release instruction.
 
 ## Installation and controls
 

@@ -1,5 +1,5 @@
--- Screen Ruler for PUNRI.  A measurement is shown only after two independent
--- references have calibrated both physical portrait axes.
+-- Screen Ruler for PUNRI. X4 Pro / X4 Classic start with their nominal device
+-- scale; independent real-ruler X/Y calibration remains available for tuning.
 
 Ruler = dofile("ruler.lua")
 Calibration = dofile("calibration.lua")
@@ -13,6 +13,7 @@ local menu_index = 1
 local message = ""
 local retry_state = nil
 local retry_after_save = nil
+local retry_return_view = nil
 local calibration = nil
 
 local function request_update()
@@ -53,10 +54,12 @@ local function set_message(text)
 end
 
 local function persist(proposal, after_success)
+    local return_view = view == "retry" and (retry_return_view or "ruler") or view
     local encoded = Calibration.encode(proposal)
     if not encoded or not punri.write_file or not punri.write_file(Calibration.FILE, encoded) then
         retry_state = Calibration.copy(proposal)
         retry_after_save = after_success
+        retry_return_view = return_view
         view = "retry"
         update_sleep_policy()
         request_update()
@@ -64,7 +67,8 @@ local function persist(proposal, after_success)
     end
     state = Calibration.copy(proposal)
     retry_state, retry_after_save = nil, nil
-    if after_success then after_success() end
+    if after_success then after_success() else view = return_view end
+    retry_return_view = nil
     apply_orientation(state)
     update_sleep_policy()
     request_update()
@@ -242,11 +246,12 @@ end
 local function reset_calibration()
     local proposal = Calibration.copy(state)
     proposal.calibrated, proposal.x, proposal.y = false, nil, nil
+    local automatic = Calibration.apply_device_profile(proposal)
     foreign_state = nil
     persist(proposal, function()
         view = "ruler"
         clean = false
-        set_message("Calibration reset. Preferences were kept.")
+        set_message(automatic and "Automatic device calibration restored." or "Calibration reset. Preferences were kept.")
     end)
 end
 
@@ -297,7 +302,7 @@ function on_init()
     -- A Lua app can be initialized again after an activity transition. Do not
     -- retain a wizard, retry, or foreign-card notice from that earlier view.
     view, clean, menu_index, message = "ruler", false, 1, ""
-    foreign_state, retry_state, retry_after_save, calibration = nil, nil, nil, nil
+    foreign_state, retry_state, retry_after_save, retry_return_view, calibration = nil, nil, nil, nil, nil
     local device, width, height = physical_identity()
     state = Calibration.default(device, width, height)
     local raw = punri.read_file and punri.read_file(Calibration.FILE, 512) or nil
@@ -315,7 +320,15 @@ function on_init()
     elseif punri.file_exists and punri.file_exists(Calibration.FILE) then
         set_message("Saved calibration could not be read; it will not be used. Calibrate X and Y.")
     else
-        set_message("No factory estimate. Calibrate X and Y with a real ruler.")
+        set_message("Calibrate X and Y with a real ruler for this device.")
+    end
+    -- A matching saved manual calibration wins. Missing, uncalibrated,
+    -- corrupt or foreign-card records never supply a scale for this board.
+    -- The supported hardware's own nominal profile makes it usable at once;
+    -- do not rewrite any SD record just because the app was opened.
+    if not state.calibrated and Calibration.apply_device_profile(state) then
+        foreign_state = nil
+        set_message("")
     end
     apply_orientation(state)
     update_sleep_policy()
@@ -338,7 +351,7 @@ function on_draw()
                 { x = w // 2 + 4, y = h - 66, w = (w - UI.safe_edge() * 2) // 2 - 4, h = 42, label = "Exit" },
             }
             UI.draw_message("Screen Ruler", {
-                "This ruler has no panel-size preset. It cannot measure accurately until both physical axes are calibrated.",
+                "Automatic calibration is available on X4 Pro and X4 Classic. Calibrate both axes for this device.",
                 message,
                 "The simulator has no physical millimetres and cannot certify accuracy.",
             }, controls)
@@ -388,9 +401,14 @@ function on_draw()
         }, controls)
     elseif view == "reset_confirm" then
         local w, h = UI.bounds()
-        UI.draw_message("Reset calibration?", { "This removes only the stored X/Y scales. Mode, units and orientation stay saved." }, {
+        local automatic = Calibration.has_device_profile(state)
+        UI.draw_message("Reset calibration?", {
+            automatic and "Restore automatic device calibration? Mode, units and orientation stay saved." or
+                "This removes only the stored X/Y scales. Mode, units and orientation stay saved."
+        }, {
             { x = UI.safe_edge(), y = h - 118, w = (w - UI.safe_edge() * 2) // 2 - 4, h = 42, label = "Keep scales" },
-            { x = w // 2 + 4, y = h - 118, w = (w - UI.safe_edge() * 2) // 2 - 4, h = 42, label = "Reset scales" },
+            { x = w // 2 + 4, y = h - 118, w = (w - UI.safe_edge() * 2) // 2 - 4, h = 42,
+                label = automatic and "Restore auto" or "Reset scales" },
         })
     elseif view == "retry" then
         local w, h = UI.bounds()

@@ -1,5 +1,20 @@
 # Changelog
 
+## Screen Ruler 0.1.2 — 2026-10-26
+
+### Added
+
+- Automatically select the manufacturer's 219-PPI physical scale on X4 Pro
+  and X4 Classic, so the ruler opens ready without a calibration wizard.
+
+### Fixed
+
+- Preserve matching manual calibration and saved preferences; reject scales
+  copied from other devices. Reset restores the automatic X4 profile, and
+  unsupported devices retain the manual calibration workflow.
+- Return to the ruler or menu after a successful save retry instead of leaving
+  the SD-save error screen visible after the data was already saved.
+
 ## QR Cards Share — 2026-10-26 (unreleased fix)
 
 ### Fixed

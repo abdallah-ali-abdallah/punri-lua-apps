@@ -2,6 +2,7 @@
 -- rotated-glyph primitive, so labels are deliberately horizontal and inset.
 
 local Ruler = Ruler or dofile("ruler.lua")
+local Calibration = Calibration or dofile("calibration.lua")
 local UI = {}
 
 local function metrics()
@@ -248,7 +249,7 @@ function UI.draw_ruler(state, clean)
     end
     if not clean then
         local top = bottom - 20
-        local description = "Screen Ruler"
+        local description = Calibration.uses_device_profile(state) and "Screen Ruler (auto)" or "Screen Ruler"
         if hm then description = description .. "  H 0–" .. UI.format_distance(hm, state.units) end
         if vm then description = description .. "  V 0–" .. UI.format_distance(vm, state.units) end
         local subdivisions = math.max(hs or 1, vs or 1)

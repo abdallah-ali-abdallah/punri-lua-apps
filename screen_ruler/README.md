@@ -1,8 +1,8 @@
 # Screen Ruler
 
-`screen_ruler` is an offline, calibrated on-screen ruler for PUNRI. It does
-not use a panel-size preset: screen resolution alone cannot establish a
-physical length.
+`screen_ruler` is an offline on-screen ruler for PUNRI. X4 Pro and X4 Classic
+start automatically with their manufacturer's nominal physical scale. Optional
+real-ruler calibration lets you fine-tune each axis independently.
 
 ## Install
 
@@ -16,7 +16,34 @@ It is listed in the local `catalog.json`; publishing the updated catalog is a
 separate step. The firmware also discovers its `manifest.json` when the package
 is copied directly to the SD card.
 
-## First calibration
+## Automatic X4 Pro / X4 Classic calibration
+
+Open the app on either device and the ruler is immediately ready. The app
+recognizes PUNRI's `x4pro` and `x4` hardware IDs, with a 480×800 portrait panel.
+Here `x4` means the supported ESP32-S3 X4 Classic; it does not add firmware
+support for retired ESP32-C3 devices. Unknown devices and other panel sizes
+continue to use manual calibration.
+
+Xteink specifies **219 PPI** for both the
+[X4 Pro](https://www.xteink.com/products/xteink-x4-pro-pocket-ereader) and
+[X4 Classic](https://www.xteink.com/products/xteink-x4-classic-pocket-ereader).
+The app converts this to the exact ratio `1095/127 px/mm` on both axes, using
+25.4 mm per inch, rather than deriving a scale from the rounded 4.3-inch size.
+This is automatic selection of the documented device scale, not a sensor
+measurement of an individual panel. The ruler footer marks it **(auto)**.
+
+An existing manual calibration for the same device and portrait dimensions
+takes priority. A missing or foreign-device calibration uses the current
+device's own profile; it never copies the other board's scale. A corrupt or
+unreadable record is not trusted or rewritten merely by opening the app.
+Preset selection does not write to SD; changing preferences or manually
+calibrating still uses the existing transactional save and Retry flow.
+
+**Reset calibration** restores the automatic profile on these two devices
+while keeping Mode, Units and Orientation. On other devices it clears the
+manual scale and returns to setup.
+
+## Optional manual calibration / other devices
 
 1. Open **Screen Ruler** and choose **Calibrate X and Y**.
 2. Put a real ruler against the two endpoint markers for portrait **X**. Use
@@ -30,8 +57,8 @@ is copied directly to the SD card.
 
 The calibrated values are attached to `punri.get_device()` plus the portrait
 screen dimensions. Moving an SD card to a different board or a screen of a
-different size does **not** reuse its scale: the app displays a confirmation
-and requires a fresh X/Y verification.
+different size does **not** reuse its scale: supported X4 hardware selects its
+own automatic profile, while other hardware requires fresh X/Y verification.
 
 The app draws its zero marker at the visible L-origin, insets labels using the
 available layout margin, and computes each tick directly from that origin.
@@ -79,16 +106,18 @@ units—the underlying calibration remains millimetres.
 `write_file` replacement is transactional, but an SD write can still fail. In
 that case the former saved calibration remains active and the app keeps an
 explicit **Retry** screen open. It does not rely on `on_exit()` for a last save.
-A corrupt or unreadable record is treated as uncalibrated, never as a trusted
-default.
+A corrupt or unreadable record is never used as a scale. Supported X4 hardware
+uses its own nominal profile; other hardware returns to calibration setup.
 
 ## Hardware acceptance still required
 
 The desktop simulator has no physical millimetres and cannot approve accuracy.
-On Sticky, X4 Pro, and X4 Classic, use the same real ruler to calibrate X and Y,
-then record the error at a short length, a medium length, and as near the usable
-screen edge as practical. Test Horizontal, Vertical and Both in portrait and
-landscape, confirm the zero corner is visible, check normal lighting, leave the
+On X4 Pro and X4 Classic, first open Screen Ruler without saved calibration and
+confirm it immediately shows **(auto)**. Check the 10, 30 and 50 mm marks against
+a real ruler in portrait and landscape. Manual calibration remains available
+if the nominal profile needs refinement. On Sticky, calibrate X and Y first.
+Then record the error near the usable screen edge. Test Horizontal, Vertical and
+Both in portrait and landscape, confirm the zero corner is visible, check normal lighting, leave the
 ruler open long enough to verify auto-sleep suppression, then exit and confirm
 both orientation and normal auto-sleep return. A standard 85.60 mm card may be
 an extra reference only if its dimensions are independently known.

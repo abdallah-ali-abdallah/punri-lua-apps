@@ -6,6 +6,7 @@ local upper = {"QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM.,?"}
 local symbols = {"1234567890", "!@#$%&*()-", "+=/:;_'\"[]"}
 local actions = {"Space", "Delete", "Aa", "123", "Enter", "Save"}
 local text, title, limit, multiline = "", "", 0, false
+local native_keyboard = false
 local row, col, page, message = 1, 1, 1, ""
 local w, h, margin, top, bottom, key_y, key_h = 0, 0, 0, 0, 0, 0, 0
 
@@ -125,6 +126,15 @@ end
 function E.open(label, initial, max_bytes, allow_newlines)
     title, text, limit, multiline = label, initial or "", max_bytes, allow_newlines
     row, col, page, message = 1, 1, 1, ""
+    native_keyboard = type(punri.keyboard) == "function" and punri.has_feature("keyboard")
+    if native_keyboard and not punri.keyboard(title, text, limit, multiline) then
+        punri.log("Unable to open firmware keyboard; Select retries")
+    end
+end
+
+-- Keep unsaved text available if the organizer rejects a title or SD write.
+function E.accept(value)
+    text = value
 end
 
 function E.value()
@@ -150,6 +160,10 @@ function E.draw()
     for i, line in ipairs(preview) do
         punri.text(margin + 8, top + 6 + (i - 1) * line_h, line, "ui12")
     end
+    if native_keyboard then
+        punri.button_hints("Cancel", "Type", "", "")
+        return
+    end
     punri.text(margin, key_y - 24, message ~= "" and message or
         (punri.has_touch() and "Tap keys. Save keeps changes." or "Side buttons: row. Back: cancel."), "small")
     for r = 1, 4 do
@@ -170,6 +184,10 @@ end
 
 function E.button(btn)
     if btn == "back" then return "cancel" end
+    if native_keyboard then
+        if btn == "confirm" then punri.keyboard(title, text, limit, multiline) end
+        return
+    end
     if btn == "confirm" then return activate() end
     if btn == "left" then col = (col - 2) % columns(row) + 1
     elseif btn == "right" then col = col % columns(row) + 1
@@ -185,6 +203,10 @@ end
 function E.tap(x, y)
     geometry()
     if punri.has_touch() and punri.in_rect(x, y, margin, top - 44, 88, 34) then return "cancel" end
+    if native_keyboard then
+        E.button("confirm")
+        return
+    end
     if x < margin or x >= w - margin or y < key_y or y >= key_y + key_h * 4 then return end
     row = math.floor((y - key_y) / key_h) + 1
     col = math.floor((x - margin) / ((w - margin * 2) / columns(row))) + 1

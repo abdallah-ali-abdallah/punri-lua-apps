@@ -1,0 +1,10 @@
+{
+  "id": "tictactoe",
+  "name": "Tic-tac-toe",
+  "version": "1.0.0",
+  "author": "PUNRI",
+  "description": "Play an unbeatable device opponent or a friend on an e-paper 3x3 board.",
+  "entry": "main.lua",
+  "min_api": 1,
+  "capabilities": ["buttons"]
+}

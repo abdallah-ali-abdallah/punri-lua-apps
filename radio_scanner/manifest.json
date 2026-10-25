@@ -1,0 +1,8 @@
+{
+  "id": "radio_scanner",
+  "name": "Radio Scanner",
+  "version": "0.1.0",
+  "description": "Foreground BLE and Wi-Fi discovery with advertisement inspection",
+  "entry": "main.lua",
+  "min_api": 3
+}

@@ -1,0 +1,1326 @@
+{
+  "schema": 2,
+  "source": "abdallah-ali-abdallah/punri-lua-apps:catalog.json",
+  "repo": "abdallah-ali-abdallah/punri-lua-apps",
+  "branch": "main",
+  "apps": [
+    {
+      "id": "dice",
+      "name": "Dice Roller",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Multi-polyhedral tabletop dice simulator with running history",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw",
+        "sprites/coin_heads.raw",
+        "sprites/coin_tails.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 193,
+          "sha256": "193ff0e4ebf94dc6cc4edab82c00a69ef7b07af13818cf6eb365f7a040bf61bf"
+        },
+        {
+          "path": "main.lua",
+          "size": 8550,
+          "sha256": "b1c0c3b7b921a3332f6fb136367a7d2b0d35139b207700d814edcc2274e12631"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "0da68d1be921c04c9d3e8b8c91874095c13e0592e77fd93e2039301283cd7f89"
+        },
+        {
+          "path": "sprites/coin_heads.raw",
+          "size": 1568,
+          "sha256": "e7f03d19ef70e58b6d155b1e153cf5bf1b13200bd7663c70ec5675a4713a2252"
+        },
+        {
+          "path": "sprites/coin_tails.raw",
+          "size": 1568,
+          "sha256": "ebf609ffa57e0370adf01704d4e4796cf70c638ff0b1cbca4f72ab76e12a7dbd"
+        }
+      ]
+    },
+    {
+      "id": "lifecounter",
+      "name": "Life Counter",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Magic: The Gathering & card game life tracker with commander mode",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 207,
+          "sha256": "2a3c441a2b8bb18b019a8eeae264ec3de03a6ac446d4a41e67207030e817b6ba"
+        },
+        {
+          "path": "main.lua",
+          "size": 2550,
+          "sha256": "764311204bb279601ca66af2ef0968dbb88dd98b88e3892996fe95f340a070fd"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "5d1ca36c89698daccb03f06e483d8125bdbdfe7914434f0af006850e25f47a7b"
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "name": "Wordle",
+      "version": "1.1.0",
+      "author": "Mumfee",
+      "description": "5-letter word deduction game with on-screen keyboard and statistics",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "words.bin",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 196,
+          "sha256": "0fbb3659d8701fffdac723257b7e06dae669b8859304d50acf3334958d05b804"
+        },
+        {
+          "path": "main.lua",
+          "size": 19681,
+          "sha256": "065a3f51daa963421296048cf14c87be7e608b1e503d54025a36a73c32ff1f0c"
+        },
+        {
+          "path": "words.bin",
+          "size": 15515,
+          "sha256": "7479dd0c333009f2be3649fb775e2f7497ab72d1a81a12d3456825b329e1ea4d"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "68ea8a655aba0d4a4c522feb2eb6b74f3deedd65f4d225a5afad3874b277521f"
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "name": "2048",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Classic 4x4 sliding tile number puzzle with high scores",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 180,
+          "sha256": "3784935d2332214167f910d9e061d5151c7231469790251c62a3476b88bf0363"
+        },
+        {
+          "path": "main.lua",
+          "size": 10311,
+          "sha256": "b311e6389664c36721dcf2bc351df0fd320a7b0fddbefa9a69697f4059643c80"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "b7343181a51d9d917925ff53b6734620004a4c0a9b5169ec500bf1166960dfaa"
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "name": "Sudoku",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Classic 9x9 Sudoku logic puzzle with puzzle generator",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "generator.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 182,
+          "sha256": "51d448392b6c23879b2c670d754bbf5a2511b2357956a10790712f04bbaa327a"
+        },
+        {
+          "path": "main.lua",
+          "size": 10098,
+          "sha256": "4c4051989c956b9b2256dcbbec5209a068963ec16cb0df36e5556e84e1a2392d"
+        },
+        {
+          "path": "generator.lua",
+          "size": 2667,
+          "sha256": "0debf031341f8f244528aea8ede05cf1fc93967ca134de78ab3bba99b2138a33"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "6cfaa98b280363ad377711f7460584b92306e4eeaff3e9cf2f1fc880fb4b18b2"
+        }
+      ]
+    },
+    {
+      "id": "blockdrop",
+      "name": "Block Drop",
+      "version": "1.0.1",
+      "author": "Mumfee",
+      "description": "Classic falling block puzzle optimized for e-paper displays",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 195,
+          "sha256": "ba93ad4b5f804b2842f15bb06bc0f00dce2c1285c511cf80c6046d911d41b1b5"
+        },
+        {
+          "path": "main.lua",
+          "size": 21210,
+          "sha256": "104656fc22672ef88bee417291856e23af23ff5ad98644a0072fd4d7135d3778"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "2f6c5a79289e97822e3d58f6cd1ca84861ae82f4054f386bc212449fd6e9bf4f"
+        }
+      ]
+    },
+    {
+      "id": "codex",
+      "name": "Codex: Ink & Iron",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Medieval illuminated manuscript deckbuilder with Couplet synergy and page progression",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "card_ui.lua",
+        "cards.lua",
+        "cards.txt",
+        "combat_engine.lua",
+        "events.txt",
+        "icon.raw",
+        "load_save.lua",
+        "main.lua",
+        "manifest.json",
+        "monsters.txt",
+        "relics.lua",
+        "relics.txt",
+        "screens/combat.lua",
+        "screens/deck_view.lua",
+        "screens/game_over.lua",
+        "screens/outcome.lua",
+        "screens/reward.lua",
+        "screens/scriptorium.lua",
+        "screens/shop.lua",
+        "screens/title.lua",
+        "screens/victory.lua",
+        "sprites/event_0.raw",
+        "sprites/event_1.raw",
+        "sprites/event_2.raw",
+        "sprites/event_3.raw",
+        "sprites/event_4.raw",
+        "sprites/event_5.raw",
+        "sprites/event_6.raw",
+        "sprites/event_7.raw",
+        "sprites/event_8.raw",
+        "sprites/merchant.raw",
+        "sprites/monster_0.raw",
+        "sprites/monster_1.raw",
+        "sprites/monster_10.raw",
+        "sprites/monster_11.raw",
+        "sprites/monster_2.raw",
+        "sprites/monster_3.raw",
+        "sprites/monster_4.raw",
+        "sprites/monster_5.raw",
+        "sprites/monster_6.raw",
+        "sprites/monster_7.raw",
+        "sprites/monster_8.raw",
+        "sprites/monster_9.raw",
+        "sprites/relic_0.raw",
+        "sprites/relic_1.raw",
+        "sprites/relic_10.raw",
+        "sprites/relic_11.raw",
+        "sprites/relic_2.raw",
+        "sprites/relic_3.raw",
+        "sprites/relic_4.raw",
+        "sprites/relic_5.raw",
+        "sprites/relic_6.raw",
+        "sprites/relic_7.raw",
+        "sprites/relic_8.raw",
+        "sprites/relic_9.raw",
+        "state.lua",
+        "ui_base.lua"
+      ],
+      "file_integrity": [
+        {
+          "path": "card_ui.lua",
+          "size": 3270,
+          "sha256": "d11d32bfc7f51abbda681e03fb486501922956a9752587dbfd5a449a6dfafce0"
+        },
+        {
+          "path": "cards.lua",
+          "size": 1819,
+          "sha256": "cbfb5b671b8065f8a839b617ca5a861ac8864705c6a23f9ca09440a57e031656"
+        },
+        {
+          "path": "cards.txt",
+          "size": 2132,
+          "sha256": "df1b994736027f54883cebdc0c5e31814f1a2fca0b0812eba98ac2b6e7476b4e"
+        },
+        {
+          "path": "combat_engine.lua",
+          "size": 6300,
+          "sha256": "debe240d5688376f7bd810ad080462aad32cb864e0b8275d88cdea2016d0f368"
+        },
+        {
+          "path": "events.txt",
+          "size": 5877,
+          "sha256": "c9f486b26714d5ce778b6b8775cc990f92eef9af956b61aa0813f152a5ec0d78"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "034908e5d3ca6ce10734e280b75eb0b8c06a3a98ed026b836fd17fb9a1819518"
+        },
+        {
+          "path": "load_save.lua",
+          "size": 2431,
+          "sha256": "49f2063cac8677c53cfbf66b7bc8101295996564134c1388472e70b454be673f"
+        },
+        {
+          "path": "main.lua",
+          "size": 2956,
+          "sha256": "d6f54454638bb4e8fb5a988c83af120c39da2a04bebaecb4d4b40149a62b2e2d"
+        },
+        {
+          "path": "manifest.json",
+          "size": 224,
+          "sha256": "4d95c009d443d7db02216951cf6718e8e058976d97b9a9952e142fbdcfe7757d"
+        },
+        {
+          "path": "monsters.txt",
+          "size": 449,
+          "sha256": "3cfc944b5ffabe531aac836076fec31b0d232077548f75527290d5bdefbcb7e7"
+        },
+        {
+          "path": "relics.lua",
+          "size": 980,
+          "sha256": "ff09016c40423afc789e8980a76554ad96b795dbf35aad09b2e69fba36e3d15d"
+        },
+        {
+          "path": "relics.txt",
+          "size": 643,
+          "sha256": "93bb316e72cda1310f3b1876d66cb877d1a0fead00bfb2d759c5a20cff8fad3f"
+        },
+        {
+          "path": "screens/combat.lua",
+          "size": 2660,
+          "sha256": "e0a25276152d028d5d4be01d04b7f11858a7d850c9d0fee790b8a853d55508dd"
+        },
+        {
+          "path": "screens/deck_view.lua",
+          "size": 4527,
+          "sha256": "262f62db16889487451a00f97d09a705e5dc71e313e0d04a9918bf6fc7c0a5f4"
+        },
+        {
+          "path": "screens/game_over.lua",
+          "size": 836,
+          "sha256": "b659d08f9ae9284002960d38ca5e856dfa9909516f4effca07dbf9af9b0b62c1"
+        },
+        {
+          "path": "screens/outcome.lua",
+          "size": 2325,
+          "sha256": "0b9d4f5b5bfc2c056e0c31ad7ad66f297c6ba9eea83e25968b1c7232c07f8bc2"
+        },
+        {
+          "path": "screens/reward.lua",
+          "size": 2757,
+          "sha256": "04f3691618426a4e418358d143ff76bdc50e01a69cfd11bd955fd073b1f15f90"
+        },
+        {
+          "path": "screens/scriptorium.lua",
+          "size": 3600,
+          "sha256": "e8d1a80e2e04f0c50a42e4e751a0ab7edf0fca5a28bb6968ee06d63a17b85613"
+        },
+        {
+          "path": "screens/shop.lua",
+          "size": 4438,
+          "sha256": "22be6ff6a9944b15feafb74373efeb9a3885da9212f150a9622064670a66cc2a"
+        },
+        {
+          "path": "screens/title.lua",
+          "size": 4073,
+          "sha256": "6431882e5b3e375464fc906b33a1ddaec002e63e6d37e37c4d78cad18268a913"
+        },
+        {
+          "path": "screens/victory.lua",
+          "size": 855,
+          "sha256": "6eabd13be5837a89b394e5e028a11e79246eb32b2182113193bfbacc6c2b2a46"
+        },
+        {
+          "path": "sprites/event_0.raw",
+          "size": 2048,
+          "sha256": "1d98269d131853025a55189400eaa7fddf974682bcc070659643e02cf16b1f31"
+        },
+        {
+          "path": "sprites/event_1.raw",
+          "size": 2048,
+          "sha256": "e24624ea1caa7294c864709c1a81dce6a7a574d499b29a0bf4af21b8a65a6b05"
+        },
+        {
+          "path": "sprites/event_2.raw",
+          "size": 2048,
+          "sha256": "d6caf24ab2e1fac286867b69b142dc355bbccd6475a075dea1607be0e54d233d"
+        },
+        {
+          "path": "sprites/event_3.raw",
+          "size": 2048,
+          "sha256": "6750503090dd59dabab3a7b4dc468050ce8606ef855133e9c601c1a380aa8829"
+        },
+        {
+          "path": "sprites/event_4.raw",
+          "size": 2048,
+          "sha256": "350ec252eee31f294d5cf8d43fad95a901278605e07ff6e70d9b18e650eda6aa"
+        },
+        {
+          "path": "sprites/event_5.raw",
+          "size": 2048,
+          "sha256": "ae39cf4ae21a7f2cb47a16b1d8de8a25b28aef63ee0b8934cba7283207307ce2"
+        },
+        {
+          "path": "sprites/event_6.raw",
+          "size": 2048,
+          "sha256": "8c781cba66ec66c6159a7c6733f141701891b77ccf777defff99bedd858fb00c"
+        },
+        {
+          "path": "sprites/event_7.raw",
+          "size": 2048,
+          "sha256": "a933dcdbd01abe63e5b0e487053542e45eb819743dad1fc9ea869e82c8155ca6"
+        },
+        {
+          "path": "sprites/event_8.raw",
+          "size": 2048,
+          "sha256": "2ed36ce8ed2170e7f3eff9aaa594771d5363edebffe8382e4e4cd196bfda83e3"
+        },
+        {
+          "path": "sprites/merchant.raw",
+          "size": 2048,
+          "sha256": "d595f1a72fcfcfe3a780dab631dc920c9ec23c94efdb8ba3426c8ebfb5bda9ad"
+        },
+        {
+          "path": "sprites/monster_0.raw",
+          "size": 2048,
+          "sha256": "f01de13b6a0b78427b403a6cc6113c240d0fa52d9b8e4a8bdc3357ec63091acf"
+        },
+        {
+          "path": "sprites/monster_1.raw",
+          "size": 2048,
+          "sha256": "5855bef3a8a1787d1b3a909d7757a4a969b5233b261677a9b0ddf1316d8f41ef"
+        },
+        {
+          "path": "sprites/monster_10.raw",
+          "size": 2048,
+          "sha256": "dfcaa1d0539653744b946274b8d9e5a8473bab76bcf16df830ef92a37b64ab36"
+        },
+        {
+          "path": "sprites/monster_11.raw",
+          "size": 2048,
+          "sha256": "8cedf42fb3b7a8bd9b8f8a95cfa82ad48428bbff8ab851e4a3ab2dea37c9ce99"
+        },
+        {
+          "path": "sprites/monster_2.raw",
+          "size": 2048,
+          "sha256": "3d3c0d5c0105c4c75a2075caa276bd4de10ab00cc7b1d719a8c4dbc5f6f1cba2"
+        },
+        {
+          "path": "sprites/monster_3.raw",
+          "size": 2048,
+          "sha256": "83102db8460262f07b1eaeac94043703a0c5addb093c90b7b239171c16c6e611"
+        },
+        {
+          "path": "sprites/monster_4.raw",
+          "size": 2048,
+          "sha256": "f1d1a348c65e2e0d04988fe56e5b2ac9ea295d533f28fc3823576ab8223eb230"
+        },
+        {
+          "path": "sprites/monster_5.raw",
+          "size": 2048,
+          "sha256": "f67ba7ab4b8d2c39a00dc8422ca095469aa8b9ee3e439bc4bf87ef55e226b37e"
+        },
+        {
+          "path": "sprites/monster_6.raw",
+          "size": 2048,
+          "sha256": "c134ef379b38432233f0962237204dfb043fb762f889c8c68a9600f7a2c34469"
+        },
+        {
+          "path": "sprites/monster_7.raw",
+          "size": 2048,
+          "sha256": "092409ee6d9db14e3ab2ac5cad7570db63b7a0232b4f29d9d884bd78e91ce40b"
+        },
+        {
+          "path": "sprites/monster_8.raw",
+          "size": 2048,
+          "sha256": "e6259c472532066469670f0a7989eeed89ebe866e37c9a416df86062318bbc40"
+        },
+        {
+          "path": "sprites/monster_9.raw",
+          "size": 2048,
+          "sha256": "64856a452b8119a7cbab674329dc23cee031d7bb118579d6a947587a6aaf1792"
+        },
+        {
+          "path": "sprites/relic_0.raw",
+          "size": 288,
+          "sha256": "c430cc5bbd9f2993992cad7df214492daa79da309f8d00ae182976c4d1745670"
+        },
+        {
+          "path": "sprites/relic_1.raw",
+          "size": 288,
+          "sha256": "58c7cdb510747bf29344c1319ed85ff7709e46b85c75aafc62d026661681cd01"
+        },
+        {
+          "path": "sprites/relic_10.raw",
+          "size": 288,
+          "sha256": "63a740537c0888747c4a5739e66f7cc54b553ef415cec38992b1e5ff701809d6"
+        },
+        {
+          "path": "sprites/relic_11.raw",
+          "size": 288,
+          "sha256": "c3eea1a420a0e14b7ac53e7cb29402cd0273a7bdd473d5ab45107afcb8dfd691"
+        },
+        {
+          "path": "sprites/relic_2.raw",
+          "size": 288,
+          "sha256": "b93ee40a0a67c56a29e7317d20683074d1bae280a5b33cbf0145e30e47a438d1"
+        },
+        {
+          "path": "sprites/relic_3.raw",
+          "size": 288,
+          "sha256": "53088b078dfba2964626d7dcbcacbdc387d029bc4a0f3cf55019f25fa27085db"
+        },
+        {
+          "path": "sprites/relic_4.raw",
+          "size": 288,
+          "sha256": "b09028e15e22768a80568099ec24fd6ca80c67ff784e2a8a59e18344ac84fb6d"
+        },
+        {
+          "path": "sprites/relic_5.raw",
+          "size": 288,
+          "sha256": "156a4f59a6872a685f1c43b6066fe08d4e160546406e5f3451350a90d6099751"
+        },
+        {
+          "path": "sprites/relic_6.raw",
+          "size": 288,
+          "sha256": "59674af2e5f81e871ea027bed056f54d843f932e153f644acfc81df8c6d0f90e"
+        },
+        {
+          "path": "sprites/relic_7.raw",
+          "size": 288,
+          "sha256": "78480f26496e5b445356b1208b9328e94855d4a76cfcf516104516827f1cb866"
+        },
+        {
+          "path": "sprites/relic_8.raw",
+          "size": 288,
+          "sha256": "666c5baaa9284ed3c48b5aac15235ac526134c2db338f0d4ce5a31e3fd112b33"
+        },
+        {
+          "path": "sprites/relic_9.raw",
+          "size": 288,
+          "sha256": "d6806e68fa30a20e418100e4be0f59d058763962ed8cf0c4836879d3ec002612"
+        },
+        {
+          "path": "state.lua",
+          "size": 3585,
+          "sha256": "ad17857022372766d6443becf23d52999c2c965b5dd41a16a2cbd9f475cb7a18"
+        },
+        {
+          "path": "ui_base.lua",
+          "size": 3774,
+          "sha256": "07fe4f26dc212f834f5632cfb2d72cef2d1291872ead8f68a92d81ae7b55f0a0"
+        }
+      ]
+    },
+    {
+      "id": "watertracker",
+      "name": "Water Tracker",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Daily hydration tracker with a cute water cup that fills as you drink",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 217,
+          "sha256": "bbe8302e440f4fe3e9fd1dee614bf7384c525e14feb3db5c52c2c2b9d9e82ac6"
+        },
+        {
+          "path": "main.lua",
+          "size": 23115,
+          "sha256": "ebeba99d9320151cfed35ffc1289365e163a4961451ff6eed4961f67e91731dd"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "1c225be10dfcbc59dd77e680d69f02c3e879d73d54066af7464f46233ab5a0c1"
+        }
+      ]
+    },
+    {
+      "id": "stopwatch",
+      "name": "Stopwatch",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Pixel cartoon stopwatch with digital display and lap split recording",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 228,
+          "sha256": "0f08d119c308cdd12df04f08e449167a6f78ee616d762b50b404efe312c45a43"
+        },
+        {
+          "path": "main.lua",
+          "size": 15846,
+          "sha256": "27c9d449b18e3f4d68752757e6bf239b6f0c9f66cf16e69a615638e163a68abb"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "71ceca4e4e4fc84a3157d01a6fdcdffb858a04d9c181f811a71ea4e0d1186f1d"
+        }
+      ]
+    },
+    {
+      "id": "dashboard",
+      "name": "Desk Stand",
+      "version": "1.0.2",
+      "author": "Mumfee",
+      "description": "Multi-style ambient desk clock with calendar, year progress, and landscape stand",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 243,
+          "sha256": "ec85ff75b63bf406eab7e90416553121f4d0218051764adbe4250928092b6524"
+        },
+        {
+          "path": "main.lua",
+          "size": 23765,
+          "sha256": "d82c8f6d8366e9231923553ac8fe358d0c91b8765a6fbfc9df65db85ae9d115b"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "03486e0a36f6d69c73fc32403694ac68e7ac3dffff2b596bb6a58cf35e700437"
+        }
+      ]
+    },
+    {
+      "id": "hourglass",
+      "name": "Hourglass",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Expressive countdown timer with dynamic sand funnel physics and cute expressions",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 224,
+          "sha256": "ccb8e81b9fd1b8384f083277c101d29437ec9042c84b3834c2b27e3026fc0b38"
+        },
+        {
+          "path": "main.lua",
+          "size": 27556,
+          "sha256": "6fb91fc0833b40aabe87b2946ca19777398419faa3bce300e09c6941bf02b005"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "cd824fdfbe3c5f0bd564e35ba5619aacf28c9286ded70190732843e11bac02c1"
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "name": "Solitaire",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Classic 7-column Klondike Solitaire card game optimized for e-paper",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "engine.lua",
+        "input.lua",
+        "suits.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 224,
+          "sha256": "20f7dfcf282e6c0f4c905f4c55a7c88f7f9c36d64c04a2b2ec1224046f30817d"
+        },
+        {
+          "path": "main.lua",
+          "size": 7804,
+          "sha256": "a8179a71cc43a6e2ef78c64be061da3efd66759c6c1d8df6645b8e0caa239322"
+        },
+        {
+          "path": "engine.lua",
+          "size": 11552,
+          "sha256": "aab01e1fdc064b0070754dbaac6105da66fedd49b3d020e48ef5b4e92292a6ce"
+        },
+        {
+          "path": "input.lua",
+          "size": 9404,
+          "sha256": "407501221c534d86940c53b710a6f477ae27cef4320af7b855474526cfed8887"
+        },
+        {
+          "path": "suits.lua",
+          "size": 2912,
+          "sha256": "9fd8609fda840b66a921b093a4237a9fe8c066939067d5ed528c2e240b6b6758"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "44107f44072b9c6db366f7a3026544718be8108d36edd252e398f71c4039d2ff"
+        }
+      ]
+    },
+    {
+      "id": "chess",
+      "name": "Chess",
+      "version": "1.0.0",
+      "author": "Mumfee",
+      "description": "Play chess against an onboard AI engine or locally with a friend, with crisp 1-bit pieces, move hints, and full touch & button controls",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw",
+        "engine.lua",
+        "ui.lua",
+        "logic.lua",
+        "input.lua",
+        "ai.lua",
+        "menu.lua",
+        "new_game.lua",
+        "load.lua",
+        "save.lua",
+        "undo.lua",
+        "sprites/bB_b.raw",
+        "sprites/bB_d.raw",
+        "sprites/bB_m.raw",
+        "sprites/bK_b.raw",
+        "sprites/bK_d.raw",
+        "sprites/bK_m.raw",
+        "sprites/bN_b.raw",
+        "sprites/bN_d.raw",
+        "sprites/bN_m.raw",
+        "sprites/bP_b.raw",
+        "sprites/bP_d.raw",
+        "sprites/bP_m.raw",
+        "sprites/bQ_b.raw",
+        "sprites/bQ_d.raw",
+        "sprites/bQ_m.raw",
+        "sprites/bR_b.raw",
+        "sprites/bR_d.raw",
+        "sprites/bR_m.raw",
+        "sprites/wB_b.raw",
+        "sprites/wB_m.raw",
+        "sprites/wK_b.raw",
+        "sprites/wK_m.raw",
+        "sprites/wN_b.raw",
+        "sprites/wN_m.raw",
+        "sprites/wP_b.raw",
+        "sprites/wP_m.raw",
+        "sprites/wQ_b.raw",
+        "sprites/wQ_m.raw",
+        "sprites/wR_b.raw",
+        "sprites/wR_m.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 262,
+          "sha256": "f21e2502e1f0643cca5d9e425a3e48a1bf04a536fab77daf90ad2ed0c630920a"
+        },
+        {
+          "path": "main.lua",
+          "size": 1695,
+          "sha256": "449167b499587606189083e81d5e431059e585af381bb4c7ff4c15f45f264b58"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "93a7683f650ce3a5baadc77968d3e163079894212729deabf41ca9b246e44544"
+        },
+        {
+          "path": "engine.lua",
+          "size": 5386,
+          "sha256": "30806a9610b12b725e61caafd6bfc6ba2544c1fc48446437641b20f22cc08bff"
+        },
+        {
+          "path": "ui.lua",
+          "size": 5449,
+          "sha256": "8e2846d8b172ba0ee341a4a8578648b78bb4ea74f7472531652d1cbc3a8b6aac"
+        },
+        {
+          "path": "logic.lua",
+          "size": 4256,
+          "sha256": "c2ad01562c3ce6604b863bc81c0b7209e4d4334e645128e3bc828ae78a638fa5"
+        },
+        {
+          "path": "input.lua",
+          "size": 5478,
+          "sha256": "184f8a52a8695742c6874afbfbbf8cb8ff3b2a01e8e7f3fd806d957c366b934e"
+        },
+        {
+          "path": "ai.lua",
+          "size": 1120,
+          "sha256": "a1891b116bd52985efb9e9f2579a23be0e4482ce6cb50741e21a10277a22c868"
+        },
+        {
+          "path": "menu.lua",
+          "size": 779,
+          "sha256": "a1e6ef55bbfb64e113e65efa567875f1cda52a3a8d720d1a044e327d7df14443"
+        },
+        {
+          "path": "new_game.lua",
+          "size": 703,
+          "sha256": "8b0cea4c24c094978c135127d6391cbb43c9886c79c0ffe6a77e3e8afe174342"
+        },
+        {
+          "path": "load.lua",
+          "size": 1094,
+          "sha256": "4777f32fe2c54bac290ff6f31e8a9a9a39c586e61968e1b30ee4da2b49a47e5e"
+        },
+        {
+          "path": "save.lua",
+          "size": 677,
+          "sha256": "afbd6c960260021e405e862861a97269db9126c99c0a6650bbb2c5922d1f5dbe"
+        },
+        {
+          "path": "undo.lua",
+          "size": 454,
+          "sha256": "753f8477e5cfb56aebb88ce6a984bd2f071e10e7a3d8f3b1847f2c29695454f2"
+        },
+        {
+          "path": "sprites/bB_b.raw",
+          "size": 180,
+          "sha256": "c14382ac5b372522bc8227d10ceb3427b6d6cd61f7e7939142c4c005e3be9a1a"
+        },
+        {
+          "path": "sprites/bB_d.raw",
+          "size": 180,
+          "sha256": "f675a4d4468c277ddd6874191dd486ce5efb320bf1047898893905850278d4ee"
+        },
+        {
+          "path": "sprites/bB_m.raw",
+          "size": 180,
+          "sha256": "f73bf36870e324fad7cb006dfd25a798964d71261aa2a6506e78b83a50f80255"
+        },
+        {
+          "path": "sprites/bK_b.raw",
+          "size": 180,
+          "sha256": "e381e6ca5df8899061bdf4f0a38090fbc41b6a27e8c8753b8f687d47b0f32f71"
+        },
+        {
+          "path": "sprites/bK_d.raw",
+          "size": 180,
+          "sha256": "9563e73f2d1e9f4cb2210955598147040294103c842b18cdc29fda31477dba3e"
+        },
+        {
+          "path": "sprites/bK_m.raw",
+          "size": 180,
+          "sha256": "734a06dd0ebd6800ceb119432f4e6026cbad585ffed063a6ed2178330e3f2d67"
+        },
+        {
+          "path": "sprites/bN_b.raw",
+          "size": 180,
+          "sha256": "72b73faf76423ef98aaefa8015faedc27f1e487d09518689ce63e721571f338c"
+        },
+        {
+          "path": "sprites/bN_d.raw",
+          "size": 180,
+          "sha256": "337abcea06fc3543d553827bdcb4caed5014efb4ad547fe85f332d2f9cecd3f0"
+        },
+        {
+          "path": "sprites/bN_m.raw",
+          "size": 180,
+          "sha256": "fc9910248cd919db1601e09a391079ee2cc73afe30466546f24f7d438fcfd565"
+        },
+        {
+          "path": "sprites/bP_b.raw",
+          "size": 180,
+          "sha256": "f1e731bc9a6f1ef564f8dfa6350e8acb701a2d4a3104a5629537b566e54f3124"
+        },
+        {
+          "path": "sprites/bP_d.raw",
+          "size": 180,
+          "sha256": "e08c7a0233fe3424e06449f8b19133016749482cba857f59774d4b29267990e0"
+        },
+        {
+          "path": "sprites/bP_m.raw",
+          "size": 180,
+          "sha256": "72c64946da9e887a6680af211a76c91536113130e6ffc5ac731dc47c15ce8a06"
+        },
+        {
+          "path": "sprites/bQ_b.raw",
+          "size": 180,
+          "sha256": "53bf0688edf87d5f9d65df098373aef373a654377e8d2f6c4acb104e715d0ac9"
+        },
+        {
+          "path": "sprites/bQ_d.raw",
+          "size": 180,
+          "sha256": "19541afcfb88d83a5918d885fe2960f03f08f5f9c53a09a74418f0d9a7ee38f1"
+        },
+        {
+          "path": "sprites/bQ_m.raw",
+          "size": 180,
+          "sha256": "58ef6e5bebd9bddf83eb7c787427cc858a3c2eb2be6f85f6a451297cd4a35490"
+        },
+        {
+          "path": "sprites/bR_b.raw",
+          "size": 180,
+          "sha256": "845092e0963ac913c055f667eb1d72c80ea5c336b5e040b8a2a007eaf87d7d2f"
+        },
+        {
+          "path": "sprites/bR_d.raw",
+          "size": 180,
+          "sha256": "e08c7a0233fe3424e06449f8b19133016749482cba857f59774d4b29267990e0"
+        },
+        {
+          "path": "sprites/bR_m.raw",
+          "size": 180,
+          "sha256": "437d7ebabb23e4e9742ee423b306441c81e9aebaae3c4689aa4c844dd0508373"
+        },
+        {
+          "path": "sprites/wB_b.raw",
+          "size": 180,
+          "sha256": "08698a3899d5a263bca7cbc6b9f2f20113dfe7be76a1b1c45e6e07479cd824e2"
+        },
+        {
+          "path": "sprites/wB_m.raw",
+          "size": 180,
+          "sha256": "9af57b069d3f7794f98aa42f8cfa5077191e6f58d48b1e4de1ad30db98cb0820"
+        },
+        {
+          "path": "sprites/wK_b.raw",
+          "size": 180,
+          "sha256": "a8621e34a33e589c048aa932ebab6cd17ba37a1892c6d2ee854c5f7870053ade"
+        },
+        {
+          "path": "sprites/wK_m.raw",
+          "size": 180,
+          "sha256": "476b093fd8906d51c79ebadd8aae17dbdc9b03c5943bfebdbb7c5f37df9ad385"
+        },
+        {
+          "path": "sprites/wN_b.raw",
+          "size": 180,
+          "sha256": "eb3de7fb20f0fab61859035513fde10c7e1ea345dc34db14576f8e86a052f6d5"
+        },
+        {
+          "path": "sprites/wN_m.raw",
+          "size": 180,
+          "sha256": "0e573cbd872c758aa0882ab3361622d61526949e13dff0786c5c57b8fa3e7217"
+        },
+        {
+          "path": "sprites/wP_b.raw",
+          "size": 180,
+          "sha256": "3b162311fcdd841dc5ccad4e46f97efd99da795b312db7758bfbe98c17962447"
+        },
+        {
+          "path": "sprites/wP_m.raw",
+          "size": 180,
+          "sha256": "d36ec5366317883b88f6835884abbf1a4eac19be978f347c983ade533c0ebadb"
+        },
+        {
+          "path": "sprites/wQ_b.raw",
+          "size": 180,
+          "sha256": "53a236753baaeaa8d27351145a11989c5b2125246efe86513b0b989aa35ea6ee"
+        },
+        {
+          "path": "sprites/wQ_m.raw",
+          "size": 180,
+          "sha256": "2b4e622a266179a02ef1720d7f620e62bf25c071fe5accd168bf43e1dfa08a5a"
+        },
+        {
+          "path": "sprites/wR_b.raw",
+          "size": 180,
+          "sha256": "a71bc5e6d68fd7e459a2dfbcc94e5328aa34d2e05230239ffc747982b86b064a"
+        },
+        {
+          "path": "sprites/wR_m.raw",
+          "size": 180,
+          "sha256": "845092e0963ac913c055f667eb1d72c80ea5c336b5e040b8a2a007eaf87d7d2f"
+        }
+      ]
+    },
+    {
+      "id": "wifi_analyzer",
+      "name": "Wi-Fi Analyzer",
+      "version": "1.0.0",
+      "author": "PUNRI",
+      "description": "Scan nearby Wi-Fi networks, compare RSSI and channels, and export observations to SD.",
+      "entry": "main.lua",
+      "min_api": 3,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "wifi_scan.lua",
+        "wifi_ui.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 286,
+          "sha256": "ce835f928a62d2b47869e7142e6b8cd157b93fd2d4438da6489aebeda0b60d60"
+        },
+        {
+          "path": "main.lua",
+          "size": 6626,
+          "sha256": "f0404020ff8e5a8de1e8b20cd6505611fa630fa4721595f54722bf1e7c049580"
+        },
+        {
+          "path": "wifi_scan.lua",
+          "size": 5908,
+          "sha256": "63fc4c01571921b05069fba48a6b754e66eacd961f551d55a3b7651ebf64961e"
+        },
+        {
+          "path": "wifi_ui.lua",
+          "size": 5149,
+          "sha256": "11a085018ea3b21660de448da8f84cd4e62c62fee22e2af28260536778aad134"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "c7031b1bf221520585e6fb7cbe9a122500c24700a8f6a8cab4b0188325b4a419"
+        }
+      ]
+    },
+    {
+      "id": "signal_meter",
+      "name": "Signal Meter",
+      "version": "1.0.0",
+      "author": "PUNRI",
+      "description": "Measure one Wi-Fi access point with an RSSI graph, min/average/max and SD-card CSV export.",
+      "entry": "main.lua",
+      "min_api": 3,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "wifi_scan.lua",
+        "wifi_ui.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 288,
+          "sha256": "37ceb4688f7d3d5bcf9f52eef31633d26ec58641de36ebef4207f285b977e229"
+        },
+        {
+          "path": "main.lua",
+          "size": 11222,
+          "sha256": "59e6da1f53b539ceb4cb2e187d3016490c389f110c84adc907a849cfd0fd9d49"
+        },
+        {
+          "path": "wifi_scan.lua",
+          "size": 5908,
+          "sha256": "63fc4c01571921b05069fba48a6b754e66eacd961f551d55a3b7651ebf64961e"
+        },
+        {
+          "path": "wifi_ui.lua",
+          "size": 5149,
+          "sha256": "11a085018ea3b21660de448da8f84cd4e62c62fee22e2af28260536778aad134"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "13d0ce234f3353cc7fed7d74243e2c14b6eb74a332ed75f9c4cf69f0b2d19032"
+        }
+      ]
+    },
+    {
+      "id": "notepad",
+      "name": "Notepad",
+      "version": "1.0.0",
+      "author": "PUNRI",
+      "description": "Offline notes with a multiline keyboard, paged reading and SD-card text exports.",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw",
+        "organizer.lua",
+        "text_editor.lua"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 268,
+          "sha256": "cf1f44f2c584d655aba6f92a4487c2085c89669fa43f21259bb1e65f0353726b"
+        },
+        {
+          "path": "main.lua",
+          "size": 157,
+          "sha256": "940d1c710ca22816da6d76695a63a3ef5ff5a8a008eadf97d95afdb83228b96e"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "b1aac6b83587915b82221f91a82efbde938f2b96aa50706991ad79ac5e99a3b3"
+        },
+        {
+          "path": "organizer.lua",
+          "size": 17987,
+          "sha256": "ea16e5d8ced0afe02b3e88852cddd9f60eb7d43763425f7a79b9594af2bbe267"
+        },
+        {
+          "path": "text_editor.lua",
+          "size": 7299,
+          "sha256": "57d57eebdfa375b402def9e2971d8a6e9eef37e965eb911f0e1aec731fd7a492"
+        }
+      ]
+    },
+    {
+      "id": "radio_scanner",
+      "name": "Radio Scanner",
+      "version": "0.1.0",
+      "author": "PUNRI contributors",
+      "description": "Foreground BLE and Wi-Fi discovery with advertisement inspection",
+      "entry": "main.lua",
+      "min_api": 3,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 201,
+          "sha256": "2bde125a38c5d52d897b729905dd344f6c73f28c902d84deb9321d5a9dafdf45"
+        },
+        {
+          "path": "main.lua",
+          "size": 3634,
+          "sha256": "622dd2f0c8ef5a60a8d7025d3670d537f53a24648f689db63730f26977a86072"
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "name": "Tic-tac-toe",
+      "version": "1.0.0",
+      "author": "PUNRI",
+      "description": "Play an unbeatable device opponent or a friend on an e-paper 3x3 board.",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "engine.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 254,
+          "sha256": "99f29ff24f752d9e857d22c89d8e0a8f09be3cdb29eae1f36327cbfb0a3d4fc0"
+        },
+        {
+          "path": "main.lua",
+          "size": 6943,
+          "sha256": "f904778bd444ce89383eeb6e499a903fbbbccebfc5dc43ccfac6e574aed0f648"
+        },
+        {
+          "path": "engine.lua",
+          "size": 1577,
+          "sha256": "3ce240098ddd9d55ca43cb08d6fecd07e94afd5f1bd9b04c09df881271fe70d9"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "07362b54e3c644e13144368e99191265147a633f2c48e000b2f1f21ba79fb336"
+        }
+      ]
+    },
+    {
+      "id": "todo",
+      "name": "To-do List",
+      "version": "1.0.0",
+      "author": "PUNRI",
+      "description": "Offline tasks with on-device text entry, completion filters and SD-card saving.",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "icon.raw",
+        "organizer.lua",
+        "text_editor.lua"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 267,
+          "sha256": "75fd5c5872d822f0f3b08528e59325aeaba1f58c421a5534f9c8111c3a4683cf"
+        },
+        {
+          "path": "main.lua",
+          "size": 163,
+          "sha256": "c9942978b8b8c210e9bbe73130bd0b4a25852d92e4ff9d8ec3b43979b36df4bc"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "f6af8c1f9837f0e87ce429a9dbf8b2a25d8fd0b6c87bf157976466a6ba114674"
+        },
+        {
+          "path": "organizer.lua",
+          "size": 17987,
+          "sha256": "ea16e5d8ced0afe02b3e88852cddd9f60eb7d43763425f7a79b9594af2bbe267"
+        },
+        {
+          "path": "text_editor.lua",
+          "size": 7299,
+          "sha256": "57d57eebdfa375b402def9e2971d8a6e9eef37e965eb911f0e1aec731fd7a492"
+        }
+      ]
+    }
+  ]
+}

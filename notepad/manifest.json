@@ -1,0 +1,10 @@
+{
+  "id": "notepad",
+  "name": "Notepad",
+  "version": "1.0.0",
+  "author": "PUNRI",
+  "description": "Offline notes with a multiline keyboard, paged reading and SD-card text exports.",
+  "entry": "main.lua",
+  "min_api": 1,
+  "capabilities": ["buttons", "storage"]
+}

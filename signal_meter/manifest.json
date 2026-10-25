@@ -1,0 +1,10 @@
+{
+  "id": "signal_meter",
+  "name": "Signal Meter",
+  "version": "1.0.0",
+  "author": "PUNRI",
+  "description": "Measure one Wi-Fi access point with an RSSI graph, min/average/max and SD-card CSV export.",
+  "entry": "main.lua",
+  "min_api": 3,
+  "capabilities": ["buttons", "storage"]
+}

@@ -13,17 +13,12 @@
   using bold measured labels, a shared baseline, compact margins and one zero
   at the corner to keep measurements readable without overlapping numbers.
 
-## QR Cards Share 0.1.0 — 2026-10-25 (local, unpublished)
+## Unreleased
 
-### Added
+### Removed
 
-- Offline QR cards for links/text, vCard contacts, Wi-Fi credentials, and large-print emergency/return messages.
-- Version 1–10/M byte-mode QR encoding with a four-module quiet zone, structured editable storage, touch targets, and X4 Classic button controls.
-
-### Fixed
-
-- Payloads that exceed the 213-byte version-10/M limit are rejected rather than truncated; Wi-Fi and vCard delimiters are escaped before capacity checking.
-- Failed saves leave the previous SD data intact and keep the draft available to retry; corrupt saved data is not overwritten.
+- Remove Life Counter from the source collection and local catalog. Existing
+  device installations and saved data are unaffected.
 
 ## Stopwatch 1.0.0 — 2026-10-25 (local, unpublished)
 
@@ -48,6 +43,18 @@
 ### Verification limits
 
 - Desktop replay is explicitly simulated. Physical pairing, reconnect, reader mappings, sleep/wake and Bluetooth range require X4 Pro hardware acceptance; this app is not listed in the App Store catalog.
+
+## QR Cards Share 0.1.0 — 2026-10-25 (local, unpublished)
+
+### Added
+
+- Offline QR cards for links/text, vCard contacts, Wi-Fi credentials, and large-print emergency/return messages.
+- Version 1–10/M byte-mode QR encoding with a four-module quiet zone, structured editable storage, touch targets, and X4 Classic button controls.
+
+### Fixed
+
+- Payloads that exceed the 213-byte version-10/M limit are rejected rather than truncated; Wi-Fi and vCard delimiters are escaped before capacity checking.
+- Failed saves leave the previous SD data intact and keep the draft available to retry; corrupt saved data is not overwritten.
 
 ## Unit Convert 1.0.0 — 2026-10-25
 

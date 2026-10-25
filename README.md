@@ -314,7 +314,8 @@ covering the keys. `smudge.keyboard` and `ink.keyboard` are compatibility aliase
 - **`punri.millis()`** *(or `punri.get_time_ms()`)*\
   Returns millisecond uptime counter.
 - **`punri.time()`**\
-  Returns UNIX epoch timestamp (seconds).
+  Legacy compatibility clock value. It is not a documented UTC source; use
+  `punri.get_date()` with `clock_validity` for verified calendar time.
 - **`punri.random(min, max)`**\
   Returns a random integer between `min` and `max`.
 - **`punri.exit()`**\
@@ -410,7 +411,14 @@ All shape drawing functions support a customizable line **thickness** (stroke wi
   local d = punri.get_date()
   -- d.year (e.g. 2026), d.month (1-12), d.day (1-31),
   -- d.wday (1=Sun .. 7=Sat), d.hour (0-23), d.min (0-59), d.sec (0-59)
+  -- d.offset_minutes is the actual presentation offset applied by firmware.
+  -- When has_feature("clock_validity") is true, d.valid says whether this
+  -- reading is trusted and d.source is "rtc", "system", or "unavailable".
   ```
+  Legacy calendar fields remain available even when the clock is invalid for
+  compatibility; do not treat their fallback date as real time. The raw RTC is
+  synchronized as UTC, so an app needing UTC can subtract `offset_minutes`
+  from the valid local calendar fields with its own civil-date arithmetic.
 - **`punri.get_memory()`** *(or `punri.memory()`)*\
   Returns real-time heap metrics table for profiling embedded memory usage:
   - `lua_kb`: Kilobytes currently allocated by the Lua runtime.
@@ -778,5 +786,8 @@ hardware-verification limits. Further local changes do not publish updates:
 | `blockdrop` | **Block Drop** | Games | Classic falling block puzzle with ghost piece guide and e-paper optimized refresh scheduling. |
 | `2048` | **2048** | Games | Classic 4×4 sliding tile number puzzle with high scores and smooth e-paper rendering. |
 | `dice` | **Dice Roller** | Utilities | Multi-polyhedral tabletop dice simulator (d4, d6, d8, d10, d12, d20, d100) with coin flipper and roll history. |
-| `lifecounter` | **Life Counter** | Utilities | Magic: The Gathering & card game life tracker supporting multiplayer and commander damage tracking. |
+
+Life Counter has been removed from this source collection and its local catalog.
+Existing device installations and saved data are unaffected. Its replacement is
+described in the [Counter app plan](docs/counter-plan.md); Counter is not yet implemented.
 

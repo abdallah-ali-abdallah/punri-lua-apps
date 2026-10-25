@@ -1412,18 +1412,18 @@
         },
         {
           "path": "main.lua",
-          "size": 16714,
-          "sha256": "277a58f5a5a56b2fdb7e503a02ae54af0a613909b9a47297d5a1f51c9dbcd7d8"
+          "size": 17825,
+          "sha256": "e0cf9e7846778f4d8f7622814a41a958716e96d545615d7261ac471c79323bb4"
         },
         {
           "path": "calendar.lua",
-          "size": 2802,
-          "sha256": "25e45c8208b5fbe904596deb37ba67d1a04a67935aed4a2837075893c3785e60"
+          "size": 4355,
+          "sha256": "a503f9d38f4bdb55f77c40b8fac92f359ad6fa35d03f5263540acb1cd46b3362"
         },
         {
           "path": "model.lua",
-          "size": 7740,
-          "sha256": "7b18fd66c312a9880fe47d2fa930933ecba7b7136d2824c8c8f42aeaa7cef2a3"
+          "size": 8496,
+          "sha256": "44993a8f437a5bb01527ec34550808019b756b24aa6219d35a4097cefbf2ea3f"
         },
         {
           "path": "storage.lua",
@@ -1432,8 +1432,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 16651,
-          "sha256": "625585d821cdaa3ae86acff1a0f5bc62bb1b5639e696256ddf24c05cf748fe5a"
+          "size": 19472,
+          "sha256": "aa0d7f28478e9291b21dc3c0aa7577ab644cc430fe49a15357372a590c1f2d7b"
         },
         {
           "path": "input.lua",
@@ -1548,8 +1548,8 @@
         },
         {
           "path": "main.lua",
-          "size": 12501,
-          "sha256": "2cd02fc34da7ae8a961487177a0644fe07b00f38faabaa36760f5353e20d455d"
+          "size": 12365,
+          "sha256": "ab5eb761d8176a20bb97760a93ccc22d9b940b84a823c7410e120f61cb29982a"
         },
         {
           "path": "units.lua",
@@ -1568,8 +1568,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 9131,
-          "sha256": "c4558939a35fdcff16bbd77141afd2f13f6b3faa9e453c807b5d0172686bb394"
+          "size": 10371,
+          "sha256": "eef34f0774278bf72993e7cd524c83538691529461c0d46a093449df7a95eef7"
         },
         {
           "path": "input.lua",
@@ -1586,7 +1586,7 @@
     {
       "id": "screen_ruler",
       "name": "Screen Ruler",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "PUNRI contributors",
       "description": "An offline calibrated screen ruler with independent physical X/Y scales.",
       "entry": "main.lua",
@@ -1607,12 +1607,12 @@
         {
           "path": "manifest.json",
           "size": 283,
-          "sha256": "4e74a779a29513d420145c25b9cff56649764189f0330a7fb15be93205a74c84"
+          "sha256": "403cb6ba73199da83fa250da5bd21054c3186239550b12994c5ebe856dc65edc"
         },
         {
           "path": "main.lua",
-          "size": 22352,
-          "sha256": "3e5c74e0bf3212b802c4fee583977509745f071e2d14296b5ec960b2e39c8d7e"
+          "size": 23387,
+          "sha256": "51159fbaeb3176e36b2173ab056e6cd9d107ccf39ee09e5554323b4a68e2b97b"
         },
         {
           "path": "ruler.lua",
@@ -1621,13 +1621,13 @@
         },
         {
           "path": "calibration.lua",
-          "size": 5894,
-          "sha256": "afb5dfeca456b7703e0124df6f344c3d128bee7884c903e8a2460bc80409b265"
+          "size": 6871,
+          "sha256": "733ad549f9d509e1f8bb0cffd13ac597d39220fb7044c638a7cf448e6db1efb4"
         },
         {
           "path": "ui.lua",
-          "size": 12397,
-          "sha256": "5eae1950b4bbf842a2a8d08056dfdd763effb72c079061e538907b72736ca81b"
+          "size": 12526,
+          "sha256": "89ba3c0376f09d5413be2b932e06e345a044edae41434ec6139915ff3a0f9b81"
         },
         {
           "path": "icon.raw",

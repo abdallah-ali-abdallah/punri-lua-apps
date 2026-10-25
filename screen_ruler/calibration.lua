@@ -43,6 +43,28 @@ function Calibration.copy(state)
     }
 end
 
+function Calibration.has_device_profile(state)
+    return (state.device == "x4pro" or state.device == "x4") and
+        state.portrait_width == 480 and state.portrait_height == 800
+end
+
+function Calibration.apply_device_profile(state)
+    -- Xteink specifies 219 PPI for X4 Pro and X4 Classic. At 25.4 mm/inch,
+    -- px/mm = 219 * 10 / 254 = 1095/127. Keep the nominal factory scale exact
+    -- rather than deriving it from the rounded 4.3-inch marketing diagonal.
+    -- Sources and the hardware verification procedure are in README.md.
+    if not Calibration.has_device_profile(state) then return false end
+    state.x, state.y = { n = 1095, d = 127 }, { n = 1095, d = 127 }
+    state.calibrated = true
+    return true
+end
+
+function Calibration.uses_device_profile(state)
+    return Calibration.has_device_profile(state) and state.calibrated and
+        state.x and state.y and state.x.n == 1095 and state.x.d == 127 and
+        state.y.n == 1095 and state.y.d == 127
+end
+
 local function valid_identity(device, width, height)
     return type(device) == "string" and device:match("^[a-z0-9_-]+$") ~= nil and
         is_integer(width) and is_integer(height) and width >= 100 and width <= 2000 and height >= 100 and height <= 2000

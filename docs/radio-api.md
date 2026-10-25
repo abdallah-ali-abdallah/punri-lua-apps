@@ -16,8 +16,11 @@ Call `radio.capabilities()` before requesting an operation. It returns `ble`,
 own `api_version` (1). BLE is enabled for `x4-pro` and `x4-pro-debug`; other hardware
 profiles return `unsupported` for BLE until explicitly enabled and validated.
 
-The desktop simulator defaults to radio-disabled. Set `RADIO_SIMULATION=1` to
-enable deterministic replay; `simulated` remains true. Replay is not live scanning.
+The desktop simulator enables deterministic radio replay by default when
+`RADIO_SIMULATION` is unset. Explicit `1` also enables it; `0`, empty and invalid
+values disable it for unavailable-radio tests. Set the variable before launching
+and restart after changes. `simulated` remains true: replay is not live scanning,
+and these defaults do not change hardware radio capabilities.
 
 The first valid request lazily acquires an exclusive native session. An existing
 native Wi-Fi activity or initialized BLE host causes `busy`; the API never takes

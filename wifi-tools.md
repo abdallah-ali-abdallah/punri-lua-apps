@@ -44,11 +44,13 @@ Authentication codes are raw SDK values, not inferred security guarantees.
 
 ## If Scan does nothing
 
-- **Desktop simulator:** radio replay is disabled unless `RADIO_SIMULATION=1` is
-  set **before launching**. From the firmware repo, use
-  `RADIO_SIMULATION=1 pio run -e x4-pro-simulator -t run_simulator` (or the matching
-  Sticky/Classic profile). Replay shows **SIMULATED** and synthetic peers; it
-  cannot scan the Mac's Wi-Fi or BLE hardware. Restart an already-running simulator.
+- **Desktop simulator:** radio replay is enabled by default with
+  `RADIO_SIMULATION` unset. From the firmware repo, use
+  `pio run -e x4-pro-simulator -t run_simulator` (or the matching Sticky/Classic
+  profile). Explicit `RADIO_SIMULATION=1` also enables it; `0`, empty and invalid
+  values disable it. Clear an inherited disable value and restart the simulator.
+  Rebuild older simulator binaries to get the new default. Replay shows
+  **SIMULATED** and synthetic peers, not the Mac's Wi-Fi or BLE hardware.
 - **Saved target:** reopening starts paused. Press **Start**, or **Back → Scan**
   to discover networks. Copy the complete app folder, including all three
   `radio_*.lua` modules; App Store version 1.1.0 includes them.
@@ -167,8 +169,9 @@ Package validation builds a temporary integrity-bound catalog without altering
 gate) verify the released package metadata and integrity records.
 Native tests cover scan/history bounds, BSSID identity, terminal ordering,
 cancellation, gaps/statistics, CSV safety, failed writes, saved targets, button
-controls and landscape layouts. Simulator replay requires `RADIO_SIMULATION=1`
-and displays **SIMULATED**; it is not RF validation.
+controls and landscape layouts. Simulator replay is enabled by default with
+`RADIO_SIMULATION` unset and displays **SIMULATED**; it is not RF validation.
+Use `RADIO_SIMULATION=0` to exercise unavailable-radio behavior.
 
 ### Hardware acceptance
 

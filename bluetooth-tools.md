@@ -47,11 +47,11 @@ button tests exercise UI portability, not Classic hardware BLE support.
 
 ## If Scan does nothing
 
-Desktop radio replay requires `RADIO_SIMULATION=1` **before launch**. For example,
-from the firmware repo use
-`RADIO_SIMULATION=1 pio run -e x4-pro-simulator -t run_simulator`.
-An already-running simulator must be restarted. This produces **SIMULATED**
-peers, not live Bluetooth reception from the Mac. See the
+Desktop radio replay is enabled by default with `RADIO_SIMULATION` unset. From
+the firmware repo use `pio run -e x4-pro-simulator -t run_simulator`.
+Explicit `1` enables it too; `0`, empty and invalid values disable it. Clear any
+inherited disable value and restart; older simulator binaries need rebuilding.
+This produces **SIMULATED** peers, not live Bluetooth reception from the Mac. See the
 [Wi-Fi troubleshooting checklist](wifi-tools.md#if-scan-does-nothing) for saved
 paused targets, complete-folder installation and radio ownership errors.
 
@@ -124,8 +124,9 @@ or largest-free-block headroom. A `busy` owner is never taken over.
 ## Verification
 
 Use the firmware native package/tests and simulator command in
-[Wi-Fi verification](wifi-tools.md#verification). Desktop scans require
-`RADIO_SIMULATION=1` and visibly display **SIMULATED**. Replay is not real RF or
+[Wi-Fi verification](wifi-tools.md#verification). Desktop scans default to replay
+with `RADIO_SIMULATION` unset and visibly display **SIMULATED**. Set
+`RADIO_SIMULATION=0` for unavailable-radio tests. Replay is not real RF or
 controller/privacy validation. Native app tests use the production `ble.parse`
 binding and cover address/type identity, malformed/truncated data, unsupported
 builds, bounded observations/history, missing samples, scheduling, cancellation,

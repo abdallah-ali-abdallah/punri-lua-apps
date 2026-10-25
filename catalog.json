@@ -1586,7 +1586,7 @@
     {
       "id": "screen_ruler",
       "name": "Screen Ruler",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "PUNRI contributors",
       "description": "An offline calibrated screen ruler with independent physical X/Y scales.",
       "entry": "main.lua",
@@ -1607,17 +1607,17 @@
         {
           "path": "manifest.json",
           "size": 283,
-          "sha256": "403cb6ba73199da83fa250da5bd21054c3186239550b12994c5ebe856dc65edc"
+          "sha256": "f24d5cec139f4c18684d397de4e618afa3e9e7d3e9d255633896ba11fca1dfa0"
         },
         {
           "path": "main.lua",
-          "size": 23387,
-          "sha256": "51159fbaeb3176e36b2173ab056e6cd9d107ccf39ee09e5554323b4a68e2b97b"
+          "size": 24888,
+          "sha256": "a71de875e5e6f38a77e3418331d0095c6826f53151da0196314c1bc82a07f48d"
         },
         {
           "path": "ruler.lua",
-          "size": 3917,
-          "sha256": "604a6af1736d8708290ac84cd61d4f6af01de623ea12790f41988ee2ce3da057"
+          "size": 6447,
+          "sha256": "5f4ac0be12d83f1cc96994dc5eba265395e7575590c36efa904c3b0dbacb79f8"
         },
         {
           "path": "calibration.lua",
@@ -1626,8 +1626,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 12526,
-          "sha256": "89ba3c0376f09d5413be2b932e06e345a044edae41434ec6139915ff3a0f9b81"
+          "size": 14736,
+          "sha256": "bce57dc64e5a97a18b14ef6bbcc8dd70338db9045fb1533a578b6519791f047a"
         },
         {
           "path": "icon.raw",

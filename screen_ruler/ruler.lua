@@ -50,18 +50,36 @@ function Ruler.from_span(span_px, millimeters_hundredths)
     return scale
 end
 
--- position(i) = origin + round(i * numerator / denominator).
-function Ruler.tick_position(origin, millimeter_index, scale)
-    if not is_integer(origin) or not is_integer(millimeter_index) or millimeter_index < 0 then return nil end
-    if not Ruler.is_valid(scale) or millimeter_index > Ruler.MAX_TICK_INDEX then return nil end
-    local product = millimeter_index * scale.n
+-- Metric indices are mm; inch indices are sixteenths (exactly 127/80 mm).
+-- Split whole/remainder products so even the largest saved scale stays below
+-- 2^31. Multiplying index * numerator * 127 directly would overflow on-device.
+function Ruler.tick_position(origin, index, scale, units)
+    if not is_integer(origin) or not is_integer(index) or index < 0 then return nil end
+    if not Ruler.is_valid(scale) or index > Ruler.MAX_TICK_INDEX then return nil end
+    if units == "in" then
+        local distance = index * 127
+        local product = (distance // 80) * scale.n
+        local whole = product // scale.d
+        local remainder = (product % scale.d) * 80 + (distance % 80) * scale.n
+        local denominator = scale.d * 80
+        return origin + whole + (remainder + denominator // 2) // denominator
+    end
+    local product = index * scale.n
     if product > 2000000000 then return nil end
     return origin + (product + scale.d // 2) // scale.d
 end
 
 -- Largest whole-mm mark whose rounded coordinate is inside [origin, limit).
-function Ruler.max_index(origin, limit, scale)
+function Ruler.max_index(origin, limit, scale, units)
     if not is_integer(origin) or not is_integer(limit) or limit <= origin or not Ruler.is_valid(scale) then return 0 end
+    if units == "in" then
+        local low, high = 0, Ruler.MAX_TICK_INDEX
+        while low < high do
+            local middle = (low + high + 1) // 2
+            if Ruler.tick_position(origin, middle, scale, units) < limit then low = middle else high = middle - 1 end
+        end
+        return low
+    end
     local available = limit - origin - 1
     -- round(q / d) <= available iff q + floor(d/2) < (available + 1) * d.
     local bound = (available + 1) * scale.d - 1 - scale.d // 2
@@ -73,14 +91,56 @@ end
 
 -- Do not draw overlapping 1-mm marks. This is the smallest integral-mm
 -- subdivision that can advance by at least one physical pixel.
-function Ruler.minor_step(scale)
+function Ruler.minor_step(scale, units)
     if not Ruler.is_valid(scale) then return nil end
+    if units == "in" then
+        local step = 1
+        while step * scale.n * 127 < scale.d * 80 do step = step * 2 end
+        return step
+    end
     if scale.n >= scale.d then return 1 end
     return (scale.d + scale.n - 1) // scale.n
 end
 
-function Ruler.should_draw_tick(index, minor_step)
-    return index == 0 or index % minor_step == 0 or index % 5 == 0
+function Ruler.should_draw_tick(index, minor_step, units)
+    return index == 0 or index % minor_step == 0 or index % (units == "in" and 4 or 5) == 0
+end
+
+function Ruler.tick_label(index, units)
+    local major = units == "in" and 16 or 10
+    if index <= 0 or index % major ~= 0 then return nil end
+    return tostring(units == "mm" and index or index // major)
+end
+
+function Ruler.tick_length(index, units)
+    if units == "in" then
+        if index % 16 == 0 then return 18, 2 end
+        if index % 8 == 0 then return 15, 1 end
+        if index % 4 == 0 then return 12, 1 end
+        return index % 2 == 0 and 9 or 6, 1
+    end
+    return index % 10 == 0 and 18 or (index % 5 == 0 and 13 or 8), index % 10 == 0 and 2 or 1
+end
+
+-- Hundredths of the selected display unit for a pixel distance. Compute the
+-- quotient first; pixels * denominator * 500 could exceed 32-bit Lua limits.
+function Ruler.measure_pixels(pixels, scale, units)
+    if not is_integer(pixels) or pixels < 0 or pixels > 2000 or not Ruler.is_valid(scale) then return nil end
+    local product = pixels * scale.d
+    local whole, remainder = product // scale.n, product % scale.n
+    if units == "in" then
+        local converted = whole * 500
+        local tail = (converted % 127) * scale.n + remainder * 500
+        local denominator = scale.n * 127
+        return converted // 127 + (tail + denominator // 2) // denominator
+    end
+    local factor = units == "cm" and 10 or 100
+    return whole * factor + (remainder * factor + scale.n // 2) // scale.n
+end
+
+function Ruler.tick_hundredths(index, units)
+    if units == "in" then return (index * 100 + 8) // 16 end
+    return index * (units == "cm" and 10 or 100)
 end
 
 function Ruler.format_scale(scale)

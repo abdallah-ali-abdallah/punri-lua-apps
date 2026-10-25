@@ -67,10 +67,10 @@ and a vertical ruler uses X; this keeps the physical axes correct after rotation
 
 ## Controls
 
-Touch devices have six bottom controls: **Mode**, the current unit (**mm**,
+Touch devices have seven bottom controls: **Mode**, the current unit (**mm**,
 **cm**, or **inch**), **Calibrate**,
-**Rotate**, **Clean**, and **Exit**. Clean mode hides setup controls but keeps
-an Exit target. Tapping the current unit cycles **mm → cm → inch**.
+**Rotate**, **Grid**, **Clean**, and **Exit**. Clean mode hides setup controls but keeps
+an Exit target and supports touch measurements. Tapping the current unit cycles **mm → cm → inch**.
 Only `on_tap` is implemented; the activity also emits a legacy
 `on_touch(..., "tap")` callback, and responding to both would apply a tap twice.
 
@@ -83,6 +83,33 @@ On X4 Classic:
 - **Left** cycles units in reverse (**mm → inch → cm**); **Right** starts calibration.
 - During calibration, **Left/Right** adjust one pixel and **Confirm** opens
   the length-entry keyboard.
+- The menu also exposes **Grid: on/off** and **Clear measurement**. All eight
+  menu actions stay visible, using two columns in landscape.
+
+## Inch ticks, touch measurements and grid
+
+In inch mode, the long labelled marks are real **1, 2, 3… inches**, with
+shorter marks at **½, ¼, ⅛ and ¹⁄₁₆ inch**. Positions use exactly 25.4 mm per
+inch, calculated directly from zero. On the 219-PPI X4 presets, the 1-inch mark
+is 219 pixels from zero and the 2-inch mark is 438 pixels from zero. Inch mode
+does not reuse centimetre or millimetre tick spacing.
+
+On touch devices, tap anywhere inside the measurement area to place a vertical
+and horizontal guide through that point. The footer shows **X** and **Y**
+distances from the ruler's zero corner in the selected unit. Tap another point
+to move both guides. Changing units keeps the zero corner and the point fixed;
+changing orientation or ruler mode clears the point. Use **Clear measurement**
+in the menu to remove the guides. Clean mode also supports new measurements.
+
+Tap **Grid** to enable or disable the dotted grid. The button is filled when
+enabled. Grid spacing is 1 cm in metric mode and ¼ inch in inch mode, with a
+coarser whole multiple when necessary to avoid crowded pixels. It stays aligned
+to the calibrated zero and scales correctly after rotation. X4 Classic users
+can toggle it through the menu with the physical buttons.
+
+The grid and touched point reset when the app is restarted. Neither moving a
+guide nor toggling the grid writes to SD or changes saved calibration. Input
+requests a redraw; stationary guides do not create a periodic refresh loop.
 
 The app only prevents automatic sleep while a valid ruler is actually visible.
 It never requests periodic redraws; input and explicit state changes request a
@@ -100,8 +127,10 @@ Supported reference lengths are 1.00–500.00 mm; scales must be 0.25–20 px/mm
 All persisted numerators, denominators and tick intermediates remain below the
 signed 32-bit Lua limit. Marks are 1 mm where pixels permit; if not, the app
 shows the smallest representable whole-mm subdivision rather than overlapping
-fake ticks. Millimetres, centimetres, and rounded inch labels are display
-units—the underlying calibration remains millimetres.
+fake ticks. Inch marks use exact sixteenths of an inch; metric marks use whole
+millimetres. The underlying X/Y calibration remains in pixels per millimetre.
+Touch readouts are rounded to two decimal places of the selected unit and
+remain limited by the physical pixel size and calibration accuracy.
 
 `write_file` replacement is transactional, but an SD write can still fail. In
 that case the former saved calibration remains active and the app keeps an
@@ -121,3 +150,24 @@ Both in portrait and landscape, confirm the zero corner is visible, check normal
 ruler open long enough to verify auto-sleep suppression, then exit and confirm
 both orientation and normal auto-sleep return. A standard 85.60 mm card may be
 an extra reference only if its dimensions are independently known.
+
+In inch mode, compare the **1** and **2** marks to a real inch ruler and check
+the half/quarter/sixteenth subdivisions. Tap those intersections and check the
+X/Y readings, move the point, toggle Grid twice, and repeat after rotation.
+Check the menu's Grid control on X4 Classic. Existing calibration files should
+remain unchanged when moving guides or toggling the grid.
+
+The firmware's Screen Ruler LuaRunner fixture also runs the app-repository
+regressions in `tests/screen_ruler/interaction.lua`, covering inch positions,
+32-bit arithmetic bounds, measurements, grid toggles, and Clean-mode controls.
+
+For real-renderer touch/button captures from a firmware checkout, first build
+the matching supported simulator and run:
+
+```sh
+python3 apps/tests/screen_ruler/simulator.py --profile x4-pro-simulator \
+  --program .pio/build/x4-pro-simulator/program
+```
+
+Repeat with `x4-classic-simulator` and its matching program for button controls.
+The script creates a disposable virtual SD card and does not touch installed data.

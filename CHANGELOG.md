@@ -1,5 +1,22 @@
 # Changelog
 
+## Screen Ruler 0.2.0 — 2026-10-26
+
+### Added
+
+- Tap the measurement area to move horizontal and vertical guides with X/Y
+  distance readings in the selected unit, including in Clean mode.
+- Add a Grid toggle with calibrated metric or quarter-inch spacing, plus
+  physical-button menu controls for Grid and Clear measurement.
+
+### Fixed
+
+- Draw true whole-inch marks and half/quarter/eighth/sixteenth-inch divisions,
+  rather than relabelling metric ticks as inches.
+- Keep the physical zero corner fixed when switching units, and keep every
+  menu action visible in portrait and landscape. Measuring and toggling the
+  grid leave saved calibration untouched and require no periodic redraws.
+
 ## Quote sleep data — 2026-10-26
 
 ### Added

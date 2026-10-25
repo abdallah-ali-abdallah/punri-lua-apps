@@ -15,6 +15,10 @@ local retry_state = nil
 local retry_after_save = nil
 local retry_return_view = nil
 local calibration = nil
+-- Overlay tools are session-only: moving a guide or toggling the grid must
+-- never write to SD. Two coordinates and one flag suffice; no extra buffer.
+local grid_enabled = false
+local point_x, point_y = nil, nil
 
 local function request_update()
     if punri.request_update then punri.request_update() end
@@ -40,7 +44,11 @@ local function target_orientation(for_state)
 end
 
 local function apply_orientation(for_state)
-    if has_orientation() and punri.set_orientation then punri.set_orientation(target_orientation(for_state)) end
+    if has_orientation() and punri.set_orientation then
+        local target = target_orientation(for_state)
+        if punri.get_orientation and punri.get_orientation() ~= target then point_x, point_y = nil, nil end
+        punri.set_orientation(target)
+    end
 end
 
 local function update_sleep_policy()
@@ -76,6 +84,7 @@ local function persist(proposal, after_success)
 end
 
 local function cycle_mode(direction)
+    point_x, point_y = nil, nil
     local modes = { "horizontal", "vertical", "both" }
     local index = 1
     for i, value in ipairs(modes) do if state.mode == value then index = i end end
@@ -121,6 +130,7 @@ local function calibration_limits(axis)
 end
 
 local function make_calibration(axis, phase, prior_scale, verification_mm)
+    point_x, point_y = nil, nil
     -- Calibration always occurs in portrait logical coordinates, giving names
     -- X and Y a stable physical meaning. Landscape ruler drawing swaps scales.
     if has_orientation() and punri.set_orientation then punri.set_orientation("portrait") end
@@ -244,6 +254,7 @@ local function accept_length(text)
 end
 
 local function reset_calibration()
+    point_x, point_y = nil, nil
     local proposal = Calibration.copy(state)
     proposal.calibrated, proposal.x, proposal.y = false, nil, nil
     local automatic = Calibration.apply_device_profile(proposal)
@@ -266,15 +277,25 @@ local function menu_controls()
         "Orientation: " .. state.orientation,
         "Calibrate X and Y",
         "Reset calibration",
+        grid_enabled and "Grid: on" or "Grid: off",
+        "Clear measurement",
         "Close menu",
     }
     local controls = {}
+    -- Landscape uses two columns so every action stays visible and touchable.
+    local columns = w > h and 2 or 1
+    local width = (w - edge * 2 - (columns - 1) * 8) // columns
     for index, label in ipairs(labels) do
-        controls[index] = { x = edge, y = top + (index - 1) * (row_h + 6), w = w - edge * 2, h = row_h, label = label,
+        local column, row = (index - 1) % columns, (index - 1) // columns
+        controls[index] = { x = edge + column * (width + 8), y = top + row * (row_h + 6), w = width, h = row_h, label = label,
             selected = index == menu_index }
-        if controls[index].y + row_h > h - UI.toolbar_height() then break end
     end
     return controls
+end
+
+local function toggle_grid()
+    grid_enabled = not grid_enabled
+    request_update()
 end
 
 local function menu_activate(index, direction)
@@ -283,7 +304,9 @@ local function menu_activate(index, direction)
     elseif index == 3 then cycle_orientation()
     elseif index == 4 then start_calibration()
     elseif index == 5 then view = "reset_confirm"; update_sleep_policy(); request_update()
-    elseif index == 6 then view = "ruler"; update_sleep_policy(); request_update()
+    elseif index == 6 then toggle_grid()
+    elseif index == 7 then point_x, point_y = nil, nil; view = "ruler"; update_sleep_policy(); request_update()
+    elseif index == 8 then view = "ruler"; update_sleep_policy(); request_update()
     end
 end
 
@@ -302,6 +325,7 @@ function on_init()
     -- A Lua app can be initialized again after an activity transition. Do not
     -- retain a wizard, retry, or foreign-card notice from that earlier view.
     view, clean, menu_index, message = "ruler", false, 1, ""
+    grid_enabled, point_x, point_y = false, nil, nil
     foreign_state, retry_state, retry_after_save, retry_return_view, calibration = nil, nil, nil, nil, nil
     local device, width, height = physical_identity()
     state = Calibration.default(device, width, height)
@@ -338,7 +362,7 @@ function on_draw()
     punri.clear()
     if view == "ruler" then
         if state.calibrated then
-            UI.draw_ruler(state, clean)
+            UI.draw_ruler(state, clean, grid_enabled, point_x, point_y)
             if message ~= "" and not clean then
                 local _, h = UI.bounds()
                 punri.text(UI.safe_edge(), h - UI.toolbar_height() - 36, message, "small", "regular", "left", true)
@@ -438,7 +462,7 @@ function on_button(button, pressed)
         end
     elseif view == "menu" then
         if button == "left" then menu_index = math.max(1, menu_index - 1); request_update()
-        elseif button == "right" then menu_index = math.min(6, menu_index + 1); request_update()
+        elseif button == "right" then menu_index = math.min(8, menu_index + 1); request_update()
         elseif button == "up" or button == "page_back" then menu_activate(menu_index, -1)
         elseif button == "down" or button == "page_forward" then menu_activate(menu_index, 1)
         elseif button == "confirm" then menu_activate(menu_index, 1)
@@ -472,16 +496,25 @@ function on_tap(x, y)
         if state.calibrated then
             if clean then
                 local exit = UI.clean_exit_control()
-                if punri.in_rect(x, y, exit.x, exit.y, exit.w, exit.h) then exit_app() end
-                return
+                if punri.in_rect(x, y, exit.x, exit.y, exit.w, exit.h) then exit_app(); return end
+            else
+                local action = UI.hit(UI.toolbar_controls(), x, y)
+                if action == 1 then cycle_mode(1)
+                elseif action == 2 then cycle_units(1)
+                elseif action == 3 then start_calibration()
+                elseif action == 4 then cycle_orientation()
+                elseif action == 5 then toggle_grid()
+                elseif action == 6 then
+                    clean = true; point_x, point_y = nil, nil; update_sleep_policy(); request_update()
+                elseif action == 7 then exit_app()
+                end
+                if action then return end
             end
-            local action = UI.hit(UI.toolbar_controls(), x, y)
-            if action == 1 then cycle_mode(1)
-            elseif action == 2 then cycle_units(1)
-            elseif action == 3 then start_calibration()
-            elseif action == 4 then cycle_orientation()
-            elseif action == 5 then clean = true; update_sleep_policy(); request_update()
-            elseif action == 6 then exit_app()
+            local left, top, right, bottom = UI.ruler_bounds(state, clean)
+            if x >= left and x < right and y >= top and y < bottom then
+                point_x, point_y = x, y
+                set_message("")
+                request_update()
             end
         else
             local w, h = UI.bounds()

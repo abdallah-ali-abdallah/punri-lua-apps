@@ -23,13 +23,24 @@ are intentional PUNRI compatibility paths, not a different firmware product.
 
 - Select **+ Add task**, enter a title and activate the keyboard's **Save** key.
 - Select a task to mark it done/open, edit its title or delete it.
+- Select **Quick actions**, just below **+ Add task**, for **Clear all**,
+  **Mark all complete**, or **Mark all in progress** (uncheck all tasks).
+  These actions affect the whole list, including tasks hidden by a filter.
+  On X4 Classic, select this row with Left/Right and Confirm; touch devices can tap it.
+- The counter above the list shows the completion percentage (rounded to the
+  nearest whole percent), checked count and unchecked count across all tasks.
+  An empty list shows **0% complete | 0 checked | 0 unchecked**.
 - Deleting asks for confirmation; **Keep it** is selected by default.
+  **Clear all** also asks for confirmation, with **Keep tasks** selected by default.
 - Change **All / Open / Done** using the side/page buttons, or tap the filter
   label on touch devices. An open task added in the Done view remains in All/Open.
 - Limits: 80 tasks; 160 UTF-8 bytes per title.
 
 Tasks are saved transactionally after each committed addition, edit, completion
-change or deletion. There are no writes while navigating or typing.
+change or deletion. A bulk change saves once, not once per task; failed saves
+restore the previous list and completion flags so the same action can be retried.
+There are no writes while navigating, typing or selecting a bulk action that
+would not change any tasks.
 
 ## Notepad
 
@@ -143,8 +154,8 @@ The apps add **no compiled firmware code or always-on task**: scripts, icons
 and save files live on SD, and their Lua state is released by the existing app
 lifecycle. Package sizes exclude the editable `icon.png` sources.
 
-A freshly built X4 Classic simulator, using the normal 2 MB Lua budget and a
-small measurement callback, reported these live Lua allocations:
+The initial package baseline, sampled in an X4 Classic simulator using the
+normal 2 MB Lua budget and a small measurement callback, was:
 
 | App | Package bytes | Fixture | After init | After first draw |
 | --- | ---: | --- | ---: | ---: |
@@ -157,18 +168,35 @@ physical internal-RAM/PSRAM usage or largest-free-block measurements. The
 native suite additionally exercises maximum editor and collection limits.
 No performance or hardware memory-headroom claim follows from these samples.
 
+With Quick actions and completion counts, the Todo and Notepad package sizes
+are 29,299 and 29,294 bytes respectively (3,455 extra SD bytes per package).
+The shared organizer remains identical; the new controls are enabled only for
+Todo. A matched X4 Classic simulator comparison with 80 titles of 160 bytes
+reported Todo at 117 KB before / 126 KB after the update at init, and 106 KB
+before / 115 KB after the update at first draw. These are sampled live Lua
+allocations, not peaks or physical heap measurements. The extra Lua helpers and
+labels are released with the app; no firmware code or background task is added.
+Bulk completion temporarily retains at most 80 changed indices for rollback;
+clearing retains the original collection reference until the SD save succeeds.
+
 ## Hardware acceptance
 
 - **X4 Classic:** create/edit tasks and notes using buttons only; move between
   keyboard rows with page buttons; check filters, long lists and note pages.
 - **Sticky / X4 Pro:** perform the same flows with touch only, including visible
   Cancel/Back/Exit when Back swipe is disabled, and both orientations.
+- Create mixed checked/unchecked tasks and confirm the counter stays the same
+  when switching All/Open/Done filters. Test both bulk completion actions from
+  filtered views; restart and confirm all flags persist. Cancel **Clear all**
+  first, then confirm it and verify the empty-list counter after restarting.
 - Create a task, mark it done, restart the device and confirm it remains done.
   Save a multiline note, restart, and confirm its title and text remain intact.
 - Export twice, mount the SD card and inspect both `.txt` files. Delete the note
   and confirm the exports still exist.
 - With a write-protected or full test card, confirm Save reports an SD error,
   keeps the old data, and succeeds after restoring write access and retrying.
+  Test this for **Mark all complete**, **Mark all in progress** and **Clear all**
+  too; the counter and task states must remain unchanged after a failed save.
   Back up data before testing deliberate power interruption or corruption.
 - Play two-player X/O wins and a draw; verify New game and occupied-square
   rejection. Try all opening moves against the device.

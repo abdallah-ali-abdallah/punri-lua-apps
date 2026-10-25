@@ -4,6 +4,7 @@ local editor = punri.dofile("text_editor.lua")
 local MAGIC = "PUNRI_ORGANIZER_1\n"
 local MAX_FILE = 32768
 local FILTERS = {"All tasks", "Open tasks", "Done tasks"}
+local QUICK_ACTIONS = {"Clear all", "Mark all complete", "Mark all in progress", "Back"}
 
 return function(config)
     local tasks = config.tasks
@@ -13,7 +14,7 @@ return function(config)
     local selected, active, menu_selected, filter, note_page = 1, 0, 1, 1, 1
     local screen, edit_kind, edit_return, status = "list", "", "list", ""
     local w, h, margin, top, bottom, row_h, per_page, list_top, first = 0, 0, 0, 0, 0, 0, 0, 0, 1
-    local note_next, read_error = 1, false
+    local note_next, read_error, completion = 1, false, ""
     local actions = tasks and {"Mark done / open", "Edit task", "Delete task", "Back"} or
         {"Edit text", "Rename", "Export .txt", "Delete note", "Back"}
 
@@ -24,17 +25,24 @@ return function(config)
         top = m.top_padding + m.header_height + 12
         bottom = h - m.button_hints_height - 12
         row_h = math.max(48, punri.line_height("ui12") + 20)
-        list_top = top + 44
+        list_top = top + (tasks and screen == "list" and 80 or 44)
         per_page = math.max(1, math.floor((bottom - list_top - 32) / row_h))
         first = math.floor((selected - 1) / per_page) * per_page + 1
     end
 
     local function rebuild()
-        visible = {0} -- The first row always adds a new item.
+        visible = tasks and {0, -1} or {0} -- Add item, then task-wide Quick actions.
+        local checked = 0
         for i, record in ipairs(records) do
+            if record.done then checked = checked + 1 end
             if not tasks or filter == 1 or (filter == 2 and not record.done) or (filter == 3 and record.done) then
                 visible[#visible + 1] = i
             end
+        end
+        if tasks then
+            -- Count the whole collection, not just the current filter; cache the label between changes.
+            local percent = #records > 0 and math.floor(checked * 100 / #records + 0.5) or 0
+            completion = string.format("%d%% complete | %d checked | %d unchecked", percent, checked, #records - checked)
         end
         selected = math.max(1, math.min(selected, #visible))
     end
@@ -189,6 +197,51 @@ return function(config)
         rebuild()
     end
 
+    local function mark_all(done)
+        if #records == 0 then status = "No tasks to change"; return end
+        -- At most 80 indices, only during a bulk change; keep mixed flags recoverable if SD saving fails.
+        local changed = {}
+        for i, record in ipairs(records) do
+            if record.done ~= done then
+                changed[#changed + 1] = i
+                record.done = done
+            end
+        end
+        if #changed > 0 then
+            if not persist() then
+                for _, i in ipairs(changed) do records[i].done = not done end
+                return
+            end
+        else
+            status = done and "All tasks already complete" or "All tasks already in progress"
+        end
+        screen = "list"
+        rebuild()
+    end
+
+    local function activate_quick()
+        if menu_selected == 1 then
+            if #records == 0 then status = "No tasks to clear"
+            else screen, menu_selected = "clear", 1 end
+        elseif menu_selected == 2 then mark_all(true)
+        elseif menu_selected == 3 then mark_all(false)
+        else screen = "list" end
+    end
+
+    local function clear_records()
+        -- Swap the collection instead of copying every task; retain the original until saving succeeds.
+        local old = records
+        records = {}
+        if not persist() then records = old; return end
+        active, selected, screen = 0, 1, "list"
+        rebuild()
+    end
+
+    local function menu_count()
+        if screen == "delete" or screen == "clear" then return 2 end
+        return screen == "quick" and #QUICK_ACTIONS or #actions
+    end
+
     local function move(delta, count)
         menu_selected = (menu_selected - 1 + delta) % count + 1
     end
@@ -250,19 +303,34 @@ return function(config)
             local label = tasks and FILTERS[filter] .. (punri.has_touch() and " (tap to filter)" or " (side: filter)") or
                 "Select a note to read or edit"
             punri.text(label_x, top + 6, editor.clip(label, w - margin - label_x, "small"), "small")
+            if tasks then punri.text(margin, top + 44, completion, "small") end
             for i = first, math.min(#visible, first + per_page - 1) do
                 local index = visible[i]
                 local label = tasks and "+ Add task" or "+ New note"
-                if index ~= 0 then
+                if index == -1 then label = "Quick actions"
+                elseif index ~= 0 then
                     local r = records[index]
                     label = tasks and ((r.done and "[x] " or "[ ] ") .. r.title) or r.title
                 end
                 draw_row(list_top + (i - first) * row_h, label, i == selected)
             end
-            if #visible == 1 then
-                punri.centered_text(list_top + row_h + 18, tasks and "No tasks in this view" or "No notes yet", "small")
+            if #visible == (tasks and 2 or 1) then
+                punri.centered_text(list_top + row_h * #visible + 18,
+                    tasks and "No tasks in this view" or "No notes yet", "small")
             end
             punri.button_hints("Exit", "Select", "Up", "Down")
+        elseif screen == "quick" or screen == "clear" then
+            local label = screen == "clear" and ("Clear all " .. tostring(#records) .. " tasks?") or "Quick actions"
+            punri.text(label_x, top + 6, label, "ui12", "bold")
+            if screen == "clear" then
+                draw_row(list_top, "Keep tasks", menu_selected == 1)
+                draw_row(list_top + row_h, "Clear all permanently", menu_selected == 2)
+            else
+                for i, label in ipairs(QUICK_ACTIONS) do
+                    draw_row(list_top + (i - 1) * row_h, label, i == menu_selected)
+                end
+            end
+            punri.button_hints("Back", "Select", "Up", "Down")
         elseif screen == "note" then
             note_layout()
             if punri.has_touch() then
@@ -308,6 +376,7 @@ return function(config)
                 if visible[selected] == 0 then
                     if #records >= max_count then status = "Item limit reached. Delete an item first."
                     else start_edit("new", "list") end
+                elseif visible[selected] == -1 then screen, menu_selected = "quick", 1
                 else open_record(visible[selected]) end
             elseif btn == "left" then selected = (selected - 2) % #visible + 1
             elseif btn == "right" then selected = selected % #visible + 1
@@ -324,14 +393,18 @@ return function(config)
             elseif btn == "left" or btn == "up" or btn == "page_back" then turn_page(-1)
             elseif btn == "right" or btn == "down" or btn == "page_forward" then turn_page(1) end
         else
-            local count = screen == "delete" and 2 or #actions
+            local count = menu_count()
             if btn == "back" then
-                if screen == "delete" then screen, menu_selected = "menu", 1
+                if screen == "clear" then screen, menu_selected = "quick", 1
+                elseif screen == "delete" then screen, menu_selected = "menu", 1
                 else screen = tasks and "list" or "note" end
             elseif btn == "left" or btn == "up" or btn == "page_back" then move(-1, count)
             elseif btn == "right" or btn == "down" or btn == "page_forward" then move(1, count)
             elseif btn == "confirm" then
-                if screen == "delete" then
+                if screen == "clear" then
+                    if menu_selected == 2 then clear_records() else screen, menu_selected = "quick", 1 end
+                elseif screen == "quick" then activate_quick()
+                elseif screen == "delete" then
                     if menu_selected == 2 then delete_record() else screen, menu_selected = "menu", 1 end
                 else activate_menu() end
             end
@@ -351,7 +424,8 @@ return function(config)
         if screen == "editor" then
             finish_edit(editor.tap(x, y))
         elseif screen == "list" then
-            if tasks and y < list_top and x >= margin and x < w - margin then filter = filter % 3 + 1; selected = 1; rebuild()
+            if tasks and y < top + 34 and x >= margin and x < w - margin then
+                filter = filter % 3 + 1; selected = 1; rebuild()
             elseif x >= margin and x < w - margin and y >= list_top then
                 local i = first + math.floor((y - list_top) / row_h)
                 if i <= #visible and i < first + per_page then selected = i; on_button("confirm", true) end
@@ -361,7 +435,7 @@ return function(config)
             elseif punri.in_rect(x, y, w - margin - 100, top, 100, 34) then screen, menu_selected = "menu", 1 end
         elseif x >= margin and x < w - margin and y >= list_top then
             local i = math.floor((y - list_top) / row_h) + 1
-            local count = screen == "delete" and 2 or #actions
+            local count = menu_count()
             if i <= count then menu_selected = i; on_button("confirm", true) end
         end
         punri.request_update()

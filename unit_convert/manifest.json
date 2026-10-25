@@ -1,0 +1,10 @@
+{
+  "id": "unit_convert",
+  "name": "Unit Convert",
+  "version": "1.0.0",
+  "author": "PUNRI",
+  "description": "Offline conversions for everyday length, mass, temperature, volume, speed and data units.",
+  "entry": "main.lua",
+  "min_api": 1,
+  "capabilities": ["buttons", "storage"]
+}

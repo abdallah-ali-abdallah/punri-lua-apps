@@ -1,5 +1,19 @@
 # Changelog
 
+## Unit Convert 1.0.0 — 2026-10-25
+
+### Added
+
+- Local-only unit conversion for length, mass, temperature, US customary volume, speed and binary/decimal data units.
+- Touch and X4 Classic button controls, an editable numeric keypad, unit pickers, Swap, and transactional restoration of unit choices.
+
+### Fixed
+
+- Rejects below-absolute-zero temperatures, negative data values, malformed or underflowing input, and unsafe 32-bit Lua conversion ranges instead of presenting a fabricated result.
+- Failed settings writes remain visible and retryable while the app is open.
+- Measured font alignment keeps labels, results and keypad text inside their controls in portrait and landscape layouts.
+- Touch devices expose visible Exit and picker Back controls; X4 Classic continues to use its physical footer.
+
 ## To-do List 1.1.0 — 2026-10-25
 
 ### Added

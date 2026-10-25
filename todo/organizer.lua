@@ -364,6 +364,13 @@ return function(config)
         punri.text(margin, bottom - 20, editor.clip(footer, w - margin * 2, "small"), "small")
     end
 
+    function on_keyboard(value, cancelled)
+        if screen ~= "editor" or read_error then return end
+        if not cancelled then editor.accept(value) end
+        finish_edit(cancelled and "cancel" or "save", value)
+        punri.request_update()
+    end
+
     function on_button(btn, pressed)
         if not pressed then return end
         if read_error then if btn == "back" then punri.exit() end; return end

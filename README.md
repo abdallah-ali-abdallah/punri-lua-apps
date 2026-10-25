@@ -189,6 +189,13 @@ function on_update()
 end
 ```
 
+### `on_keyboard(text, cancelled)` *(Optional Text Entry)*
+Called when a keyboard opened through `punri.keyboard()` closes. `cancelled`
+means Back/cancel (or failure to open the screen); `text` is empty on cancellation.
+The app decides whether and when to save successful input. It can request another
+keyboard from this callback. Input and update callbacks pause while entry is pending
+or open; the Lua state stays alive.
+
 ### `on_exit()` *(Optional)*
 Called right before the app terminates. Save final state or flush data:
 ```lua
@@ -226,6 +233,44 @@ In vertical menu lists (settings menus, grimoires, selection menus):
 ---
 
 ## The `punri.*` API Reference
+
+### Shared Firmware Keyboard
+
+Check `punri.has_feature("keyboard")` before using this additive API. Older
+firmware can continue using an app-packaged text editor.
+
+```lua
+local note = ""
+function edit_note()
+    if punri.has_feature("keyboard") then
+        -- title, initial text, maximum UTF-8 bytes (1–4096), multiline
+        local opened = punri.keyboard("Edit note", note, 4096, true)
+        if not opened then punri.log("Keyboard request rejected") end
+    end
+end
+
+function on_keyboard(text, cancelled)
+    if not cancelled then note = text end
+    punri.request_update()
+end
+```
+
+`punri.keyboard(title, initial_text, max_bytes, multiline)` queues the normal
+firmware keyboard and returns `true` if accepted. Defaults are empty initial text,
+256 bytes and single-line entry. Titles must be nonempty valid UTF-8, at most
+127 bytes; initial text must fit the limit and be valid UTF-8 without forbidden
+control characters (tab is allowed, newline only in multiline mode). Invalid or
+duplicate requests return `false`; initial text is never silently truncated.
+Only one keyboard may be pending/open at a time. Do not request it repeatedly
+from `on_draw()`; prefer `on_init()` or a user input callback.
+
+The screen uses **Settings → Keyboard Layouts** and the firmware's language
+switch key, grapheme-safe editing and RTL caret behavior. Current layouts are
+English, French, German, Spanish, Russian, Ukrainian, Belarusian, Kazakh, Hebrew
+and Arabic. Keyboard layouts are not equivalent to all UI translation languages;
+this API adds no IME or new layouts. Multiline entry adds a **↵** key; **OK**
+returns the text without saving it. The input preview follows the cursor without
+covering the keys. `smudge.keyboard` and `ink.keyboard` are compatibility aliases.
 
 ### Display & Refresh Control
 

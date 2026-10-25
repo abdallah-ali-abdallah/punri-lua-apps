@@ -612,7 +612,10 @@
       "files": [
         "manifest.json",
         "main.lua",
-        "icon.raw"
+        "icon.raw",
+        "stopwatch.lua",
+        "ui.lua",
+        "input.lua"
       ],
       "file_integrity": [
         {
@@ -622,13 +625,28 @@
         },
         {
           "path": "main.lua",
-          "size": 15846,
-          "sha256": "27c9d449b18e3f4d68752757e6bf239b6f0c9f66cf16e69a615638e163a68abb"
+          "size": 1727,
+          "sha256": "73605d3713c637ebf2f73d0cc92226e7de995869dd3fbe7d9d460bd85cc7ee92"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "71ceca4e4e4fc84a3157d01a6fdcdffb858a04d9c181f811a71ea4e0d1186f1d"
+        },
+        {
+          "path": "stopwatch.lua",
+          "size": 12215,
+          "sha256": "c3cd6b0e0bf6bb36145a26d7feddd428613a3f60d3ead88bb161200cb4ea48e9"
+        },
+        {
+          "path": "ui.lua",
+          "size": 14320,
+          "sha256": "c6548d3f18fd1699e309e8be57f23d2eeb67f4053e41b5c9e50c0e5da65c52e7"
+        },
+        {
+          "path": "input.lua",
+          "size": 2720,
+          "sha256": "e5a462272ab9db727adaa5c2d62a4bfea784c462e5e2447eb224bbd6b0a5cc5e"
         }
       ]
     },
@@ -1355,6 +1373,377 @@
           "path": "text_editor.lua",
           "size": 8021,
           "sha256": "8e8fb535241461661f9abb3f7907a078208d0c22ef01b0193bed4a4476d99863"
+        }
+      ]
+    },
+    {
+      "id": "daily_track",
+      "name": "Daily Track",
+      "version": "1.0.0",
+      "author": "PUNRI",
+      "description": "Offline daily habits and counters with bounded history, chains and CSV export.",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "calendar.lua",
+        "model.lua",
+        "storage.lua",
+        "ui.lua",
+        "input.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 274,
+          "sha256": "9a1e49e4f8b20811aeefdbee8198d18352f552ead30c244f0e8825133f3f2584"
+        },
+        {
+          "path": "main.lua",
+          "size": 16714,
+          "sha256": "277a58f5a5a56b2fdb7e503a02ae54af0a613909b9a47297d5a1f51c9dbcd7d8"
+        },
+        {
+          "path": "calendar.lua",
+          "size": 2802,
+          "sha256": "25e45c8208b5fbe904596deb37ba67d1a04a67935aed4a2837075893c3785e60"
+        },
+        {
+          "path": "model.lua",
+          "size": 7740,
+          "sha256": "7b18fd66c312a9880fe47d2fa930933ecba7b7136d2824c8c8f42aeaa7cef2a3"
+        },
+        {
+          "path": "storage.lua",
+          "size": 7913,
+          "sha256": "e2ab986c06c0ce91ce87b617dcd2518e67e22f8f67e794e04ae592d7d171a956"
+        },
+        {
+          "path": "ui.lua",
+          "size": 16651,
+          "sha256": "625585d821cdaa3ae86acff1a0f5bc62bb1b5639e696256ddf24c05cf748fe5a"
+        },
+        {
+          "path": "input.lua",
+          "size": 697,
+          "sha256": "481351ec0003bae839f87991c2f49d45067664cf8725aa01e1acbbb29ac87edb"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "d97c4b842aebf8a69cdf1746463b06e8338dbc25b633c15cf286c21dec21df82"
+        }
+      ]
+    },
+    {
+      "id": "qr_cards_share",
+      "name": "QR Cards Share",
+      "version": "0.1.0",
+      "author": "PUNRI Community",
+      "description": "Create offline QR cards for links, contacts, Wi-Fi, and emergency return details.",
+      "entry": "main.lua",
+      "min_api": 2,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "cards.lua",
+        "qr.lua",
+        "storage.lua",
+        "ui.lua",
+        "input.lua",
+        "icon.raw",
+        "LICENSES.md"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 293,
+          "sha256": "62de9647201620c74d5b8d090caf13715a5bf3680234e5ce70f7873bc1b5b639"
+        },
+        {
+          "path": "main.lua",
+          "size": 1001,
+          "sha256": "d1963545eaa505046dea4d4aac4fab6a5b195742306213ba0ec01c1a54d3bf44"
+        },
+        {
+          "path": "cards.lua",
+          "size": 7279,
+          "sha256": "2c08bd211323864155b840ef80616db0deb9aa04745f70a04a73ad4ca81d1cf0"
+        },
+        {
+          "path": "qr.lua",
+          "size": 16238,
+          "sha256": "7c51181dd61b52d49623d33f9daf7fe437c9d4ff66e6e90bc24c5952a7ac0e69"
+        },
+        {
+          "path": "storage.lua",
+          "size": 3682,
+          "sha256": "ac4444209ec42c5faebc896b0ec6a63fe6e8427474e1c08b7bcb8650bd702474"
+        },
+        {
+          "path": "ui.lua",
+          "size": 15968,
+          "sha256": "cf4011c0cc8b0106cd71cdd00e041e2708f2508a78fb828f2cd8d1ec276cad99"
+        },
+        {
+          "path": "input.lua",
+          "size": 10608,
+          "sha256": "33ae2fc2f67ad8e255bc1db25ec1bc96c3c6e7e8f4666cef85fbe9280b0f2654"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "079ef92e8cd675cc4848b46d37d7b395cbecae7631efe09e0a44486879094f54"
+        },
+        {
+          "path": "LICENSES.md",
+          "size": 1515,
+          "sha256": "fef27007799be7933e843ffc399b0ea610c3d6954b7124ae1c7d4d5913e566e1"
+        }
+      ]
+    },
+    {
+      "id": "unit_convert",
+      "name": "Unit Convert",
+      "version": "1.0.0",
+      "author": "PUNRI",
+      "description": "Offline conversions for everyday length, mass, temperature, volume, speed and data units.",
+      "entry": "main.lua",
+      "min_api": 1,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "units.lua",
+        "convert.lua",
+        "format.lua",
+        "ui.lua",
+        "input.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 287,
+          "sha256": "2a4df603e62244c48f47d2171b027f96e9f2d2e3af9bd4742e73a409f23f0411"
+        },
+        {
+          "path": "main.lua",
+          "size": 12501,
+          "sha256": "2cd02fc34da7ae8a961487177a0644fe07b00f38faabaa36760f5353e20d455d"
+        },
+        {
+          "path": "units.lua",
+          "size": 4054,
+          "sha256": "60205dafd2dee6cdc2581e5e06c95caab0a08b7185eee504f0cea1399b0f88cd"
+        },
+        {
+          "path": "convert.lua",
+          "size": 3192,
+          "sha256": "21ca4d55a41d81a007ac42f1c1e6843cbf3d499a20305e2e0e4141779d9bf8a5"
+        },
+        {
+          "path": "format.lua",
+          "size": 2901,
+          "sha256": "7a08caf45e86ded121895527a8b99dcb1230c495a44899c0efb9562b00342503"
+        },
+        {
+          "path": "ui.lua",
+          "size": 9131,
+          "sha256": "c4558939a35fdcff16bbd77141afd2f13f6b3faa9e453c807b5d0172686bb394"
+        },
+        {
+          "path": "input.lua",
+          "size": 1166,
+          "sha256": "2acb66b3eb47a4d9289aee223d835707737ccac02ba5f12dd0767d6fa9e13595"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "773eca0c9a9dc3571ba20def357cc05a1222bfc23c4f1c7636caa20ed6a17063"
+        }
+      ]
+    },
+    {
+      "id": "screen_ruler",
+      "name": "Screen Ruler",
+      "version": "0.1.0",
+      "author": "PUNRI contributors",
+      "description": "An offline calibrated screen ruler with independent physical X/Y scales.",
+      "entry": "main.lua",
+      "min_api": 3,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "ruler.lua",
+        "calibration.lua",
+        "ui.lua"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 283,
+          "sha256": "245e63f096a97907fcf7bc079c1731ed13fb3ce56f78f776f897267ef2195327"
+        },
+        {
+          "path": "main.lua",
+          "size": 22352,
+          "sha256": "3e5c74e0bf3212b802c4fee583977509745f071e2d14296b5ec960b2e39c8d7e"
+        },
+        {
+          "path": "ruler.lua",
+          "size": 3917,
+          "sha256": "604a6af1736d8708290ac84cd61d4f6af01de623ea12790f41988ee2ce3da057"
+        },
+        {
+          "path": "calibration.lua",
+          "size": 5894,
+          "sha256": "afb5dfeca456b7703e0124df6f344c3d128bee7884c903e8a2460bc80409b265"
+        },
+        {
+          "path": "ui.lua",
+          "size": 12397,
+          "sha256": "5eae1950b4bbf842a2a8d08056dfdd763effb72c079061e538907b72736ca81b"
+        }
+      ]
+    },
+    {
+      "id": "world_clock",
+      "name": "World Clock",
+      "version": "0.1.0",
+      "author": "PUNRI contributors",
+      "description": "Offline world times with bounded IANA timezone data.",
+      "entry": "main.lua",
+      "min_api": 3,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "time_math.lua",
+        "zones.lua",
+        "cities.lua",
+        "map.lua",
+        "ui.lua",
+        "input.lua",
+        "zones.txt",
+        "world.raw",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 261,
+          "sha256": "1a677b353aebf4922148ad7234ddca019a5592a8128c1412f56a38d79b616489"
+        },
+        {
+          "path": "main.lua",
+          "size": 25525,
+          "sha256": "92742e1504b4b1db7bc53484beecfe998f45c2c6616bdf5bf6287a4cb294c737"
+        },
+        {
+          "path": "time_math.lua",
+          "size": 4559,
+          "sha256": "11514561b8ba07e9ab0549321b56b8528d0c50e4b5dbd3b3bad2d591e2137d2c"
+        },
+        {
+          "path": "zones.lua",
+          "size": 2067,
+          "sha256": "98ab7dffc22b8a38431eb647069dda88a72e6ae6aa380c62f3e390f936fcbefc"
+        },
+        {
+          "path": "cities.lua",
+          "size": 2110,
+          "sha256": "0f2ae715eb3e1f2e4e7f4e65b081c2d4e70f7811ee1b4aba6fefebdcbcda6c1a"
+        },
+        {
+          "path": "map.lua",
+          "size": 1545,
+          "sha256": "4f568fe19f2d433b6a45a143a5368880bfc60eb5732754f2b67cb58630003bdf"
+        },
+        {
+          "path": "ui.lua",
+          "size": 6598,
+          "sha256": "c7c95aa5c2bb15ebed4f4b92c6a845e34f9255f57d649ba3a88229617d4745d5"
+        },
+        {
+          "path": "input.lua",
+          "size": 603,
+          "sha256": "dc67f00a6c017daf862e306b3e19a1eb510c0bfb219d58571789ef9cc2b2318e"
+        },
+        {
+          "path": "zones.txt",
+          "size": 5318,
+          "sha256": "4852e9310ae769903983d8f65dbf144e7e1f227a6dfe02fbf1ae92ddbe99324a"
+        },
+        {
+          "path": "world.raw",
+          "size": 5184,
+          "sha256": "c057ae62e33409228a5014b3656493eb85c6d1896899cc2a81d4fe9c17ec76ae"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "df3d0d19e37012184053f3960aa42aa6b75e0c3137a1fb43426c589c071c66d7"
+        }
+      ]
+    },
+    {
+      "id": "bluetooth_page_turner",
+      "name": "Bluetooth Page Turner",
+      "version": "0.1.0",
+      "author": "PUNRI",
+      "description": "A foreground Bluetooth HID keyboard remote for X4 Pro readers.",
+      "entry": "main.lua",
+      "min_api": 4,
+      "capabilities": [
+        "buttons"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "controller.lua",
+        "ui.lua"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 267,
+          "sha256": "5429096b250aae4bbe326ff366a311674c30489d2db4eaa86cf56986a9e44786"
+        },
+        {
+          "path": "main.lua",
+          "size": 1374,
+          "sha256": "932297ad45e866dc3ca0137e8a8d431f2ce93e1c151a6433364dbaae163ac852"
+        },
+        {
+          "path": "controller.lua",
+          "size": 6093,
+          "sha256": "7327af97b70d2bd42e5dd379f1c4e7d7e4cdac7a460c8a43a9d49d3f452101a1"
+        },
+        {
+          "path": "ui.lua",
+          "size": 5826,
+          "sha256": "7e4e87a91891c7d9b126580cd4a389217614fe01b7008882a6824fff566455ea"
         }
       ]
     }

@@ -8,8 +8,8 @@ screen awake.
 
 Copy the complete `unit_convert/` folder to
 `/.crosssmudge/applications/unit_convert/` on the SD card (or the documented
-legacy application path). It is deliberately a local package: it is not added
-to `catalog.json` by this change.
+legacy application path). It is listed in the local `catalog.json`;
+publishing the updated catalog is a separate step.
 
 On a touch device, tap a category, **From**, **To**, **Swap**, or a key. The
 keypad includes a visible **Exit** key, and each picker includes a visible

@@ -2,8 +2,8 @@
 
 World Clock is an offline, minute-resolution reference app for answering
 “what time is it in another city?”. It is deliberately not a desk clock,
-alarm, weather app, or network client. This folder is a local package preview:
-it is not registered in `catalog.json` and has not been published.
+alarm, weather app, or network client. This local package preview is listed in
+`catalog.json`; publishing the updated catalog is a separate step.
 
 ## Install locally
 

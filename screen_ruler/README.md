@@ -12,9 +12,9 @@ Copy the complete `screen_ruler/` folder to:
 /.crosssmudge/applications/screen_ruler/
 ```
 
-It is a local package only. This change does not add it to `catalog.json`,
-publish it, or modify an installed application. The firmware will discover its
-`manifest.json` from the SD card.
+It is listed in the local `catalog.json`; publishing the updated catalog is a
+separate step. The firmware also discovers its `manifest.json` when the package
+is copied directly to the SD card.
 
 ## First calibration
 

@@ -2,8 +2,8 @@
 
 This is an in-place improvement of the existing `stopwatch` app. Its ID,
 `stopwatch.dat` filename and legacy file grammar remain unchanged. It is a
-local development build: it has not changed `catalog.json`, the published
-version, or any App Store record.
+local development build: `catalog.json` includes all required Lua modules,
+while the version remains unchanged. Remote publication is a separate step.
 
 ## Install locally
 

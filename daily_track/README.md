@@ -1,7 +1,7 @@
 # Daily Track
 
-Daily Track is a local, offline app for daily habits and counters. It is a
-local package only: it is **not** listed in the App Store catalog.
+Daily Track is an offline app for daily habits and counters. It is listed in
+the local `catalog.json`; publishing the updated catalog is a separate step.
 
 ## Install
 

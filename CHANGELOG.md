@@ -15,6 +15,17 @@
 
 ## Unreleased
 
+### Added
+
+- Register Daily Track, QR Cards Share, Unit Convert, Screen Ruler, World Clock,
+  and Bluetooth Page Turner in the local catalog with their runtime modules,
+  assets and current API requirements. QR Cards Share includes its license notice.
+
+### Fixed
+
+- Include all Stopwatch modules and refresh package sizes and SHA-256 records
+  for every catalog entry. Existing application versions are preserved.
+
 ### Removed
 
 - Remove Life Counter from the source collection and local catalog. Existing
@@ -42,7 +53,7 @@
 
 ### Verification limits
 
-- Desktop replay is explicitly simulated. Physical pairing, reconnect, reader mappings, sleep/wake and Bluetooth range require X4 Pro hardware acceptance; this app is not listed in the App Store catalog.
+- Desktop replay is explicitly simulated. Physical pairing, reconnect, reader mappings, sleep/wake and Bluetooth range require X4 Pro hardware acceptance. The app is listed in the local catalog and requires firmware API 4; remote publication is a separate step.
 
 ## QR Cards Share 0.1.0 — 2026-10-25 (local, unpublished)
 

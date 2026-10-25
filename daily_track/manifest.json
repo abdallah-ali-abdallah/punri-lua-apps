@@ -1,0 +1,10 @@
+{
+  "id": "daily_track",
+  "name": "Daily Track",
+  "version": "1.0.0",
+  "author": "PUNRI",
+  "description": "Offline daily habits and counters with bounded history, chains and CSV export.",
+  "entry": "main.lua",
+  "min_api": 1,
+  "capabilities": ["buttons", "storage"]
+}

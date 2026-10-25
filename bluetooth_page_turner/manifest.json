@@ -1,7 +1,7 @@
 {
   "id": "bluetooth_page_turner",
   "name": "Bluetooth Page Turner",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "PUNRI",
   "description": "A foreground Bluetooth HID keyboard remote for X4 Pro readers.",
   "entry": "main.lua",

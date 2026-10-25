@@ -1,5 +1,15 @@
 # Changelog
 
+## App icons 0.1.1 — 2026-10-26
+
+### Fixed
+
+- Add missing monochrome icons for Screen Ruler, Bluetooth Page Turner and
+  Radio Scanner, and include them in their App Store packages. Patch versions
+  let existing installations receive the icons through Update.
+- Audit all 26 Lua applications: each now provides a nonblank 32×32 icon,
+  and all 25 catalog packages include the icon with its size and SHA-256.
+
 ## Calculations 0.1.0 — 2026-10-26
 
 ### Added

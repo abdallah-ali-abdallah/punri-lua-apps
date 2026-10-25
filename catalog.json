@@ -1263,7 +1263,7 @@
     {
       "id": "radio_scanner",
       "name": "Radio Scanner",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "PUNRI contributors",
       "description": "Foreground BLE and Wi-Fi discovery with advertisement inspection",
       "entry": "main.lua",
@@ -1274,18 +1274,24 @@
       ],
       "files": [
         "manifest.json",
-        "main.lua"
+        "main.lua",
+        "icon.raw"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 201,
-          "sha256": "2bde125a38c5d52d897b729905dd344f6c73f28c902d84deb9321d5a9dafdf45"
+          "sha256": "7b8873a70e8372917375ad6a05b30f6b2c8dd851ee4772f59573eabe0703c951"
         },
         {
           "path": "main.lua",
           "size": 3634,
           "sha256": "622dd2f0c8ef5a60a8d7025d3670d537f53a24648f689db63730f26977a86072"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "b5e5ada2bea32875c14f924ae9d55ac6ccbc7ba26122ab76a0eeeb6f8154b9d1"
         }
       ]
     },
@@ -1580,7 +1586,7 @@
     {
       "id": "screen_ruler",
       "name": "Screen Ruler",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "PUNRI contributors",
       "description": "An offline calibrated screen ruler with independent physical X/Y scales.",
       "entry": "main.lua",
@@ -1594,13 +1600,14 @@
         "main.lua",
         "ruler.lua",
         "calibration.lua",
-        "ui.lua"
+        "ui.lua",
+        "icon.raw"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 283,
-          "sha256": "245e63f096a97907fcf7bc079c1731ed13fb3ce56f78f776f897267ef2195327"
+          "sha256": "4e74a779a29513d420145c25b9cff56649764189f0330a7fb15be93205a74c84"
         },
         {
           "path": "main.lua",
@@ -1621,6 +1628,11 @@
           "path": "ui.lua",
           "size": 12397,
           "sha256": "5eae1950b4bbf842a2a8d08056dfdd763effb72c079061e538907b72736ca81b"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "9c539c0de17c519f45c2a3d1d8a30c6a24b69684f3759bc38a2e6bb335eace66"
         }
       ]
     },
@@ -1710,7 +1722,7 @@
     {
       "id": "bluetooth_page_turner",
       "name": "Bluetooth Page Turner",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "PUNRI",
       "description": "A foreground Bluetooth HID keyboard remote for X4 Pro readers.",
       "entry": "main.lua",
@@ -1722,13 +1734,14 @@
         "manifest.json",
         "main.lua",
         "controller.lua",
-        "ui.lua"
+        "ui.lua",
+        "icon.raw"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 267,
-          "sha256": "5429096b250aae4bbe326ff366a311674c30489d2db4eaa86cf56986a9e44786"
+          "sha256": "d24b2d0803dc087d4b91491e1a6d074d82b6e2c14ca5defb5c50325967712f10"
         },
         {
           "path": "main.lua",
@@ -1744,6 +1757,11 @@
           "path": "ui.lua",
           "size": 5826,
           "sha256": "7e4e87a91891c7d9b126580cd4a389217614fe01b7008882a6824fff566455ea"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "748f480087d794400f8c6ff19779616e808a42202b11ae6bc1b3628d1644ef8f"
         }
       ]
     }

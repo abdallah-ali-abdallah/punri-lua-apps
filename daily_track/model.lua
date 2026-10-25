@@ -34,9 +34,13 @@ function model.find_day(tracker, date)
     return nil
 end
 
+function model.history_start(active_date)
+    return calendar.add_days(active_date, -(model.MAX_DAYS - 1))
+end
+
 local function sort_and_trim_days(tracker, active_date)
     table.sort(tracker.days, function(a, b) return a.date < b.date end)
-    local earliest = calendar.add_days(active_date, -(model.MAX_DAYS - 1))
+    local earliest = model.history_start(active_date)
     local kept = 1
     for _, day in ipairs(tracker.days) do
         if day.date >= earliest and day.date <= active_date then
@@ -191,10 +195,25 @@ end
 
 function model.period_stats(tracker, active_date)
     if tracker.kind ~= "counter" then return nil end
-    local first = calendar.add_days(active_date, -(model.MAX_DAYS - 1))
+    local first = model.history_start(active_date)
     local total, recorded = 0, 0
     for _, day in ipairs(tracker.days) do
         if day.date >= first and day.date <= active_date then
+            total, recorded = total + day.value, recorded + 1
+        end
+    end
+    return total, recorded, recorded > 0 and math.floor(total / recorded) or nil
+end
+
+function model.month_stats(tracker, month, active_date)
+    if tracker.kind ~= "counter" then return nil end
+    local first, last = calendar.month_start(month), calendar.month_end(month)
+    if not first or not last then return nil end
+    if calendar.compare(first, active_date) == 1 then return 0, 0, nil end
+    if calendar.compare(last, active_date) == 1 then last = active_date end
+    local total, recorded = 0, 0
+    for _, day in ipairs(tracker.days) do
+        if day.date >= first and day.date <= last then
             total, recorded = total + day.value, recorded + 1
         end
     end

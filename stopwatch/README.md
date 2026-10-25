@@ -10,7 +10,7 @@ while the version remains unchanged. Remote publication is a separate step.
 Copy the complete directory, including every Lua module, to:
 
 ```text
-/.crosssmudge/applications/stopwatch/
+/.punri/applications/stopwatch/
 ```
 
 Keep `manifest.json`, `main.lua`, `stopwatch.lua`, `ui.lua`, `input.lua`, and
@@ -54,7 +54,7 @@ callback from applying the action twice.
 
 ## Saved session and failures
 
-`/.smudge/saved_data/stopwatch/stopwatch.dat` retains the existing format:
+`/.punri/saved_data/stopwatch/stopwatch.dat` retains the existing format:
 
 ```text
 <was-running:0-or-1>;<elapsed-ms>

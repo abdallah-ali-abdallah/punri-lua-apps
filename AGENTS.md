@@ -6,7 +6,8 @@ the firmware repository, not here.
 
 - Application folders and `catalog.json` live at the repository root.
 - Preserve application IDs, versions, upstream credits, assets and saved-data
-  compatibility. Do not bump versions as part of a repository move.
+  compatibility through firmware storage migration. Do not bump versions as
+  part of a repository move.
 - Read `README.md` and the relevant application before editing. Radio apps
   require firmware API level 3; see `docs/radio-api.md`.
 - After an explicitly authorized catalog update, regenerate exact file sizes

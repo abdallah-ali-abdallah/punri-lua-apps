@@ -11,6 +11,6 @@ Per-application authors, source comments, assets and any asset-specific notices
 are retained. The repository license does not override third-party asset
 licenses.
 
-Moving the packages does not rename released Lua API aliases or device data
-paths. Installed applications remain in `/.crosssmudge/applications/`, with
-`/.smudge/applications/` retained as a compatibility path.
+Released Lua API aliases and original application data formats remain readable.
+PUNRI migrates installed applications to `/.punri/applications/` and private
+saved files to `/.punri/saved_data/` during startup without discarding their data.

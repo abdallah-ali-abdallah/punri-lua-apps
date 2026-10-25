@@ -9,9 +9,9 @@ are `1.0.0`; they have **not been added to the published catalog or pushed**.
 Copy these complete directories to the card:
 
 ```text
-/.crosssmudge/applications/todo/
-/.crosssmudge/applications/notepad/
-/.crosssmudge/applications/tictactoe/
+/.punri/applications/todo/
+/.punri/applications/notepad/
+/.punri/applications/tictactoe/
 ```
 
 Keep `manifest.json`, the entry script, every Lua module and `icon.raw` together.
@@ -89,9 +89,9 @@ with the typed value for another Save attempt. Do not exit before retrying.
 ## Where SD data lives
 
 ```text
-/.smudge/saved_data/todo/items.dat
-/.smudge/saved_data/notepad/items.dat
-/.smudge/saved_data/notepad/exports/note_001.txt
+/.punri/saved_data/todo/items.dat
+/.punri/saved_data/notepad/items.dat
+/.punri/saved_data/notepad/exports/note_001.txt
 ```
 
 Use `punri.write_file`, rather than `punri.save`, because only `write_file`

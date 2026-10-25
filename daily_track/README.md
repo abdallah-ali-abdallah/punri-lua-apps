@@ -6,9 +6,8 @@ the local `catalog.json`; publishing the updated catalog is a separate step.
 ## Install
 
 Copy this entire `daily_track` folder to
-`/.crosssmudge/applications/daily_track/` on the SD card, then open **Daily
-Track** from Applications. Existing firmware also recognizes the legacy
-`/.smudge` location.
+`/.punri/applications/daily_track/` on the SD card, then open **Daily
+Track** from Applications. Earlier installations migrate automatically.
 
 ## Controls
 

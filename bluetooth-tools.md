@@ -16,7 +16,7 @@ publication still require a separate explicit release instruction.
 Copy the complete folder to:
 
 ```text
-/.crosssmudge/applications/bluetooth_analyzer/
+/.punri/applications/bluetooth_analyzer/
 ```
 
 Required files are `manifest.json`, `main.lua`, `radio_app.lua`, `radio_scan.lua`,
@@ -88,9 +88,9 @@ may replay BLE. Scan-start and completion errors stay visible in Graph and Info;
 ## SD and bounded resource use
 
 ```text
-/.smudge/saved_data/bluetooth_analyzer/last_scan.csv
-/.smudge/saved_data/bluetooth_analyzer/target.dat
-/.smudge/saved_data/bluetooth_analyzer/signal.csv
+/.punri/saved_data/bluetooth_analyzer/last_scan.csv
+/.punri/saved_data/bluetooth_analyzer/target.dat
+/.punri/saved_data/bluetooth_analyzer/signal.csv
 ```
 
 Target format is `PUNRI_BLE_TARGET_1`, address, type 0–3, then sanitized name on

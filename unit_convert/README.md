@@ -7,8 +7,8 @@ screen awake.
 ## Install and control
 
 Copy the complete `unit_convert/` folder to
-`/.crosssmudge/applications/unit_convert/` on the SD card (or the documented
-legacy application path). It is listed in the local `catalog.json`;
+`/.punri/applications/unit_convert/` on the SD card. Earlier installations
+migrate automatically. It is listed in the local `catalog.json`;
 publishing the updated catalog is a separate step.
 
 On a touch device, tap a category, **From**, **To**, **Swap**, or a key. The

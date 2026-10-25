@@ -15,6 +15,12 @@
 
 ## Unreleased
 
+### Changed
+
+- Document canonical PUNRI installation and private-save paths. Firmware moves
+  existing applications and saved data automatically; application IDs, versions
+  and Lua compatibility aliases are preserved.
+
 ### Added
 
 - Register Daily Track, QR Cards Share, Unit Convert, Screen Ruler, World Clock,

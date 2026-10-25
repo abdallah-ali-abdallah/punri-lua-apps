@@ -34,9 +34,9 @@ assume the firmware checkout; omit that prefix in a standalone app checkout.
 
 ## Architecture Overview
 
-- **Compatibility:** `punri.*` is the public API. Released `smudge.*` and `ink.*` scripts remain supported as aliases of the same table; existing applications and their saved data stay in place. The legacy SD directory names below are intentional.
+- **Compatibility:** `punri.*` is the public API. Released Lua table aliases remain supported. Existing applications and saved data migrate automatically to the canonical paths below.
 - **Engine:** Sandboxed Lua 5.4 runtime embedded within PUNRI firmware.
-- **Location on Device:** `/.crosssmudge/applications/<app_id>/` (fallback: `/.smudge/applications/<app_id>/`).
+- **Location on Device:** `/.punri/applications/<app_id>/`.
 - **Dynamic Discovery:** PUNRI discovers all installed applications on SD card startup and populates the **Applications** menu automatically.
 - **Zero-Flash Iteration:** Changes made to Lua scripts or assets on the SD card take effect immediately the next time the app is launched.
 
@@ -44,7 +44,7 @@ assume the firmware checkout; omit that prefix in a standalone app checkout.
 
 ## Application Directory Structure
 
-Every application lives in its own subdirectory inside `apps/` (or on device in `/.crosssmudge/applications/<app_id>/`):
+Every application lives in its own subdirectory inside `apps/` (or on device in `/.punri/applications/<app_id>/`):
 
 ```text
 apps/
@@ -276,7 +276,7 @@ English, French, German, Spanish, Russian, Ukrainian, Belarusian, Kazakh, Hebrew
 and Arabic. Keyboard layouts are not equivalent to all UI translation languages;
 this API adds no IME or new layouts. Multiline entry adds a **↵** key; **OK**
 returns the text without saving it. The input preview follows the cursor without
-covering the keys. `smudge.keyboard` and `ink.keyboard` are compatibility aliases.
+covering the keys. Released keyboard API aliases remain supported.
 
 ### Display & Refresh Control
 
@@ -446,7 +446,7 @@ PUNRI provides key-value persistence, full sandboxed file operations, and high-p
 
 - **`punri.save(key, value_string)`**\
   Persists a key-value string to the app's private SD storage
-  (`/.smudge/saved_data/<app_id>/<key>.dat`). Replacing an existing value is
+  (`/.punri/saved_data/<app_id>/<key>.dat`). Replacing an existing value is
   transactional: write, sync and close complete in a temporary file before the
   previous value is backed up and the new value is published. An interrupted
   replacement is recovered on the next access.
@@ -643,11 +643,11 @@ end
 
 ### Method 2: Direct SD Card Copy / USB Drive Mode
 1. Connect your device via USB Drive mode or insert the SD card into your PC.
-2. Copy your application folder into `/.crosssmudge/applications/<app_id>/`.
+2. Copy your application folder into `/.punri/applications/<app_id>/`.
 3. Eject the drive. Open **Applications** on your device to launch!
 
 ### Method 3: In the Native Simulator
-1. Place your application folder inside `apps/<app_id>/` in the repository (and mirror it to `fs_/.crosssmudge/applications/<app_id>/`).
+1. Place your application folder inside `apps/<app_id>/` in the repository (and mirror it to `fs_/.punri/applications/<app_id>/`).
 2. Build and launch the simulator:
    ```bash
    pio run -e x4-classic-simulator
@@ -664,7 +664,7 @@ end
 
 ## Submitting to the App Store
 
-PUNRI features an on-device **App Store** accessible directly over Wi-Fi. New settings and **Reset App Store to official** use `abdallah-ali-abdallah/punri-lua-apps`, branch `main`, catalog `catalog.json` (`https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/catalog.json`). The installer resolves the branch to an immutable commit before downloading. Saved settings matching the previous official firmware source migrate to this public repository; custom sources and the enabled/disabled choice remain unchanged. Installed applications and their data are not moved or deleted.
+PUNRI features an on-device **App Store** accessible directly over Wi-Fi. New settings and **Reset App Store to official** use `abdallah-ali-abdallah/punri-lua-apps`, branch `main`, catalog `catalog.json` (`https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/catalog.json`). The installer resolves the branch to an immutable commit before downloading. Saved settings matching the previous official firmware source migrate to this public repository; custom sources and the enabled/disabled choice remain unchanged. Installed applications and their data are preserved during storage migration.
 
 The following describes a separately authorized package publication workflow for the repository configured on the device. A local firmware rename does not authorize catalog edits, version bumps, commits or publication:
 
@@ -740,7 +740,7 @@ resolved package contents but does not replace the on-device repository trust
 warning.
 
 ### Step 4: Open a GitHub Pull Request
-1. Use the repository selected as the catalog source. The default PUNRI destination is [abdallah-ali-abdallah/punri-lua-apps](https://github.com/abdallah-ali-abdallah/punri-lua-apps). Upstream author credits and installed Lua compatibility paths remain unchanged.
+1. Use the repository selected as the catalog source. The default PUNRI destination is [abdallah-ali-abdallah/punri-lua-apps](https://github.com/abdallah-ali-abdallah/punri-lua-apps). Upstream author credits and installed Lua scripts remain compatible.
 2. Commit your new application folder (`<app_id>/...`) and your edit to the root `catalog.json` in that repository. In the firmware checkout, commit and push changes inside the `apps/` submodule before advancing its pinned commit.
 3. Submit a Pull Request with title `feat(apps): add <app_name>`.
 4. Follow that repository's review and release process. Availability depends on the source configured on each device; no PUNRI catalog publication occurs from a local change.

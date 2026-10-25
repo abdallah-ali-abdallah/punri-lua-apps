@@ -9,7 +9,7 @@ physical length.
 Copy the complete `screen_ruler/` folder to:
 
 ```text
-/.crosssmudge/applications/screen_ruler/
+/.punri/applications/screen_ruler/
 ```
 
 It is listed in the local `catalog.json`; publishing the updated catalog is a

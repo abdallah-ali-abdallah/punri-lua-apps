@@ -8,8 +8,8 @@ alarm, weather app, or network client. This local package preview is listed in
 ## Install locally
 
 Copy the runtime files below to
-`/.crosssmudge/applications/world_clock/` on the SD card (the legacy
-`/.smudge/applications/` path remains supported). Do not copy `tools/` or this
+`/.punri/applications/world_clock/` on the SD card. Earlier installations
+migrate automatically. Do not copy `tools/` or this
 README to the device:
 
 ```text

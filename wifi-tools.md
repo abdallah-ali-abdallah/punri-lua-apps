@@ -14,7 +14,7 @@ catalog publication or version bumps.
 Copy the complete `wifi_analyzer/` folder to:
 
 ```text
-/.crosssmudge/applications/wifi_analyzer/
+/.punri/applications/wifi_analyzer/
 ```
 
 The new entry loads `radio_app.lua`, `radio_scan.lua` and `radio_ui.lua` once.
@@ -86,9 +86,9 @@ readings and CSV preserve the actual measured values.
 ## SD persistence and compatibility
 
 ```text
-/.smudge/saved_data/wifi_analyzer/last_scan.csv
-/.smudge/saved_data/wifi_analyzer/target.dat
-/.smudge/saved_data/wifi_analyzer/signal.csv
+/.punri/saved_data/wifi_analyzer/last_scan.csv
+/.punri/saved_data/wifi_analyzer/target.dat
+/.punri/saved_data/wifi_analyzer/signal.csv
 ```
 
 The original Analyzer app ID and `last_scan.csv` path remain unchanged. Target
@@ -100,7 +100,7 @@ explicit failed-write retry; history is session-only unless exported.
 **Existing Signal Meter users:** its package, ID and files are retained. The
 combined app cannot read another app's private SD directory. To migrate a target,
 back up both directories and copy
-`/.smudge/saved_data/signal_meter/target.dat` to the Analyzer's `target.dat` while
+`/.punri/saved_data/signal_meter/target.dat` to the Analyzer's `target.dat` while
 both apps are closed. This is optional; selecting the AP again works as well.
 Old `signal_meter/signal.csv` exports are not moved or deleted. Installing the
 combined Analyzer does not automatically uninstall an existing Signal Meter.

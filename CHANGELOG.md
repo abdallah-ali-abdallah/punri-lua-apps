@@ -91,6 +91,9 @@
 
 ### Fixed
 
+- Daily Track now opens directly from a valid device date, displays each
+  month as a weekday-labelled calendar, provides larger month/navigation
+  controls, and keeps counter metadata clear of its action button.
 - Include all Stopwatch modules and refresh package sizes and SHA-256 records
   for every catalog entry. Existing application versions are preserved.
 

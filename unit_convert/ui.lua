@@ -2,6 +2,8 @@ local M = {}
 
 M.keys = {"7", "8", "9", "Del", "4", "5", "6", "Clear", "1", "2", "3", "+/-", "0", "."}
 local layout = {}
+local CATEGORY_COLUMNS = 3
+local CATEGORY_GAP = 4
 
 function M.key_count()
     return #M.keys + ((punri.has_touch and punri.has_touch()) and 1 or 0)
@@ -59,7 +61,7 @@ local function picker_row_height(l, count)
     return math.max(25, math.min(38, math.floor((l.picker_bottom - l.picker_y - 2) / count)))
 end
 
-function M.compute(width, height, metrics)
+function M.compute(width, height, metrics, category_count)
     local l = layout
     l.w, l.h = width, height
     l.left = metrics.content_side_padding or 12
@@ -67,12 +69,22 @@ function M.compute(width, height, metrics)
     l.content_w = l.right - l.left
     l.bottom = height - (metrics.button_hints_height or 40) - 3
     l.top = (metrics.top_padding or 0) + (metrics.header_height or 48) + 4
-    l.category_y, l.category_h = l.top, 27
-    l.input_y, l.input_h = l.category_y + l.category_h + 5, 40
-    l.from_y, l.row_h = l.input_y + l.input_h + 5, 32
-    l.swap_y, l.swap_h = l.from_y + l.row_h + 3, 25
+    l.category_columns = math.min(CATEGORY_COLUMNS, category_count or CATEGORY_COLUMNS)
+    l.category_rows = math.ceil((category_count or CATEGORY_COLUMNS) / l.category_columns)
+    l.category_gap = CATEGORY_GAP
+    l.category_col_w = math.floor((l.content_w - l.category_gap * (l.category_columns - 1)) / l.category_columns)
+
+    -- A landscape e-ink screen has to retain four keypad rows below these
+    -- larger category controls, so compact fields reclaim the needed height.
+    local compact = height <= 520
+    l.category_row_h = compact and 30 or 34
+    l.category_y = l.top
+    l.category_h = l.category_rows * l.category_row_h + (l.category_rows - 1) * l.category_gap
+    l.input_y, l.input_h = l.category_y + l.category_h + 5, compact and 36 or 40
+    l.from_y, l.row_h = l.input_y + l.input_h + 5, compact and 28 or 32
+    l.swap_y, l.swap_h = l.from_y + l.row_h + 3, compact and 23 or 25
     l.to_y = l.swap_y + l.swap_h + 3
-    l.result_y, l.result_h = l.to_y + l.row_h + 5, 43
+    l.result_y, l.result_h = l.to_y + l.row_h + 5, compact and 38 or 43
     l.key_gap = 4
     local usable = l.bottom - (l.result_y + l.result_h) - 10
     l.key_h = math.max(26, math.min(68, math.floor((usable - l.key_gap * 3) / 4)))
@@ -85,6 +97,24 @@ function M.compute(width, height, metrics)
     l.picker_y = l.top + 35
     l.picker_bottom = l.bottom
     return l
+end
+
+function M.category_rect(index)
+    local l = layout
+    local zero = index - 1
+    local column = zero % l.category_columns
+    local row = math.floor(zero / l.category_columns)
+    local x = l.left + column * (l.category_col_w + l.category_gap)
+    local width = column == l.category_columns - 1 and l.right - x or l.category_col_w
+    return x, l.category_y + row * (l.category_row_h + l.category_gap), width, l.category_row_h
+end
+
+function M.category_at(x, y, count)
+    for index = 1, count do
+        local cx, cy, cw, ch = M.category_rect(index)
+        if punri.in_rect(x, y, cx, cy, cw, ch) then return index end
+    end
+    return nil
 end
 
 function M.key_rect(index)
@@ -109,14 +139,12 @@ function M.draw_main(state)
     punri.clear()
     punri.header("Unit Convert", state.category.short)
 
-    local cat_w = math.floor(l.content_w / #state.categories)
     for index, category in ipairs(state.categories) do
-        local x = l.left + (index - 1) * cat_w
-        local width = (index == #state.categories) and (l.right - x) or cat_w - 2
+        local x, y, width, height = M.category_rect(index)
         local selected = category.id == state.category.id
-        if selected then punri.rect_dither(x, l.category_y, width, l.category_h, false) end
-        punri.rect(x, l.category_y, width, l.category_h, false, selected and 2 or 1)
-        draw_in_rect(x, l.category_y, width, l.category_h, category.short, "small", selected and "bold" or "regular", "center")
+        if selected then punri.rect_dither(x, y, width, height, false) end
+        punri.rect(x, y, width, height, false, selected and 2 or 1)
+        draw_in_rect(x, y, width, height, category.short, "ui10", selected and "bold" or "regular", "center")
     end
 
     draw_field(l.left, l.input_y, l.content_w, l.input_h, "Input", state.input == "" and "Tap keypad" or state.input,

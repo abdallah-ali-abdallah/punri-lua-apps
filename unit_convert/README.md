@@ -12,9 +12,10 @@ migrate automatically. It is listed in the local `catalog.json`;
 publishing the updated catalog is a separate step.
 
 On a touch device, tap a category, **From**, **To**, **Swap**, or a key. The
-keypad includes a visible **Exit** key, and each picker includes a visible
-**Back** button. A touch tap is handled through `on_tap` only, which avoids
-duplicate conversion input in the current PUNRI activity bridge.
+six categories use two roomy rows of three controls. The keypad includes a
+visible **Exit** key, and each picker includes a visible **Back** button. A
+touch tap is handled through `on_tap` only, which avoids duplicate conversion
+input in the current PUNRI activity bridge.
 
 On X4 Classic, use **Up/Down** (or page buttons) to move between Category,
 From, To, Swap and the keypad. **Left/Right** change the highlighted category

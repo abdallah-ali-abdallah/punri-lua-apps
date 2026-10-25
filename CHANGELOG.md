@@ -121,6 +121,7 @@
 - Failed settings writes remain visible and retryable while the app is open.
 - Measured font alignment keeps labels, results and keypad text inside their controls in portrait and landscape layouts.
 - Touch devices expose visible Exit and picker Back controls; X4 Classic continues to use its physical footer.
+- Category controls use two larger rows for easier touch and button navigation.
 
 ## World Clock 0.1.0 — 2026-10-25
 

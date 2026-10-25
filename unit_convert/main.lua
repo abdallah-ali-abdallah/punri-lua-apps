@@ -214,7 +214,7 @@ end
 function on_init()
     width, height = punri.get_bounds()
     metrics = punri.get_metrics()
-    UI.compute(width, height, metrics)
+    UI.compute(width, height, metrics, #Units.categories)
     defaults()
     load_state()
     recompute()
@@ -223,7 +223,7 @@ end
 function on_draw()
     width, height = punri.get_bounds()
     metrics = punri.get_metrics()
-    UI.compute(width, height, metrics)
+    UI.compute(width, height, metrics, #Units.categories)
     if mode == "picker" then UI.draw_picker(main_state()) else UI.draw_main(main_state()) end
 end
 
@@ -314,9 +314,8 @@ function on_tap(x, y)
         if save_state() then request() end
         return
     end
-    if punri.in_rect(x, y, l.left, l.category_y, l.content_w, l.category_h) then
-        local index = math.floor((x - l.left) / math.floor(l.content_w / #Units.categories)) + 1
-        if index > #Units.categories then index = #Units.categories end
+    local index = UI.category_at(x, y, #Units.categories)
+    if index then
         local current = 1
         for i, item in ipairs(Units.categories) do if item.id == category.id then current = i break end end
         set_category(index - current)

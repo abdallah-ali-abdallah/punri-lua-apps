@@ -1,5 +1,13 @@
 # Changelog
 
+## Quote sleep data — 2026-10-26
+
+### Added
+
+- Add 20 sourced quotations in each of the firmware's 28 languages, plus a
+  size/SHA-256 manifest for optional firmware sleep-screen downloads. These
+  data files are independent of the Lua application catalog and versions.
+
 ## Screen Ruler 0.1.2 — 2026-10-26
 
 ### Added

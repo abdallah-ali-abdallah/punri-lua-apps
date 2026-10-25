@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "languages": {
+    "AR": {
+      "size": 1628,
+      "sha256": "049898acb277c6909f365fee5736436e2f2d1715d8c9617f90604af96d88fecb",
+      "quotes": 20
+    },
+    "BE": {
+      "size": 1840,
+      "sha256": "98ee557e0ba15894ab4bf96938f1eb24d933b1a4e057490f5b6c4f24e16ecf51",
+      "quotes": 20
+    },
+    "CA": {
+      "size": 1223,
+      "sha256": "84ac26a02c6e89891de7e5478f085290439c71629fc450b5634be10834588f18",
+      "quotes": 20
+    },
+    "CAV": {
+      "size": 1212,
+      "sha256": "8022fd83030a38c25e2bda10a1d77c7b45041a32abe5c1841eb747a672a86c0e",
+      "quotes": 20
+    },
+    "CS": {
+      "size": 1213,
+      "sha256": "a038033dd1508fbe4aae464a8e44c60a1a61cc1d4d4b3e2fe018a24b03c3518a",
+      "quotes": 20
+    },
+    "DA": {
+      "size": 1192,
+      "sha256": "39e4bf7fe42e5c756a05be3f30010e74e3a6f562517d122717ca634e990b8408",
+      "quotes": 20
+    },
+    "DE": {
+      "size": 1285,
+      "sha256": "3184696731e7a0f0e0ef7eed9f566f427f34778ebc276bd69487d3b4dc7b9fe8",
+      "quotes": 20
+    },
+    "EN": {
+      "size": 1178,
+      "sha256": "0fa985f1f31dfce27cf987e053a445797d865602730091354b83b52c3531536f",
+      "quotes": 20
+    },
+    "ES": {
+      "size": 1204,
+      "sha256": "7e83490b3b544542aed301d48edb31f1907cce082a0b9cde5b8085d25fb96015",
+      "quotes": 20
+    },
+    "FI": {
+      "size": 1241,
+      "sha256": "460f74ac33cb18027f6e5189b1a31e30063c74770bccd7b86cef9f5ea6892e83",
+      "quotes": 20
+    },
+    "FR": {
+      "size": 1315,
+      "sha256": "1098ce191ff714c019177b47f862f1581109bd2f1cb8ac8cdfa6313de7ccd428",
+      "quotes": 20
+    },
+    "HE": {
+      "size": 1368,
+      "sha256": "523501960dc44926bc999a9b2f39992d4733424c9534f4a5266ff21be8f91d31",
+      "quotes": 20
+    },
+    "HU": {
+      "size": 1294,
+      "sha256": "5db7bdb9afc930ec698d3fa268d51aab6e944e125890f7e276b50da9d3012041",
+      "quotes": 20
+    },
+    "IT": {
+      "size": 1238,
+      "sha256": "18d885035203128675a123d0bd39a9449b49ced51debd380ec5e9d00cc42d142",
+      "quotes": 20
+    },
+    "KK": {
+      "size": 1728,
+      "sha256": "6bd947fa73ef7a1a1c8803e25b0b49b367777ecf03a9da6e38020b5b3c1b7ef2",
+      "quotes": 20
+    },
+    "LT": {
+      "size": 1179,
+      "sha256": "2fa63cf571175997500eb21db1f63cd849b7672de2264385f372df6775b941c3",
+      "quotes": 20
+    },
+    "NL": {
+      "size": 1199,
+      "sha256": "eb082e1e8fca09c3c467020bb406b96a2bef5d345d1ff2c4b703086be866db36",
+      "quotes": 20
+    },
+    "PL": {
+      "size": 1255,
+      "sha256": "368f80e074d699991d25549402c106c65d5db9256b551bf4ea35d2fd4a7a0c91",
+      "quotes": 20
+    },
+    "PT": {
+      "size": 1191,
+      "sha256": "a0d0ab1a0365ddf837f91c71a54e30535444ed97bc522cc4a3cc256bf0a41df8",
+      "quotes": 20
+    },
+    "PT2": {
+      "size": 1191,
+      "sha256": "482e3e55973ab7dddc59cc4df84a79369b68c5876b6578191c933a75556da8bc",
+      "quotes": 20
+    },
+    "RO": {
+      "size": 1349,
+      "sha256": "187320999a76aaf81c8e22b41e250d9035ddb3d597c11db20430f4fe958b7fda",
+      "quotes": 20
+    },
+    "RU": {
+      "size": 1851,
+      "sha256": "04cf1b140dc596d0cdbe1ce44822c517dc98f3e5ba208474d70abef5a67e1689",
+      "quotes": 20
+    },
+    "SI": {
+      "size": 1168,
+      "sha256": "8965280203cd31678b07227fb8339dbe3aa4e450d29f50eccdd5ef0eac92828a",
+      "quotes": 20
+    },
+    "SK": {
+      "size": 1215,
+      "sha256": "01e539d639293a4d6fd46849717ee28adaae2d3c8721bf878cab4522d75ae1cc",
+      "quotes": 20
+    },
+    "SV": {
+      "size": 1225,
+      "sha256": "789b4e4fb65d13d3b91b456d44dcc0e7381257fbdbbfe437d4e82652abb0014b",
+      "quotes": 20
+    },
+    "TR": {
+      "size": 1299,
+      "sha256": "d75829b29c996e08c761337d2e829e131a14c23d4b236ca082e65fd18951f517",
+      "quotes": 20
+    },
+    "UK": {
+      "size": 1754,
+      "sha256": "70d9ece4faacae9beb07e825f98460d8c855b98a20c42a44fb0d6f66e92fe51f",
+      "quotes": 20
+    },
+    "VI": {
+      "size": 1524,
+      "sha256": "f7d5432e3a9317c32ae0748151ae4fc2640189c31380fd88606f093f2b85a9e5",
+      "quotes": 20
+    }
+  }
+}

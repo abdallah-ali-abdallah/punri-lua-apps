@@ -7,7 +7,8 @@ local ui = punri.dofile("ui.lua")
 local input = punri.dofile("input.lua")
 
 local state = nil
-local view = {hits = {}, hit_count = 0, selected = 1, today_page = 1, manage_selected = 1, edit_selected = 1}
+local view = {hits = {}, hit_count = 0, selected = 1, today_page = 1, manage_selected = 1, edit_selected = 1,
+    detail_month = nil}
 local screen, active_id, candidate_date = "date_confirm", nil, nil
 local clock_confirmed, protected_data = false, false
 local dirty, autosave_armed, retries = false, false, 0
@@ -74,6 +75,20 @@ local function set_selected(index)
     view.selected = (index - 1) % #state.trackers + 1
     if view.cards_per_page and view.cards_per_page > 0 then
         view.today_page = math.floor((view.selected - 1) / view.cards_per_page) + 1
+    end
+end
+
+local function move_detail_month(delta)
+    local current = calendar.month_start(state.date)
+    local earliest = calendar.month_start(model.history_start(state.date))
+    local shown = calendar.month_start(view.detail_month or current) or current
+    local target = calendar.add_months(shown, delta)
+    if not target or calendar.compare(target, earliest) == -1 then
+        status = "Only the latest 35 days are stored"
+    elseif calendar.compare(target, current) == 1 then
+        status = "Already at the current month"
+    else
+        view.detail_month, status = target, ""
     end
 end
 
@@ -152,6 +167,7 @@ local function use_candidate_date()
         status = "Enter a valid YYYY-MM-DD date"
         return
     end
+    local rolled = false
     if not state then
         state = model.new_state(candidate_date)
     else
@@ -159,12 +175,14 @@ local function use_candidate_date()
         if comparison and comparison >= 0 then
             local ok, err = model.roll_to(state, candidate_date)
             if not ok then status = err return end
+            rolled = comparison == 1
         else
             screen, status = "clock_back", "Clock moved backwards; saved data remains unchanged."
             return
         end
     end
     clock_confirmed, screen, status = true, "today", ""
+    if rolled then mark_dirty("Date updated") end
     set_selected(view.selected)
 end
 
@@ -182,6 +200,7 @@ local function perform(action)
         end
     elseif kind == "details" then
         active_id, screen, status = tonumber(value), "details", ""
+        view.detail_month = calendar.month_start(state.date)
     elseif kind == "edit" then
         active_id, screen, status = tonumber(value), "edit", ""
     elseif kind == "add" then
@@ -194,6 +213,12 @@ local function perform(action)
         screen, status = "manage", ""
     elseif action == "today" then
         screen, status = "today", ""
+    elseif action == "month_prev" then
+        move_detail_month(-1)
+    elseif action == "month_next" then
+        move_detail_month(1)
+    elseif action == "month_current" then
+        view.detail_month, status = calendar.month_start(state.date), ""
     elseif action == "confirm_date" then
         use_candidate_date()
     elseif action == "manual_date" then
@@ -230,18 +255,28 @@ function on_init()
     end
     state = loaded
     if not observed then
-        screen, status = "date_confirm", "Clock date unavailable; set the device clock first."
+        screen, status = "date_confirm", "Device date unavailable; enter it manually."
         return
     end
     if state and calendar.compare(observed, state.date) == -1 then
         screen, status = "clock_back", "Clock moved backwards; saved data is protected."
         return
     end
-    if not state then state = model.new_state(observed) end
-    -- get_date exposes a local date but no validity flag.  Requiring an explicit
-    -- confirmation on every launch avoids silently assigning user records to a
-    -- plausible-looking fallback day.
-    screen = "date_confirm"
+    if not state then
+        state = model.new_state(observed)
+    elseif observed ~= state.date then
+        local ok, err = model.roll_to(state, observed)
+        if not ok then
+            screen, status = "date_confirm", err
+            return
+        end
+        -- A real device date is available, so move forward and save it instead
+        -- of making people approve the same clock value every time they open
+        -- the app.  Backward jumps above remain read-only protection.
+        mark_dirty("Date updated")
+    end
+    clock_confirmed, screen, status = true, "today", status
+    set_selected(view.selected)
 end
 
 function on_draw()
@@ -335,17 +370,8 @@ function on_button(button, pressed)
     elseif screen == "details" then
         if button == "back" then perform("today")
         elseif button == "confirm" then perform("edit:" .. active_id)
-        else
-            local delta = input.button_delta(button)
-            if delta ~= 0 and #state.trackers > 0 then
-                local _, index = model.find_tracker(state, active_id)
-                if index then
-                    -- Wrap instead of exposing a missing tracker on a
-                    -- button-only device.
-                    active_id = state.trackers[(index - 1 + delta) % #state.trackers + 1].id
-                    request()
-                end
-            end
+        elseif button == "left" or button == "up" or button == "page_back" then perform("month_prev")
+        elseif button == "right" or button == "down" or button == "page_forward" then perform("month_next")
         end
     elseif screen == "delete" then
         if button == "back" or button == "confirm" or button == "left" then perform("cancel_delete")
@@ -370,7 +396,8 @@ function on_update()
         if observed and observed ~= state.date then
             candidate_date = observed
             if calendar.compare(observed, state.date) == 1 then
-                screen, clock_confirmed, status = "date_confirm", false, "Date changed; confirm before recording."
+                local ok, err = model.roll_to(state, observed)
+                if ok then mark_dirty("Date updated") else status = err end
             else
                 screen, clock_confirmed, status = "clock_back", false, "Clock moved backwards; data is protected."
             end

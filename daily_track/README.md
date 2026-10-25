@@ -11,21 +11,23 @@ Track** from Applications. Earlier installations migrate automatically.
 
 ## Controls
 
-The app asks the person using it to confirm the displayed local date on every
-launch because the current Lua clock API has no validity flag. If the clock goes
-backward, Daily Track switches to a protected read-only screen; correct the
-device clock and reopen it rather than adding a record to an older date. A
-forward date or timezone change is also confirmed before it starts a new day.
-Manually entered dates use a valid four-digit `YYYY-MM-DD` value. Date handling
-keeps all 35 cells available around a year boundary rather than rejecting the
-prior year's history.
+Daily Track uses the device's valid local date automatically when it opens and
+when the date moves forward, so normal launches do not need a confirmation
+screen. If the device cannot provide a valid date, the app asks for a manual
+four-digit `YYYY-MM-DD` value. If the clock goes backward, Daily Track switches
+to a protected read-only screen; correct the device clock and reopen it rather
+than adding a record to an older date. Date handling keeps all 35 stored days
+available around a year boundary rather than rejecting the prior year's history.
 
 On touch models, tap the card to toggle a Habit or add a Counter step; tap the
 separate **Undo**, **Details**, **Manage**, **Export**, and **Exit** controls.
-On X4 Classic, Back exits, Confirm performs the selected card action, Up opens
-details, Down opens Manage, and Left/Right move the selection. Manage, Edit,
-Details, and delete confirmation all have button navigation; deletion defaults
-to **Keep tracker**.
+Details starts at the current calendar month, labels Sunday through Saturday,
+and has large **Prev** and **Today** buttons. It can browse the stored 35-day
+history window. On X4 Classic, Back exits, Confirm performs the selected card
+action, Up opens details, Down opens Manage, and Left/Right move the selection.
+Within Details, Left/Up goes to the previous month and Right/Down moves toward
+the current month. Manage, Edit, Details, and delete confirmation all have
+button navigation; deletion defaults to **Keep tracker**.
 
 Creating and editing names/numbers needs the firmware keyboard. Firmware that
 does not provide it shows a clear unsupported message instead of a broken

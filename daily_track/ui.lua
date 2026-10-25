@@ -77,11 +77,11 @@ end
 local function footer(view, w, bottom, margin, message)
     local gap, count = 6, 3
     local bw = math.floor((w - margin * 2 - gap * (count - 1)) / count)
-    local y = bottom - 40
-    button(view, margin, y, bw, 36, "Manage", "manage")
+    local footer_h, y = 44, bottom - 44
+    button(view, margin, y, bw, footer_h, "Manage", "manage")
     local retry = message and message:find("Retry", 1, true)
-    button(view, margin + bw + gap, y, bw, 36, retry and "Retry" or "Export", retry and "retry" or "export")
-    button(view, margin + (bw + gap) * 2, y, bw, 36, "Exit", "exit")
+    button(view, margin + bw + gap, y, bw, footer_h, retry and "Retry" or "Export", retry and "retry" or "export")
+    button(view, margin + (bw + gap) * 2, y, bw, footer_h, "Exit", "exit")
 end
 
 local function retry_button(view, message, screen)
@@ -96,9 +96,15 @@ end
 local function draw_today(state, view, message)
     local w, h, margin, top, bottom = metrics()
     punri.header("Daily Track", state.date)
-    local footer_top = bottom - 50
+    local footer_top = bottom - 60
     local columns = w >= 640 and 2 or 1
-    local gap, card_h = 10, 116
+    -- Lay content out from measured line heights.  The prior fixed positions
+    -- let counter metadata touch the primary button on the device font.
+    local title_h = punri.line_height("ui12")
+    local status_h = punri.line_height("ui12")
+    local detail_h = punri.line_height("small")
+    local action_h = math.max(34, punri.line_height("ui10") + 8)
+    local gap, card_h = 10, 10 + title_h + 2 + status_h + 2 + detail_h + 10 + action_h + 8
     local card_w = math.floor((w - margin * 2 - gap * (columns - 1)) / columns)
     local rows = math.max(1, math.floor((footer_top - top) / (card_h + gap)))
     local per_page = rows * columns
@@ -126,7 +132,10 @@ local function draw_today(state, view, message)
         local detail_w = button_width("Details", 64)
         local detail_x = x + card_w - detail_w - 8
         local title_room = math.max(1, detail_x - (x + 12) - 8)
-        punri.text(x + 12, y + 10, fit_text(tracker.name, title_room, "ui12", "bold"), "ui12", "bold", "left", true)
+        local title_y = y + 10
+        local status_y = title_y + title_h + 2
+        local detail_y = status_y + status_h + 2
+        punri.text(x + 12, title_y, fit_text(tracker.name, title_room, "ui12", "bold"), "ui12", "bold", "left", true)
         local current_day = model.find_day(tracker, state.date)
         local status
         if tracker.kind == "habit" then
@@ -137,14 +146,13 @@ local function draw_today(state, view, message)
         else
             status = tracker.goal > 0 and string.format("0 / %d", tracker.goal) or "0 logged"
         end
-        punri.text(x + 12, y + 40, status, "ui12", "regular", "left", true)
+        punri.text(x + 12, status_y, fit_text(status, card_w - 24, "ui12", "regular"), "ui12", "regular", "left", true)
         local streak, best = model.streaks(tracker, state.date)
         local footer_text = streak and string.format("Chain %d  Best %d", streak, best) or "No goal: no chain"
-        punri.text(x + 12, y + 66, footer_text, "small", "regular", "left", true)
+        punri.text(x + 12, detail_y, fit_text(footer_text, card_w - 24, "small", "regular"), "small", "regular", "left", true)
         local action_label = tracker.kind == "habit" and "Toggle" or ("+" .. tostring(tracker.step))
-        local action_h = math.max(24, punri.line_height("ui10") + 4)
         local action_w = math.floor((card_w - 30) * 0.56)
-        local action_y = y + card_h - action_h - 6
+        local action_y = y + card_h - action_h - 8
         button(view, x + 10, action_y, action_w, action_h, action_label, "primary:" .. tracker.id, selected)
         button(view, x + 16 + action_w, action_y, card_w - action_w - 26, action_h, "Undo", "undo:" .. tracker.id, false)
         button(view, detail_x, y + 4, detail_w, action_h, "Details", "details:" .. tracker.id, false)
@@ -201,58 +209,82 @@ local function draw_details(state, view, tracker, message)
     local w, h, margin, top, bottom = metrics()
     tracker_header("Tracker Details", tracker, w)
     local streak, best = model.streaks(tracker, state.date)
-    local grid_y
+    local cursor
     if streak then
         local summary = string.format("Current %d days    Best %d days (all time)", streak, best)
         if punri.text_width(summary, "ui10", "bold") <= w - margin * 2 then
             punri.text(margin, top, summary, "ui10", "bold")
-            grid_y = top + punri.line_height("ui10") + 10
+            cursor = top + punri.line_height("ui10") + 8
         else
             punri.text(margin, top, string.format("Current %d days", streak), "ui10", "bold")
             punri.text(margin, top + punri.line_height("ui10") + 2,
                 string.format("Best %d days (all time)", best), "ui10", "bold")
-            grid_y = top + punri.line_height("ui10") * 2 + 12
+            cursor = top + punri.line_height("ui10") * 2 + 10
         end
     else
         punri.text(margin, top, "Counter without a goal: no chain", "ui10", "bold")
-        grid_y = top + punri.line_height("ui10") + 10
+        cursor = top + punri.line_height("ui10") + 8
     end
-    local info_lines = tracker.kind == "counter" and 2 or 1
-    local control_y = bottom - 40
-    local grid_h = math.min(270, control_y - grid_y - info_lines * punri.line_height("small") - 28)
-    grid_h = math.max(5 * 24, grid_h)
+
+    local current_month = calendar.month_start(state.date)
+    local earliest_month = calendar.month_start(model.history_start(state.date))
+    local shown_month = calendar.month_start(view.detail_month or current_month)
+    if not shown_month or calendar.compare(shown_month, current_month) == 1 then shown_month = current_month end
+    if calendar.compare(shown_month, earliest_month) == -1 then shown_month = earliest_month end
+    view.detail_month = shown_month
+    punri.text(math.floor(w / 2), cursor, calendar.month_label(shown_month), "ui10", "bold", "center")
+    local weekday_y = cursor + punri.line_height("ui10") + 5
     local cell_w = math.max(1, math.floor((w - margin * 2) / 7))
-    local cell_h = math.max(24, math.floor(grid_h / 5))
-    local first = calendar.add_days(state.date, -(model.MAX_DAYS - 1))
-    for index = 0, model.MAX_DAYS - 1 do
-        local date = calendar.add_days(first, index)
+    local weekday_labels = {"S", "M", "T", "W", "T", "F", "S"}
+    for col, label in ipairs(weekday_labels) do
+        punri.text(margin + math.floor((col - 0.5) * cell_w), weekday_y, label, "small", "bold", "center")
+    end
+    local grid_y = weekday_y + punri.line_height("small") + 5
+    local year, month = calendar.parse(shown_month)
+    local first_weekday = calendar.weekday(shown_month)
+    local days_in_month = calendar.days_in_month(year, month)
+    local rows = math.ceil((first_weekday + days_in_month) / 7)
+    local info_lines = tracker.kind == "counter" and 2 or 1
+    local footer_h, control_y = 48, bottom - 56
+    local grid_h = math.max(rows * 24, math.min(300,
+        control_y - grid_y - info_lines * punri.line_height("small") - 18))
+    local cell_h = math.max(24, math.floor(grid_h / rows))
+    for day = 1, days_in_month do
+        local index = first_weekday + day - 1
         local col, row = index % 7, math.floor(index / 7)
         local x, y = margin + col * cell_w, grid_y + row * cell_h
+        local date = calendar.format(year, month, day)
         local status = model.day_status(tracker, date, state.date)
+        punri.rect(x + 1, y + 1, cell_w - 3, cell_h - 3, false)
         if status == "complete" then
             punri.rect(x + 2, y + 2, cell_w - 4, cell_h - 4, true)
-            punri.text(x + math.floor(cell_w / 2), y + math.floor(cell_h / 2) - 7, "X", "ui10", "bold", "center", false)
+            punri.text(x + math.floor(cell_w / 2), y + math.floor((cell_h - punri.line_height("ui10")) / 2),
+                "X", "ui10", "bold", "center", false)
         elseif status == "logged" then
             punri.rect_dither(x + 2, y + 2, cell_w - 4, cell_h - 4)
-            punri.text(x + math.floor(cell_w / 2), y + math.floor(cell_h / 2) - 7, ".", "ui10", "bold", "center")
-        else
-            punri.rect(x + 2, y + 2, cell_w - 4, cell_h - 4, false)
+            punri.text(x + math.floor(cell_w / 2), y + math.floor((cell_h - punri.line_height("ui10")) / 2),
+                ".", "ui10", "bold", "center")
         end
-        if index % 7 == 0 then punri.text(x + 3, y + 4, date:sub(9, 10), "small") end
+        punri.text(x + 3, y + 3, tostring(day), "small", "regular", "left", status == "complete" and false or true)
     end
-    local info_y = grid_y + grid_h + 16
+    local info_y = grid_y + cell_h * rows + 10
     if tracker.kind == "counter" then
-        local total, recorded, average = model.period_stats(tracker, state.date)
-        punri.text(margin, info_y, string.format("Past 35 days: total %d", total), "ui10")
+        local total, recorded, average = model.month_stats(tracker, shown_month, state.date)
+        punri.text(margin, info_y, fit_text(string.format("Month total %d", total), w - margin * 2, "ui10", "regular"), "ui10")
         punri.text(margin, info_y + 20, average and string.format("Average %d from %d recorded days", average, recorded) or
             "Average: no recorded days", "small")
     else
-        punri.text(margin, info_y, "X complete   . recorded, below target   outline empty", "small")
+        punri.text(margin, info_y, fit_text("X complete   . logged below goal   outline empty", w - margin * 2, "small", "regular"), "small")
     end
-    button(view, margin, bottom - 40, 104, 34, "Edit", "edit:" .. tracker.id, false)
-    button(view, w - margin - 104, bottom - 40, 104, 34, "Back", "today", false)
-    if message and message ~= "" then punri.text(margin + 116, bottom - 28, message, "small") end
-    punri.button_hints("Back", "Edit", "Prev", "Next")
+    local gap, count = 6, 4
+    local button_w = math.floor((w - margin * 2 - gap * (count - 1)) / count)
+    button(view, margin, control_y, button_w, footer_h, "Edit", "edit:" .. tracker.id, false)
+    button(view, margin + (button_w + gap), control_y, button_w, footer_h, "Prev", "month_prev", false)
+    button(view, margin + (button_w + gap) * 2, control_y, button_w, footer_h, "Today", "month_current", false)
+    button(view, margin + (button_w + gap) * 3, control_y, button_w, footer_h, "Back", "today", false)
+    if message and message ~= "" then punri.text(margin, control_y - punri.line_height("small") - 3,
+        fit_text(message, w - margin * 2, "small", "regular"), "small") end
+    punri.button_hints("Back", "Edit", "Prev", "Today")
 end
 
 local function draw_confirm(view, candidate, backward, message)
@@ -262,20 +294,27 @@ local function draw_confirm(view, candidate, backward, message)
     -- app title away.  The body already states the date/clock state, so keep
     -- the stable app title in the header and avoid a competing right label.
     punri.header("Daily Track")
-    local title = backward and "Clock moved backwards" or "Confirm local date before tracking"
+    local has_candidate = candidate and calendar.parse(candidate)
+    local title = backward and "Clock moved backwards" or (has_candidate and "Confirm entered date" or "Set a local date")
     punri.centered_text(top + 56, title, "ui12", "bold")
     punri.centered_text(top + 90, candidate or "Date unavailable", "ui12", "regular")
     if backward then
         punri.centered_text(top + 126, "Saved history is read-only until the clock is fixed.", "small")
         button(view, margin, top + 168, w - margin * 2, 38, "Exit", "exit", false)
     else
-        punri.centered_text(top + 126, "The clock has no validity signal; confirm it first.", "small")
-        button(view, margin, top + 168, w - margin * 2, 38, "Use date", "confirm_date", true)
-        button(view, margin, top + 216, w - margin * 2, 38, "Edit date", "manual_date", false)
-        button(view, margin, top + 264, w - margin * 2, 38, "Exit", "exit", false)
+        punri.centered_text(top + 126, has_candidate and "Use the entered date, or correct it first." or
+            "The device did not provide a usable date.", "small")
+        if has_candidate then
+            button(view, margin, top + 168, w - margin * 2, 42, "Use date", "confirm_date", true)
+            button(view, margin, top + 220, w - margin * 2, 42, "Edit date", "manual_date", false)
+            button(view, margin, top + 272, w - margin * 2, 42, "Exit", "exit", false)
+        else
+            button(view, margin, top + 184, w - margin * 2, 42, "Enter date", "manual_date", true)
+            button(view, margin, top + 236, w - margin * 2, 42, "Exit", "exit", false)
+        end
     end
     if message and message ~= "" then punri.centered_text(bottom - 26, message, "small") end
-    punri.button_hints("Exit", "Use", "Edit", "")
+    punri.button_hints("Exit", has_candidate and "Use" or "Enter", has_candidate and "Edit" or "", "")
 end
 
 local function draw_error(view, message)

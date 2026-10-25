@@ -1,0 +1,10 @@
+{
+  "id": "screen_ruler",
+  "name": "Screen Ruler",
+  "version": "0.1.0",
+  "author": "PUNRI contributors",
+  "description": "An offline calibrated screen ruler with independent physical X/Y scales.",
+  "entry": "main.lua",
+  "min_api": 3,
+  "capabilities": ["buttons", "storage"]
+}

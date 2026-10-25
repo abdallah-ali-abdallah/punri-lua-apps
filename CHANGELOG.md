@@ -1,5 +1,18 @@
 # Changelog
 
+## Screen Ruler 0.1.0 — 2026-10-25 (local, unpublished)
+
+### Added
+
+- Offline screen ruler with independent X/Y calibration, mm/cm/inch controls,
+  orientation modes, and retryable saves tied to the device and screen size.
+
+### Fixed
+
+- Place horizontal numbers above the scale and vertical numbers to its left,
+  using bold measured labels, a shared baseline, compact margins and one zero
+  at the corner to keep measurements readable without overlapping numbers.
+
 ## QR Cards Share 0.1.0 — 2026-10-25 (local, unpublished)
 
 ### Added

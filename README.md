@@ -698,7 +698,9 @@ capabilities vary by build; desktop replay is explicitly marked as simulated.
 
 The following applications are included in this local repository. Published catalog packages remain separate release artifacts.
 For the new offline apps, see [installation, controls, SD storage and verification](offline-apps.md).
-For Wi-Fi scanning and RSSI measurement, see [Wi-Fi Analyzer and Signal Meter](wifi-tools.md):
+For combined Wi-Fi scanning/channel/RSSI analysis, see [Wi-Fi Analyzer](wifi-tools.md).
+For BLE discovery/advertisement/RSSI analysis, see [Bluetooth Analyzer](bluetooth-tools.md).
+These local changes do not update the published catalog or application versions:
 
 | App ID | Name | Category | Description |
 |---|---|---|---|
@@ -706,8 +708,9 @@ For Wi-Fi scanning and RSSI measurement, see [Wi-Fi Analyzer and Signal Meter](w
 | `hourglass` | **Hourglass** | Productivity | Expressive countdown timer with dynamic parabolic sand funnel physics, full neck passage, bottom sand accumulation mound, and auto-sleep prevention. |
 | `stopwatch` | **Stopwatch** | Productivity | Pixel cartoon stopwatch character with animated mechanical crown plunger, facial expressions, digital LCD window (`MM:SS.cc`), lap split recording, and auto-sleep prevention. |
 | `solitaire` | **Solitaire** | Games | Classic 7-column Klondike Solitaire card game optimized for e-paper with draw-1 and draw-3 modes. |
-| `wifi_analyzer` | **Wi-Fi Analyzer** | Utilities | Nearby SSID/BSSID/RSSI/channel discovery, channel-count charts and SD-card CSV export. |
-| `signal_meter` | **Signal Meter** | Utilities | Selected-BSSID RSSI readout, 60-scan history, min/average/max, pause/resume and SD-card CSV export. |
+| `wifi_analyzer` | **Wi-Fi Analyzer** | Utilities | Network discovery, channel charts, selected-BSSID RSSI meter, 60-scan graphs, statistics and SD-card CSV exports in one app. |
+| `bluetooth_analyzer` | **Bluetooth Analyzer** | Utilities | BLE discovery, advertisement details/overview, selected-address/type RSSI meter, graphs and CSV exports; BLE-enabled firmware required. |
+| `signal_meter` | **Signal Meter (legacy)** | Compatibility | Original standalone package retained for existing installs and saved data; its features now also live in Wi-Fi Analyzer. |
 | `todo` | **To-do List** | Productivity | Offline tasks with a button/touch keyboard, completion filters and transactional SD saving. |
 | `notepad` | **Notepad** | Productivity | Multiline notes with on-device editing, paged reading and SD-card plain-text exports. |
 | `tictactoe` | **Tic-tac-toe** | Games | Unbeatable solo opponent or local two-player mode with session scores. |

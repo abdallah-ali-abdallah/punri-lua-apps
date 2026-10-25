@@ -1,184 +1,191 @@
-# Wi-Fi Analyzer and Signal Meter
+# Wi-Fi Analyzer
 
-Two standalone Lua apps for Sticky, X4 Pro and X4 Classic, registered in the local
-`catalog.json` (`apps/catalog.json` in the firmware checkout). Both require **Lua API 3**, use the foreground radio API and
-work without connecting to an access point or entering a password. They inspect
-2.4 GHz Wi-Fi; they are not packet-capture or spectrum-analysis tools.
+One foreground Lua app combines Wi-Fi discovery, channel analysis and signal
+monitoring. It runs on Sticky, X4 Pro and X4 Classic with **Lua API 3**. No Wi-Fi
+connection, password, packet capture or firmware change is needed.
 
-Catalog registration is local. These changes do not upload the packages to
-GitHub or make them downloadable from an unchanged remote catalog.
+For the separate BLE companion, see [Bluetooth Analyzer](bluetooth-tools.md).
+Local implementation does not authorize catalog publication or version bumps.
+The checked-in catalog still describes the previous packages; an authorized
+release must update its file lists, versions and integrity records together.
 
-## Install
+## Install and use
 
-Copy the complete app directories to the SD card:
+Copy the complete `wifi_analyzer/` folder to:
 
 ```text
 /.crosssmudge/applications/wifi_analyzer/
-/.crosssmudge/applications/signal_meter/
 ```
 
-Each package contains `manifest.json`, `main.lua`, `wifi_scan.lua`, `wifi_ui.lua`
-and `icon.raw`. `icon.png` is the editable upright source and is not needed on
-hardware. Keep the two packaged copies of `wifi_scan.lua` and `wifi_ui.lua`
-identical; apps cannot import another app's files across the sandbox.
+The new entry loads `radio_app.lua`, `radio_scan.lua` and `radio_ui.lua` once.
+The previous `wifi_scan.lua`/`wifi_ui.lua` files are retained but not loaded by
+the combined app. `icon.raw` is required for its icon; `icon.png` is editable
+source. Apps cannot import another app's files across the sandbox.
 
-## Wi-Fi Analyzer
+1. Open **Applications → Wi-Fi Analyzer → Scan**. Results are strongest-first,
+   deduplicated by **BSSID**, and show SSID, BSSID, RSSI in dBm and channel.
+2. **Channels** graphs observed AP counts on channels 1–14. Counts are **not**
+   RF congestion, airtime, interference, speed or spectrum measurements.
+3. Select an AP to start its RSSI meter: large numeric readout, relative signal
+   bar, a 60-scan graph and minimum/average/maximum over valid retained samples.
+4. **Info** shows last-observed channel/authentication code; **Graph** returns
+   to the meter. Both views belong to the same foreground measurement session.
+5. **Pause** cancels an outstanding scan, consumes its terminal event, and
+   releases the radio. **Start** resumes. **Back** from the meter returns to
+   the list and stops monitoring; Back from Info returns to the meter.
+6. **Resume: <name>** in the list opens the remembered target **paused**, keeping
+   the current session's history. Relaunch also opens the saved target paused.
+7. **Export** in the list/Channels saves `last_scan.csv`; Export in Graph/Info
+   saves `signal.csv`. Both explicitly replace their previous snapshot on SD.
 
-1. Open **Applications → Wi-Fi Analyzer → Scan**.
-2. Results are ordered by RSSI, strongest first, and deduplicated by BSSID.
-   Each row shows SSID, BSSID, RSSI in dBm and channel. Hidden SSIDs have a label.
-3. Select a network to see its signal readout and raw SDK authentication code.
-4. **Channels** shows the number of observed access points on each channel.
-   These counts do **not** measure RF congestion, airtime, interference or speed.
-5. **Export** saves/replaces `last_scan.csv` transactionally after a successful
-   scan. Back up that file on your computer before replacing a snapshot you need.
+The list holds at most 32 APs. `PARTIAL` indicates dropped, capped or invalid
+observations. A partial/empty list does not establish that other APs are absent.
+Authentication codes are raw SDK values, not inferred security guarantees.
 
-The list holds at most 32 access points. The native radio queue can also drop
-observations; the app shows `PARTIAL`, dropped, capped and invalid observations.
-An empty or partial list must not be interpreted as proof that no other AP exists.
+## If Scan does nothing
 
-## Signal Meter
+- **Desktop simulator:** radio replay is disabled unless `RADIO_SIMULATION=1` is
+  set **before launching**. From the firmware repo, use
+  `RADIO_SIMULATION=1 pio run -e x4-pro-simulator -t run_simulator` (or the matching
+  Sticky/Classic profile). Replay shows **SIMULATED** and synthetic peers; it
+  cannot scan the Mac's Wi-Fi or BLE hardware. Restart an already-running simulator.
+- **Saved target:** reopening starts paused. Press **Start**, or **Back → Scan**
+  to discover networks. Copy the complete app folder, including all three
+  `radio_*.lua` modules; the published catalog still describes the previous app.
+- **Wi-Fi unavailable:** check firmware Lua API 3 and whether this is the disabled
+  simulator. Installing Lua files does not add a radio backend to older firmware.
+- **Cannot scan: busy:** exit native network/BLE tools and retry. Another owner
+  or a residual radio stack blocks acquisition; the app will not take it over.
+- **Scan: failed/timeout** or **out_of_memory:** capture serial logs around the
+  scan. Check internal heap/largest block as well as PSRAM; replay cannot validate
+  physical RF or reader-memory headroom. Errors remain visible in Graph and Info.
 
-1. Open **Signal Meter → Scan**, wait for completion and select an access point.
-2. Selection is by **BSSID**, so two access points sharing an SSID do not get
-   mixed into the same measurement. The target is saved to SD.
-3. The meter starts sequential scans and shows a large RSSI readout, a relative
-   signal bar, a graph and minimum/average/maximum over valid retained samples.
-4. There is a three-second idle interval **after** each completed scan. A scan
-   can itself take up to ten seconds; this is not a 3 Hz or guaranteed 3-second
-   sampler. The graph's horizontal axis is completed scans, not uniform time.
-5. **Pause** cancels an outstanding scan and releases the radio after consuming
-   its terminal event. **Start** resumes; **Choose/Back** stops automatic scans.
-6. **Export** saves/replaces `signal.csv` on SD. Only the most recent 60 completed
-   scans are retained, including missing/error samples as gaps. There are no
-   automatic SD writes for every measurement.
+## Signal interpretation and timing
 
-The remembered target reopens **paused** after relaunch. Measurement history is
-session-only unless exported. If saving the target fails, the footer stays marked
-`TARGET NOT SAVED`; Export retries that write before exporting history.
+Measurements wait three seconds **after** a scan completes. Wi-Fi scans may
+last ten seconds; this is not a guaranteed three-second sampler. Graph X positions
+represent completed scans, not uniformly spaced time. Each scan uses the last
+received observation for the selected BSSID; equal SSIDs are not combined.
 
-Missing observations are not fabricated as `0 dBm`:
+The most recent 60 completed scans are retained. Missing/error observations are
+gaps, not fabricated `0 dBm`, and do not enter minimum/average/maximum:
 
-- `ok`: this BSSID was observed in a complete scan.
-- `partial`: it was observed, but the overall scan lost/capped/invalidated observations.
-- `not_seen`: it was not observed in a completed scan with no known loss.
-- `unknown`: it was not observed, but the scan was incomplete.
-- `error:<code>`: the scan failed; the app pauses for an explicit retry.
+- `ok`: selected BSSID observed in a scan with no known observation loss.
+- `partial`: observed, but other observations were dropped/capped/invalid.
+- `not_seen`: absent from the completed scan's received observations.
+- `unknown`: not observed, with known observation loss.
+- `error:<code>`: scan failed; monitoring pauses for an explicit retry.
 
-`not_seen` is **not** an out-of-range or absence guarantee. RSSI varies with walls,
-antenna orientation and interference. It does not give an accurate distance.
-The bar is an approximate visual scale (-100 dBm = empty, -30 dBm = full), not
-throughput or a calibrated quality percentage. The graph clips vertically to
--100..-20 dBm while the numeric readout and CSV retain the measured value.
+`not_seen` is not an out-of-range or absence guarantee. RSSI is **not distance**.
+The bar is an approximate scale (-100 dBm empty, -30 dBm full), not a calibrated
+quality/throughput percentage. Graph Y values clip to -100..-20 dBm; numeric
+readings and CSV preserve the actual measured values.
 
-## Controls
-
-- **Touch:** tap the visible toolbar and result rows; swipe up/down through long
-  lists. Exit/Back remain available when firmware Back swipe is disabled.
-- **X4 Classic:** initial Confirm activates Scan. Left/Right move through the
-  toolbar and results, Confirm activates the selection, and page buttons move
-  by a list page. Back returns or exits. The selected item is filled black.
-- The firmware's reserved Back-edge swipe remains firmware-owned; there are no
-  hidden footer hitboxes. Drawing never polls radio events.
-
-## SD files
+## SD persistence and compatibility
 
 ```text
 /.smudge/saved_data/wifi_analyzer/last_scan.csv
-/.smudge/saved_data/signal_meter/target.dat
-/.smudge/saved_data/signal_meter/signal.csv
+/.smudge/saved_data/wifi_analyzer/target.dat
+/.smudge/saved_data/wifi_analyzer/signal.csv
 ```
 
-Exports use the runtime's transactional overwrite API: write, sync, close and
-publish, with recovery after an interrupted replacement. Failed export writes
-leave the old file intact and show a retry message. The target preference uses
-`PUNRI_SIGNAL_TARGET_1`, then BSSID and SSID on separate lines; it is bounded to
-128 bytes. Invalid preferences are ignored with a log message so another target
-can be selected. No reader/EPUB cache reset is needed.
+The original Analyzer app ID and `last_scan.csv` path remain unchanged. Target
+preferences use the existing `PUNRI_SIGNAL_TARGET_1` format, followed by BSSID and
+name on separate lines (128-byte maximum). Invalid preferences are logged and
+ignored without rewriting them. Targets are written only on selection or an
+explicit failed-write retry; history is session-only unless exported.
 
-CSV signal timestamps are **milliseconds of uptime**, not UTC. Exports mark
-`simulated=true` for replay. CSV quotes are escaped, unsafe SSID control/invalid
-UTF-8 bytes are replaced for display/export, and potentially formula-like SSIDs
-are prefixed with an apostrophe to protect spreadsheet imports. Authentication
-codes are the SDK values, not inferred security guarantees.
+**Existing Signal Meter users:** its package, ID and files are retained. The
+combined app cannot read another app's private SD directory. To migrate a target,
+back up both directories and copy
+`/.smudge/saved_data/signal_meter/target.dat` to the Analyzer's `target.dat` while
+both apps are closed. This is optional; selecting the AP again works as well.
+Old `signal_meter/signal.csv` exports are not moved or deleted. Installing the
+combined Analyzer does not automatically uninstall an existing Signal Meter.
 
-## Radio ownership and resource bounds
+Writes use `punri.write_file()`'s transactional replace/sync/close operation.
+Failures preserve the previous file and show a retry message. A failed target
+write stays marked `TARGET NOT SAVED`; signal Export retries it first. Back up
+exports before replacing a snapshot you need. Signal CSV timestamps are scan-
+completion milliseconds of uptime, not UTC; replay rows mark `simulated=true`. Names are UTF-8 sanitized,
+quotes escaped, and formula-like spreadsheet cells prefixed with an apostrophe.
+No EPUB/reader cache reset is needed.
 
-- Wi-Fi Analyzer closes the radio after a single scan completes.
-- Signal Meter reuses its session between automatic scans to avoid repeatedly
-  allocating native session buffers. Pause, navigation, exit, script errors and
-  physical sleep release the session. The resident foreground radio session
-  inhibits automatic sleep; leave or pause the meter when finished.
-- Native Wi-Fi activities are not taken over. If another activity owns Wi-Fi,
-  `busy` is shown; leave that activity and retry.
-- There are 32 reusable AP records and 60 reusable sample records, allocated at
-  initialization because they are mutable, per-run state. A bounded SSID scratch
-  table is reused. No extra framebuffer or application FreeRTOS task is added.
-- Polling processes at most eight events per update. A new scan starts only after
-  the reserved `complete/error` event is consumed; `scan_complete` alone is not
-  sufficient. SDK observations can be dropped without losing that terminal event.
-- Lua allocations are bounded by the existing VM. SDK radio stacks and buffers
-  additionally consume native memory outside the Lua budget, so plentiful PSRAM
-  does not prove internal-RAM or largest-free-block headroom.
+## Controls and resources
 
-### Sampled simulator memory
+- Touch: visible toolbar/result rows; swipe up/down for lists and Info pages.
+  Exit/Back do not depend on firmware swipe-to-back being enabled.
+- Buttons: Confirm initially scans; Left/Right traverse toolbar/results;
+  Confirm activates; page buttons move list/Info pages; Back returns/exits.
+  Duplicate direction/page callbacks for one release are handled only once.
+- Single surveys close their radio session after completion. Monitoring reuses
+  the session between scans; pause/navigation/exit/error/physical sleep release
+  it. A resident radio session inhibits automatic sleep, so pause when finished.
+- Existing native radio owners are not taken over: `busy` is recoverable.
+- Allocate 32 mutable observation records and 60 sample records once at startup;
+  reuse them rather than adding records every scan. Poll at most eight events per
+  update. `scan_complete` alone is not permission to reuse a pending request.
+- The app adds no framebuffer or FreeRTOS task. SDK stacks/queues consume native
+  memory outside the Lua budget; inspect internal heap and largest free blocks
+  on hardware. Bluetooth's shared-controller copy remains standalone.
 
-With the normal 2 MB Lua budget and a minimal measurement callback, X4 Classic
-and X4 Pro replay runs reported:
+### Sampled replay costs
 
-| App | Package bytes | Lua after initialization | Lua during replay UI |
+With one virtual peer and three signal samples, instrumented X4 Classic and
+X4 Pro simulator runs reported:
+
+| App | Package bytes | Lua at initialization | Sampled Lua during UI |
 | --- | ---: | ---: | ---: |
-| Wi-Fi Analyzer | 18,165 | 68 KB | 69–72 KB |
-| Signal Meter | 22,866 | 81 KB | 82–89 KB |
+| Combined Wi-Fi Analyzer | 47,213 (includes retained legacy modules) | 107 KB | 108–110 KB |
+| Bluetooth Analyzer | 36,122 | 107 KB | 108–111 KB |
 
-The replay fixture has one AP and three signal samples. These are sampled live
-Lua allocations, **not** compiler/search peaks, maximum-capacity data costs,
-physical internal-RAM/PSRAM usage or largest-free-block measurements. Native
-app tests separately exercise the 32-AP and 60-sample capacity bounds.
+These are sampled live Lua allocations with a small logging wrapper, **not**
+compiler peaks, 32-peer/512-byte payload peaks, hardware internal-RAM/PSRAM usage,
+or largest-free-block measurements. Native tests exercise the bounded capacity
+separately; hardware memory acceptance is still required.
 
 ## Verification
 
-Run these commands from the **PUNRI firmware checkout**. In a standalone app
-checkout, use `python3 scripts/generate_app_catalog.py --check` for its root
-catalog and use the firmware checkout for native/simulator tests.
+From the firmware checkout:
 
 ```bash
-python3 scripts/generate_app_catalog.py --check
 python3 test/lua_apps/test_packages.py
-pio run -e host-unit-tests -t unit-tests
-pio run -e x4-classic-simulator
+cmake -S test -B /tmp/punri-radio-analyzers-tests
+cmake --build /tmp/punri-radio-analyzers-tests --parallel 4 --target \
+  LuaRunnerNativeOomTest LuaSandboxTest RadioTest RadioPlatformLifetimeTest
+/tmp/punri-radio-analyzers-tests/lua_sandbox/LuaRunnerNativeOomTest
+/tmp/punri-radio-analyzers-tests/lua_sandbox/LuaSandboxTest
+/tmp/punri-radio-analyzers-tests/radio/RadioTest
+/tmp/punri-radio-analyzers-tests/radio/RadioPlatformLifetimeTest
 pio run -e x4-pro-simulator
+pio run -e x4-classic-simulator
+python3 scripts/test_radio_analyzers_simulator.py
 ```
 
-For manual simulator use, copy the app directories under its `fs_` tree and set
-`RADIO_SIMULATION=1` before starting the matching simulator binary. Without that
-opt-in, Wi-Fi is unavailable in the simulator. Replay is visibly labelled
-**SIMULATED** and produces a fixed virtual AP, not real RSSI or RF reception.
-
-Native tests cover BSSID deduplication, bounded lists/polling/history, incomplete
-scans, cancellation, scheduling, malformed SSIDs, CSV safety, save failures,
-button-only controls and landscape layouts. Production radio tests also check
-ownership, queue overflow, terminal-event ordering and valid replay BSSIDs.
-See [radio API](docs/radio-api.md) for the underlying contract.
+Package validation builds a temporary integrity-bound catalog without altering
+`apps/catalog.json`. Full catalog checks (also included in the complete host-unit-tests gate) remain
+pending until the separately authorized release updates the catalog.
+Native tests cover scan/history bounds, BSSID identity, terminal ordering,
+cancellation, gaps/statistics, CSV safety, failed writes, saved targets, button
+controls and landscape layouts. Simulator replay requires `RADIO_SIMULATION=1`
+and displays **SIMULATED**; it is not RF validation.
 
 ### Hardware acceptance
 
-On a supported device with Lua API 3:
+1. On a supported device, compare a known router's SSID/BSSID/channel to the
+   scan. With two same-SSID APs, verify only the selected BSSID enters history.
+2. Change distance/orientation and check RSSI/graph responses without expecting
+   precise distance or monotonic changes. Check Channels and Info as well.
+3. Pause during a scan, resume, then leave and open a book. Verify scanning stops,
+   normal sleep returns, and native Wi-Fi flows can acquire the radio.
+4. Test visible controls with Back swipe disabled on touch hardware; repeat
+   using only physical buttons/page keys on X4 Classic. Try normal and reversed
+   side-button layouts: one release should cause only one menu page action.
+5. Export and inspect SD CSVs; relaunch and verify the target opens paused.
+   On a backed-up write-protected/full test card, verify retry messages and that
+   old exports survive failures. Test optional legacy-target copying separately.
+6. Inspect serial errors, task stack watermarks, internal heap/largest block and
+   PSRAM/largest block during scans and after closing.
 
-1. Use a known router; scan and compare its SSID/BSSID/channel to the router's
-   configuration. If possible, use two APs with the same SSID and verify the
-   meter follows the selected BSSID, not both of them.
-2. Move nearer/farther and change orientation. Confirm the RSSI/readout/graph
-   respond without expecting a precise distance or a guaranteed monotonic change.
-3. Pause while scanning, resume, then leave the app and open a book. Confirm
-   automatic scanning stops, normal sleep returns and another Wi-Fi flow works.
-4. Disable Back swipe on Sticky/X4 Pro and verify all visible touch controls.
-   On X4 Classic, complete the same flow using only physical buttons/page keys.
-5. Export, mount the SD card and inspect CSV values. Reboot and confirm the
-   remembered target opens paused. Use a full/write-protected test card to verify
-   retry messages and preservation of the old export; back up data first.
-6. Check serial errors, task stack high-water marks, internal heap/largest block
-   and PSRAM/largest block while scanning and after closing the app.
-
-Simulator/native results are not RF, physical SD durability, radio coexistence,
-battery-consumption or hardware memory-headroom validation.
+Native/simulator tests do not validate physical RF, SD durability, radio
+coexistence, battery consumption or hardware memory headroom.

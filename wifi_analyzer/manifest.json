@@ -3,7 +3,7 @@
   "name": "Wi-Fi Analyzer",
   "version": "1.0.0",
   "author": "PUNRI",
-  "description": "Scan nearby Wi-Fi networks, compare RSSI and channels, and export observations to SD.",
+  "description": "Wi-Fi discovery, channel charts, selected-BSSID RSSI monitoring, signal history and SD-card CSV exports.",
   "entry": "main.lua",
   "min_api": 3,
   "capabilities": ["buttons", "storage"]

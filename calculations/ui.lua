@@ -133,7 +133,9 @@ return function(I, P, N, D)
                 U.controls[#U.controls + 1] = {id = "field", value = {p = node.p, q = node.q}, label = box.text, x = x, y = y, w = box.w, h = box.h}
             end
             if node.k == "slot" or selected then U.rect(x, y, box.w, box.h, false, selected and 2 or 1) end
-            if box.text ~= "" then centered(x, y, box.w, box.h, box.text, box.font) end
+            -- A math atom is measured with six pixels of padding. Ordinary
+            -- buttons reserve ten; using that wrapper here ellipsizes digits.
+            if box.text ~= "" then U.text(x + 3, y + (box.h - height(box.font)) // 2, box.text, box.font) end
         elseif box.items then
             for _, item in ipairs(box.items) do draw_model(item, x, y + (box.h - item.h) // 2, clip, editor); x = x + item.w + 2 end
         elseif box.k == "fraction" then

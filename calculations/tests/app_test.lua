@@ -17,6 +17,7 @@ punri = {
     text_width = function(text,font) return #tostring(text)*sizes[font or "ui10"][1] end,
     line_height = function(font) return sizes[font or "ui10"][2] end,
     wrapped_text = function(text,w,font,style,maxlines)
+        if maxlines==1 and #text*sizes[font or "ui10"][1]>w then return {"..."} end
         local out, chars = {}, math.max(1,w//sizes[font or "ui10"][1])
         for i=1,math.min(#text,chars*(maxlines or 3)),chars do out[#out+1]=text:sub(i,i+chars-1) end
         return out
@@ -47,6 +48,18 @@ app:init(); geometry()
 app:button("confirm",true);check(app.state.editor.source=="7","Button Confirm enters a digit exactly once")
 tap("key","Clear");tap("template","fraction");tap("key","3");tap("action","next_field");tap("key","4");tap("key","=")
 check(app.state.answer=="0.75","Touch fraction result")
+for _,field in ipairs(UI.controls) do
+    if field.id=="field" then
+        local expected=app.state.editor.source:sub(field.value.p,field.value.q-1)
+        if expected~="?" then
+            local found=false
+            for _,cmd in ipairs(UI.commands) do
+                if cmd[1]=="text" and cmd[4]==expected and cmd[2]>=field.x and cmd[2]<field.x+field.w and cmd[3]>=field.y and cmd[3]<field.y+field.h then found=true end
+            end
+            check(found,"Natural field must render its actual value, not an ellipsis: "..expected)
+        end
+    end
+end
 tap("rotate",nil);geometry();check(orientation=="landscape" and app.state.editor.source=="(3)/(4)","Rotation preserves work")
 tap("view","functions");tap("edit_function",1);Editor.set(app.state.editor,"sin(x)");app:dispatch("key","=")
 check(app.state.functions[1].source=="sin(x)" and app.state.editor.source=="(3)/(4)","Function editor preserves calculator draft")

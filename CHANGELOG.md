@@ -12,6 +12,11 @@
 - Statistics, small-matrix operations, complex polar conversion, unsigned base
   conversion and exact unit ratios, with retryable saves and protected future schemas.
 
+### Fixed
+
+- Render each measured natural-input value directly so narrow numerator,
+  denominator and exponent fields show their digits instead of ellipses.
+
 ## Screen Ruler 0.1.0 — 2026-10-25 (local, unpublished)
 
 ### Added

@@ -1097,8 +1097,8 @@
         },
         {
           "path": "wifi_scan.lua",
-          "size": 5908,
-          "sha256": "63fc4c01571921b05069fba48a6b754e66eacd961f551d55a3b7651ebf64961e"
+          "size": 5976,
+          "sha256": "fd0be74ad359044020cfbe930f02b47a1805689dc55f477b89d9640254dfc9dd"
         },
         {
           "path": "wifi_ui.lua",
@@ -1139,13 +1139,13 @@
         },
         {
           "path": "main.lua",
-          "size": 11222,
-          "sha256": "59e6da1f53b539ceb4cb2e187d3016490c389f110c84adc907a849cfd0fd9d49"
+          "size": 11325,
+          "sha256": "13a11459d27d232af4424a34a3c50908f3e246ea0e60c103deeff4a297abaee0"
         },
         {
           "path": "wifi_scan.lua",
-          "size": 5908,
-          "sha256": "63fc4c01571921b05069fba48a6b754e66eacd961f551d55a3b7651ebf64961e"
+          "size": 5976,
+          "sha256": "fd0be74ad359044020cfbe930f02b47a1805689dc55f477b89d9640254dfc9dd"
         },
         {
           "path": "wifi_ui.lua",

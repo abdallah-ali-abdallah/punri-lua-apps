@@ -7,6 +7,7 @@ local next_scan, last_redraw = 0, 0
 -- Reuse 60 sample records; the oldest completed scan is overwritten at capacity.
 local history, head, count, minimum, maximum, average, valid_count = {}, 1, 0, nil, nil, nil, 0
 local labels = {"Exit", "Scan", "Target", "Export"}
+local graph_levels = {-20, -60, -100}
 
 local function refresh()
     punri.request_update()
@@ -122,7 +123,7 @@ end
 local function draw_graph(y, height)
     local x, width = ui.margin + 36, ui.w - ui.margin * 2 - 48
     punri.rect(x, y, width, height, false)
-    for _, level in ipairs({-20, -60, -100}) do
+    for _, level in ipairs(graph_levels) do
         local py = y + math.floor((-20 - level) / 80 * height)
         punri.text(x - 6, py - 7, tostring(level), "small", "regular", "right")
         if level == -60 then punri.line(x, py, x + width, py) end
@@ -131,7 +132,8 @@ local function draw_graph(y, height)
     for i = 1, count do
         local row = sample(i)
         if row.rssi then
-            local px = x + math.floor((i - 1) / 59 * (width - 2)) + 1
+            local px = count == 1 and x + math.floor(width / 2) or
+                x + math.floor((i - 1) / (count - 1) * (width - 2)) + 1
             local value = math.max(-100, math.min(-20, row.rssi))
             local py = y + math.floor((-20 - value) / 80 * (height - 2)) + 1
             if previous_x then punri.line(previous_x, previous_y, px, py, 2) end

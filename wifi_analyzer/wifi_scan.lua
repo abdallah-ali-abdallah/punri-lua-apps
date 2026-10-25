@@ -2,7 +2,7 @@
 -- 32 reusable AP records bound app memory. SDK queue overflow is reported separately.
 local S = {rows = {}, channels = {}, count = 0, dropped = 0, capped = 0, invalid = 0,
     request = nil, cancelling = false, supported = false, simulated = false, status = "Ready", dirty = false}
-local pool, dropped_before = {}, 0
+local pool, name_parts, dropped_before = {}, {}, 0
 local function stronger(a, b)
     if a.rssi ~= b.rssi then return a.rssi > b.rssi end
     return a.address < b.address
@@ -17,7 +17,8 @@ end
 -- before passing them to the renderer; do not turn a broadcast name into UI markup.
 function S.safe_name(name)
     name = type(name) == "string" and name:sub(1, 32) or ""
-    local parts, at = {}, 1
+    local parts, at = name_parts, 1
+    for i = 1, #parts do parts[i] = nil end
     while at <= #name do
         local b = name:byte(at)
         local n = b < 128 and 1 or (b >= 194 and b <= 223 and 2 or

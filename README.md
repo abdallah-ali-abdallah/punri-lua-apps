@@ -697,7 +697,8 @@ capabilities vary by build; desktop replay is explicitly marked as simulated.
 ## Bundled Applications
 
 The following applications are included in this local repository. Published catalog packages remain separate release artifacts.
-For the new offline apps, see [installation, controls, SD storage and verification](offline-apps.md):
+For the new offline apps, see [installation, controls, SD storage and verification](offline-apps.md).
+For Wi-Fi scanning and RSSI measurement, see [Wi-Fi Analyzer and Signal Meter](wifi-tools.md):
 
 | App ID | Name | Category | Description |
 |---|---|---|---|
@@ -705,6 +706,8 @@ For the new offline apps, see [installation, controls, SD storage and verificati
 | `hourglass` | **Hourglass** | Productivity | Expressive countdown timer with dynamic parabolic sand funnel physics, full neck passage, bottom sand accumulation mound, and auto-sleep prevention. |
 | `stopwatch` | **Stopwatch** | Productivity | Pixel cartoon stopwatch character with animated mechanical crown plunger, facial expressions, digital LCD window (`MM:SS.cc`), lap split recording, and auto-sleep prevention. |
 | `solitaire` | **Solitaire** | Games | Classic 7-column Klondike Solitaire card game optimized for e-paper with draw-1 and draw-3 modes. |
+| `wifi_analyzer` | **Wi-Fi Analyzer** | Utilities | Nearby SSID/BSSID/RSSI/channel discovery, channel-count charts and SD-card CSV export. |
+| `signal_meter` | **Signal Meter** | Utilities | Selected-BSSID RSSI readout, 60-scan history, min/average/max, pause/resume and SD-card CSV export. |
 | `todo` | **To-do List** | Productivity | Offline tasks with a button/touch keyboard, completion filters and transactional SD saving. |
 | `notepad` | **Notepad** | Productivity | Multiline notes with on-device editing, paged reading and SD-card plain-text exports. |
 | `tictactoe` | **Tic-tac-toe** | Games | Unbeatable solo opponent or local two-player mode with session scores. |

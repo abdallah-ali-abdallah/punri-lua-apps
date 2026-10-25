@@ -1,0 +1,10 @@
+{
+  "id": "world_clock",
+  "name": "World Clock",
+  "version": "0.1.0",
+  "author": "PUNRI contributors",
+  "description": "Offline world times with bounded IANA timezone data.",
+  "entry": "main.lua",
+  "min_api": 3,
+  "capabilities": ["buttons", "storage"]
+}

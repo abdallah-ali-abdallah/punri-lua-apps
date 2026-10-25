@@ -50,6 +50,18 @@
 - Measured font alignment keeps labels, results and keypad text inside their controls in portrait and landscape layouts.
 - Touch devices expose visible Exit and picker Back controls; X4 Classic continues to use its physical footer.
 
+## World Clock 0.1.0 — 2026-10-25
+
+### Added
+
+- Local-only offline World Clock preview with a marker map, 16 cities, Home comparison, favorites, city details, and X4 Classic button controls.
+- Bounded IANA tzdata 2026d transitions for 2024–2040, including independent DST vectors and explicit trusted-clock handling.
+
+### Fixed
+
+- Failed preference writes remain retryable without replacing the prior saved settings; corrupt saved state remains untouched.
+- Use font-measured, UTF-8-safe control labels and dynamic two-line row heights so selected cities, offset values, retry actions, and long storage-recovery actions remain visible in portrait and landscape.
+
 ## To-do List 1.1.0 — 2026-10-25
 
 ### Added

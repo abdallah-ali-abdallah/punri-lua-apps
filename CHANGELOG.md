@@ -8,7 +8,7 @@
   Radio Scanner, and include them in their App Store packages. Patch versions
   let existing installations receive the icons through Update.
 - Audit all 26 Lua applications: each now provides a nonblank 32×32 icon,
-  and all 25 catalog packages include the icon with its size and SHA-256.
+  and all 26 catalog packages include the icon with its size and SHA-256.
 
 ## Calculations 0.1.0 — 2026-10-26
 
@@ -21,6 +21,8 @@
   approximate graph previews, tracing, zoom/pan and bracketed equation solving.
 - Statistics, small-matrix operations, complex polar conversion, unsigned base
   conversion and exact unit ratios, with retryable saves and protected future schemas.
+- Register Calculations in the App Store catalog with all runtime modules and
+  its icon, including verified package sizes and SHA-256 hashes.
 
 ### Fixed
 

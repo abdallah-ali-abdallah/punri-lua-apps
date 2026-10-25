@@ -1,5 +1,17 @@
 # Changelog
 
+## QR Cards Share — 2026-10-26 (unreleased fix)
+
+### Fixed
+
+- Add visible Add card / Save changes, Cancel, Previous and Next controls to
+  card forms, with readable highlighted fields and a retryable save error.
+- Make card creation, saved-card navigation, editing, Back and Exit reachable
+  through both touch controls and physical buttons. Wi-Fi options toggle
+  directly and sharing offers a visible Delete Wi-Fi action.
+- Keep library rows and long action lists clear of navigation controls in
+  portrait and landscape.
+
 ## App icons 0.1.1 — 2026-10-26
 
 ### Fixed

@@ -39,14 +39,20 @@ end
 local function selected_card(app) return app.cards[app.selection] end
 
 local function normalise_selection(app)
-    if #app.cards == 0 then app.selection = 1 else app.selection = math.max(1, math.min(#app.cards, app.selection)) end
+    -- New (0), saved cards (1..n), then Actions (n+1) are all
+    -- reachable with the same Previous/Next buttons shown in the footer.
+    app.selection = math.max(0, math.min(#app.cards + 1, app.selection))
 end
 
 local function enter_preview(app)
-    if #app.cards == 0 then app.notice = "Create a card first."; return end
-    normalise_selection(app)
+    if not selected_card(app) then app.notice = "Select a saved card first."; return end
     app.screen = "preview"
     app.notice = nil
+end
+
+local function open_actions(app)
+    if #app.cards > 0 and not selected_card(app) then app.selection = #app.cards end
+    app.screen, app.notice = "actions", nil
 end
 
 local function begin_form(app, kind, source)
@@ -59,6 +65,16 @@ local function begin_form(app, kind, source)
     app.form_index, app.pending_field = 1, nil
     app.screen = "form"
     app.notice = nil
+end
+
+local function cancel_form(app)
+    app.draft, app.edit_index, app.pending_field = nil, nil, nil
+    app.screen, app.notice = "library", "Draft discarded."
+end
+
+local function move_form(app, step)
+    -- Save is a focusable final control; moving past a field never saves it.
+    app.form_index = math.max(1, math.min(#Cards.field_names(app.draft.type) + 1, app.form_index + step))
 end
 
 local function show_qr(app)
@@ -80,7 +96,8 @@ end
 
 local function finish_wifi_share(app)
     local payload = Cards.payload(selected_card(app))
-    local code, error = payload and QR.encode(payload) or nil, "No Wi-Fi payload"
+    local code, error
+    if payload then code, error = QR.encode(payload) else error = "No Wi-Fi payload" end
     if not code then app.notice = error; app.screen = "preview"; return end
     app.qr, app.screen, app.notice = code, "qr", nil
     set_sleep(true)
@@ -104,6 +121,7 @@ local function delete_selected(app)
     if not app.confirm_delete then
         app.screen = app.return_screen or "preview"
         app.notice = "Kept the card."
+        set_sleep(app.screen == "qr")
         return
     end
     local next = copy_cards(app.cards)
@@ -138,6 +156,14 @@ local function keyboard_for_current_field(app)
     local fields = Cards.field_names(app.draft.type)
     local field = fields[app.form_index]
     if not field then return end
+    if field == "security" then
+        local next_value = {WPA = "WEP", WEP = "Open", Open = "WPA"}
+        app.draft.fields.security = next_value[app.draft.fields.security] or "WPA"
+        return
+    elseif field == "hidden" then
+        app.draft.fields.hidden = app.draft.fields.hidden == "true" and "false" or "true"
+        return
+    end
     local title = Cards.display_field(field)
     if not punri.keyboard(title, app.draft.fields[field], Cards.field_limit(field), false) then
         app.notice = "Could not open the keyboard. Try again."
@@ -156,7 +182,7 @@ function Input.keyboard_result(app, value, cancelled)
     else
         app.draft.fields[field] = value
         local total = #Cards.field_names(app.draft.type)
-        if app.form_index < total then app.form_index = app.form_index + 1 end
+        if app.form_index <= total then app.form_index = app.form_index + 1 end
         app.notice = nil
     end
     redraw()
@@ -165,13 +191,22 @@ end
 local function handle_target(app, target)
     if not target then return end
     local kind, value = target:match("^([^:]+):?(.*)$")
-    if kind == "open" then app.selection = tonumber(value); enter_preview(app)
+    if kind == "back" then Input.button(app, "back"); return
+    elseif kind == "previous" then Input.button(app, "up"); return
+    elseif kind == "next" then Input.button(app, "down"); return
+    elseif kind == "open" then app.selection = tonumber(value); enter_preview(app)
     elseif kind == "new" then app.screen, app.notice = "type", nil
-    elseif kind == "actions" then app.screen, app.notice = "actions", nil
+    elseif kind == "actions" then open_actions(app)
     elseif kind == "type" then begin_form(app, value)
     elseif kind == "action" then app.action_selection = tonumber(value); action(app, app.action_selection)
     elseif kind == "show_qr" then show_qr(app)
     elseif kind == "field" then app.form_index = tonumber(value); keyboard_for_current_field(app)
+    elseif kind == "save" then save_draft(app)
+    elseif kind == "cancel" then cancel_form(app)
+    elseif kind == "edit" then begin_form(app, selected_card(app).type, selected_card(app))
+    elseif kind == "delete_wifi" then
+        app.confirm_delete, app.return_screen, app.screen = false, "qr", "confirm_delete"
+        set_sleep(false)
     elseif kind == "keep" then app.confirm_delete = false; delete_selected(app)
     elseif kind == "delete" then app.confirm_delete = true; delete_selected(app)
     elseif kind == "privacy_continue" then finish_wifi_share(app)
@@ -180,17 +215,20 @@ local function handle_target(app, target)
 end
 
 function Input.tap(app, x, y)
+    if app.pending_field then return end
     handle_target(app, UI.hit(x, y))
 end
 
 function Input.button(app, button)
+    if app.pending_field then return end
     if app.screen == "library" then
         if button == "back" then punri.exit(); return end
-        if button == "confirm" then enter_preview(app)
-        elseif button == "left" or button == "page_back" then app.selection = app.selection - 1; normalise_selection(app)
-        elseif button == "right" or button == "page_forward" then app.selection = app.selection + 1; normalise_selection(app)
-        elseif button == "up" then app.screen = "actions"
-        elseif button == "down" then app.screen = "type"; app.notice = nil end
+        if button == "confirm" then
+            if app.selection == 0 then app.screen, app.notice = "type", nil
+            elseif app.selection == #app.cards + 1 then open_actions(app)
+            else enter_preview(app) end
+        elseif button == "left" or button == "up" or button == "page_back" then app.selection = app.selection - 1; normalise_selection(app)
+        elseif button == "right" or button == "down" or button == "page_forward" then app.selection = app.selection + 1; normalise_selection(app) end
     elseif app.screen == "type" then
         if button == "back" then app.screen = "library"
         elseif button == "left" or button == "up" or button == "page_back" then app.type_selection = math.max(1, app.type_selection - 1)
@@ -208,14 +246,15 @@ function Input.button(app, button)
         elseif button == "right" or button == "up" then app.screen = "actions" end
     elseif app.screen == "form" then
         local total = #Cards.field_names(app.draft.type)
-        if button == "back" then app.draft, app.pending_field, app.screen, app.notice = nil, nil, "library", "Draft discarded."
-        elseif button == "confirm" then keyboard_for_current_field(app)
-        elseif button == "left" or button == "up" or button == "page_back" then app.form_index = math.max(1, app.form_index - 1)
+        if button == "back" then cancel_form(app)
+        elseif button == "confirm" then
+            if app.form_index == total + 1 then save_draft(app) else keyboard_for_current_field(app) end
+        elseif button == "left" or button == "up" or button == "page_back" then move_form(app, -1)
         elseif button == "right" or button == "down" or button == "page_forward" then
-            if app.form_index < total then app.form_index = app.form_index + 1 else save_draft(app) end
+            move_form(app, 1)
         end
     elseif app.screen == "confirm_delete" then
-        if button == "back" then app.screen = app.return_screen or "preview"; app.notice = "Kept the card."
+        if button == "back" then app.screen = app.return_screen or "preview"; app.notice = "Kept the card."; set_sleep(app.screen == "qr")
         elseif button == "left" or button == "page_back" then app.confirm_delete = false
         elseif button == "right" or button == "page_forward" then app.confirm_delete = true
         elseif button == "confirm" then delete_selected(app) end
@@ -225,7 +264,10 @@ function Input.button(app, button)
         if button == "back" then app.screen = "preview" elseif button == "confirm" then finish_wifi_share(app) end
     elseif app.screen == "qr" then
         if button == "back" or button == "confirm" then leave_qr(app); app.screen = "preview"
-        elseif button == "left" and selected_card(app).type == "wifi" then app.confirm_delete, app.return_screen, app.screen = false, "qr", "confirm_delete" end
+        elseif button == "left" and selected_card(app).type == "wifi" then
+            app.confirm_delete, app.return_screen, app.screen = false, "qr", "confirm_delete"
+            set_sleep(false)
+        end
     end
     redraw()
 end

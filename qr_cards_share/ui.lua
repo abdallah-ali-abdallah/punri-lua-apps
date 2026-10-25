@@ -92,6 +92,24 @@ local function box_label(x, y, width, height, label, font, style, ink)
     punri.text(x + floor(width / 2), line_y(y, height, font), clip(label, width - 20, font, style), font, style, "center", ink)
 end
 
+local function button(id, x, y, width, label, selected)
+    punri.rounded_rect(x, y, width, 44, 8, selected or false, 2, true)
+    box_label(x, y, width, 44, label, "ui10", "bold", not selected)
+    add_target(id, x, y, width, 44)
+end
+
+local function footer_y(height, metrics)
+    return height - (metrics.button_hints_height or 40) - 56
+end
+
+local function button_row(items, width, y)
+    local gap, margin = 8, 16
+    local cell = floor((width - margin * 2 - (#items - 1) * gap) / #items)
+    for index, item in ipairs(items) do
+        button(item[1], margin + (index - 1) * (cell + gap), y, cell, item[2], item[3])
+    end
+end
+
 local function card_title(card)
     return card and card.fields and card.fields.title or ""
 end
@@ -112,12 +130,16 @@ local function draw_library(app)
         punri.centered_text(y + 72, "Choose New to create an offline QR card.", "small")
         y = y + 100
     end
-    local max_rows = height < 600 and 3 or 5
+    local button_y = footer_y(height, metrics)
+    local page_y = button_y - 52
+    local notice_y = page_y - 2 * punri.line_height("small") - 8
+    if not app.data_error then message(app, width, notice_y, 2) end
+    local max_rows = math.max(1, floor((notice_y - y) / 90))
     local start = math.max(1, math.min(app.selection - floor(max_rows / 2), math.max(1, #app.cards - max_rows + 1)))
     local finish = math.min(#app.cards, start + max_rows - 1)
     for index = start, finish do
         local card, selected = app.cards[index], index == app.selection
-        local row_height, card_height = 84, 78
+        local row_height, card_height = 90, 84
         punri.rounded_rect(14, y, width - 28, card_height, 8, selected, selected and false or 2, selected and false or true)
         local ink = selected_ink(selected)
         value_text(25, y + 5, width - 50, punri.line_height("small"), (selected and "> " or "") .. Cards.label_for(card.type), "small", "bold", ink)
@@ -126,29 +148,30 @@ local function draw_library(app)
         add_target("open:" .. index, 14, y, width - 28, card_height)
         y = y + row_height
     end
-    local button_y = height - (metrics.button_hints_height or 40) - 54
-    local button_width, right_x = floor((width - 54) / 2), width - 18 - floor((width - 54) / 2)
-    punri.rounded_rect(18, button_y, button_width, 42, 8, false, 2)
-    punri.rounded_rect(right_x, button_y, button_width, 42, 8, false, 2)
-    box_label(18, button_y, button_width, 42, "New", "ui10", "bold", true)
-    box_label(right_x, button_y, button_width, 42, "Actions", "ui10", "bold", true)
-    add_target("new", 18, button_y, button_width, 42)
-    add_target("actions", right_x, button_y, button_width, 42)
-    punri.button_hints("Exit", "Open", "Previous", "Next")
+    button_row({{"previous", "Previous"}, {"next", "Next"}}, width, page_y)
+    button_row({{"back", "Exit"}, {"new", "New card", app.selection == 0},
+        {"actions", "Actions", app.selection == #app.cards + 1}}, width, button_y)
+    local confirm = app.selection == 0 and "New" or (app.selection == #app.cards + 1 and "Actions" or "Open")
+    punri.button_hints("Exit", confirm, "Previous", "Next")
 end
 
 local function draw_type_picker(app)
-    local width, _, metrics = bounds()
+    local width, height, metrics = bounds()
     header("New QR card", "Choose type")
     UI.targets = {}
     local y = content_top(metrics)
+    local bottom = footer_y(height, metrics)
+    local notice_y = bottom - 2 * punri.line_height("small") - 8
+    local row_height = math.min(56, floor((notice_y - y - 30) / #Cards.types))
     for index, item in ipairs(Cards.types) do
         local selected = index == app.type_selection
-        punri.rounded_rect(18, y, width - 36, 56, 8, selected, selected and false or 2, selected and false or true)
-        value_text(32, y, width - 64, 56, item.label, "ui12", "bold", selected_ink(selected))
-        add_target("type:" .. item.id, 18, y, width - 36, 56)
-        y = y + 66
+        punri.rounded_rect(18, y, width - 36, row_height, 8, selected, 2, true)
+        value_text(32, y, width - 64, row_height, item.label, "ui12", "bold", selected_ink(selected))
+        add_target("type:" .. item.id, 18, y, width - 36, row_height)
+        y = y + row_height + 10
     end
+    message(app, width, notice_y, 2)
+    button_row({{"back", "Back"}}, width, bottom)
     punri.button_hints("Back", "Choose", "Previous", "Next")
 end
 
@@ -158,16 +181,21 @@ local function draw_actions(app)
     UI.targets = {}
     local choices = {"Open", "New", "Edit", "Delete", "Move up", "Move down", "Privacy", "Back"}
     local y = content_top(metrics, 10)
-    local content_bottom = height - (metrics.button_hints_height or 42) - 12
-    local gap = 5
-    local row_height = math.max(38, math.min(42, floor((content_bottom - y - gap * 7) / 8)))
-    for index, label in ipairs(choices) do
+    local bottom = footer_y(height, metrics)
+    local notice_y = bottom - 2 * punri.line_height("small") - 8
+    local row_height, gap = 42, 5
+    local count = math.max(1, floor((notice_y - y + gap) / (row_height + gap)))
+    local first = math.max(1, math.min(app.action_selection - floor(count / 2), math.max(1, #choices - count + 1)))
+    for index = first, math.min(#choices, first + count - 1) do
+        local label = choices[index]
         local selected = index == app.action_selection
         punri.rounded_rect(18, y, width - 36, row_height, 7, selected, selected and false or 2, selected and false or true)
         value_text(32, y, width - 64, row_height, label, "ui10", selected and "bold" or "regular", selected_ink(selected))
         add_target("action:" .. index, 18, y, width - 36, row_height)
         y = y + row_height + gap
     end
+    message(app, width, notice_y, 2)
+    button_row({{"back", "Back"}, {"previous", "Previous"}, {"next", "Next"}}, width, bottom)
     punri.button_hints("Back", "Choose", "Previous", "Next")
 end
 
@@ -184,22 +212,27 @@ local function draw_preview(app)
     local card = app.cards[app.selection]
     header(Cards.label_for(card.type), "Preview")
     UI.targets = {}
-    local show_height = 42
-    local show_y = height - (metrics.button_hints_height or 40) - show_height - 12
+    local show_y = footer_y(height, metrics)
+    local tools_y = show_y - 52
+    local notice_y = tools_y - 2 * punri.line_height("small") - 8
     local body_top = content_top(metrics)
-    punri.rounded_rect(16, body_top, width - 32, show_y - body_top - 12, 10, false, 2)
+    local body_bottom = notice_y - 8
+    punri.rounded_rect(16, body_top, width - 32, body_bottom - body_top, 10, false, 2)
     value_text(30, body_top + 10, width - 60, 32, card_title(card), "ui12", "bold", true)
     local y = body_top + 56
     if card.type == "emergency" then
-        y = y + wrapped_value(30, y, width - 60, card.fields.message, "ui12", "bold", 7, true) + 12
+        local count = math.max(1, floor((body_bottom - y - 8) / punri.line_height("ui12")))
+        wrapped_value(30, y, width - 60, card.fields.message, "ui12", "bold", count, true)
     else
-        for _, line in ipairs(preview_lines(card)) do
-            y = y + wrapped_value(30, y, width - 60, line, "ui10", "regular", 3, true) + 10
+        local lines = preview_lines(card)
+        for index, line in ipairs(lines) do
+            local count = math.max(1, floor((body_bottom - y - 8) / (punri.line_height("ui10") * (#lines - index + 1))))
+            y = y + wrapped_value(30, y, width - 60, line, "ui10", "regular", math.min(count, 3), true) + 6
         end
     end
-    punri.rounded_rect(24, show_y, width - 48, show_height, 8, false, 2)
-    box_label(24, show_y, width - 48, show_height, card.type == "emergency" and "Show contact QR" or "Show QR", "ui10", "bold", true)
-    add_target("show_qr", 24, show_y, width - 48, show_height)
+    message(app, width, notice_y, 2)
+    button_row({{"back", "Back"}, {"edit", "Edit"}, {"actions", "Actions"}}, width, tools_y)
+    button_row({{"show_qr", card.type == "emergency" and "Show contact QR" or "Show QR"}}, width, show_y)
     punri.button_hints("Back", "Show QR", "Edit", "Actions")
 end
 
@@ -207,10 +240,13 @@ local function draw_form(app)
     local width, height, metrics = bounds()
     local card = app.draft
     local fields = Cards.field_names(card.type)
-    header("Edit " .. Cards.label_for(card.type), string.format("%d/%d", app.form_index, #fields))
+    local save_selected = app.form_index == #fields + 1
+    header("Edit " .. Cards.label_for(card.type), save_selected and "Ready to save" or string.format("%d/%d", app.form_index, #fields))
     UI.targets = {}
     local y, row_height, gap = content_top(metrics), 58, 8
-    local notice_y = height - (metrics.button_hints_height or 42) - 2 * punri.line_height("small") - 10
+    local bottom = footer_y(height, metrics)
+    local page_y = bottom - 52
+    local notice_y = page_y - 2 * punri.line_height("small") - 8
     local rows = math.max(1, floor((notice_y - y + gap) / (row_height + gap)))
     local first = math.max(1, math.min(app.form_index - floor(rows / 2), math.max(1, #fields - rows + 1)))
     local last = math.min(#fields, first + rows - 1)
@@ -220,14 +256,16 @@ local function draw_form(app)
         local value = card.fields[field]
         local display = field == "password" and (value == "" and "(empty)" or "Saved value hidden") or (value == "" and "(empty)" or value)
         local ink = selected_ink(selected)
-        punri.rounded_rect(16, y, width - 32, row_height, 8, selected, selected and false or 2, ink)
+        punri.rounded_rect(16, y, width - 32, row_height, 8, selected, 2, true)
         value_text(28, y + 5, width - 56, punri.line_height("small"), Cards.display_field(field), "small", "bold", ink)
         value_text(28, y + 7 + punri.line_height("small"), width - 56, punri.line_height("ui10"), display, "ui10", "regular", ink)
         add_target("field:" .. index, 16, y, width - 32, row_height)
         y = y + row_height + gap
     end
     message(app, width, notice_y, 2)
-    punri.button_hints("Cancel", "Edit", "Previous", "Next/Save")
+    button_row({{"previous", "Previous"}, {"next", "Next"}}, width, page_y)
+    button_row({{"cancel", "Cancel"}, {"save", app.edit_index and "Save changes" or "Add card", save_selected}}, width, bottom)
+    punri.button_hints("Cancel", save_selected and "Save" or "Edit", "Previous", "Next")
 end
 
 local function draw_confirmation(app)
@@ -260,11 +298,10 @@ local function draw_privacy(app, pre_share)
     for i, line in ipairs(wrapped.lines) do punri.text(25, body_top + (i - 1) * punri.line_height("ui10"), line, "ui10") end
     if pre_share then
         local button_y = height - (metrics.button_hints_height or 40) - 46 - 12
-        punri.rounded_rect(25, button_y, width - 50, 46, 8, false, 2)
-        box_label(25, button_y, width - 50, 46, "I understand — show QR", "ui10", "bold", true)
-        add_target("privacy_continue", 25, button_y, width - 50, 46)
+        button_row({{"back", "Back"}, {"privacy_continue", "Show QR"}}, width, button_y)
         punri.button_hints("Back", "Continue", "", "")
     else
+        button_row({{"back", "Back"}}, width, footer_y(height, metrics))
         punri.button_hints("Back", "", "", "")
     end
 end
@@ -285,9 +322,11 @@ local function draw_qr(app)
     local bottom = done_y - 10
     local available = math.max(0, math.min(width - 24, bottom - top))
     local scale = floor(available / (code.size + 8))
-    punri.rounded_rect(24, done_y, width - 48, done_height, 8, false, 2)
-    box_label(24, done_y, width - 48, done_height, "Done", "ui10", "bold", true)
-    add_target("done_qr", 24, done_y, width - 48, done_height)
+    if card.type == "wifi" then
+        button_row({{"done_qr", "Done"}, {"delete_wifi", "Delete Wi-Fi"}}, width, done_y)
+    else
+        button_row({{"done_qr", "Done"}}, width, done_y)
+    end
     if scale < 1 then
         punri.centered_text(top + 20, "Not enough space for this QR layout", "ui10", "bold")
         punri.button_hints("Done", "", "", "")

@@ -13,6 +13,7 @@ APP = {
 function on_init()
     local cards, error = Storage.load()
     if cards then APP.cards = cards else APP.cards, APP.data_error, APP.notice = {}, error, error end
+    APP.selection = #APP.cards == 0 and 0 or 1
 end
 
 function on_draw()

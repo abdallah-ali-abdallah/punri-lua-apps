@@ -6,6 +6,7 @@
 
 - Quick actions to mark all tasks complete or in progress, or clear the list after confirmation.
 - Completion percentage and checked/unchecked counts across all tasks, including filtered views.
+- Preserve the concurrently published firmware-keyboard integration, with the existing text-entry fallback on older firmware.
 
 ### Fixed
 
@@ -33,7 +34,7 @@
 
 ### Fixed
 
-- Refreshed the integrity record for the already-published shared organizer in Notepad; its version and behavior are unchanged.
+- Refreshed integrity records for the already-published organizer and text-editor helpers in Notepad; its version remains unchanged. The concurrent firmware-keyboard source update is preserved rather than overwritten.
 
 ### Verification limits
 

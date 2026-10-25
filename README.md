@@ -165,15 +165,21 @@ function on_button(btn, pressed)
 end
 ```
 
-### `on_touch(event, x, y)` *(Touch-Enabled Devices)*
-Called on touch events on supported hardware (e.g. Seeed reTerminal Sticky, Xteink X4 Pro). `event` is `"down"`, `"move"`, or `"up"`:
+### `on_tap(x, y)` *(Touch-Enabled Devices)*
+Called once for each completed tap on supported hardware (e.g. Seeed reTerminal
+Sticky, Xteink X4 Pro). Use this for ordinary button hit testing:
 ```lua
-function on_touch(event, x, y)
-    if event == "up" then
-        -- Check if touch landed inside a button rectangle
-    end
+function on_tap(x, y)
+    -- Check whether (x, y) is inside a visible button rectangle.
 end
 ```
+
+### `on_touch(x, y, event)` *(Compatibility callback)*
+The current activity invokes `on_tap(x, y)` and then
+`on_touch(x, y, "tap")` for the **same** physical touch. It does not currently
+deliver `"down"`, `"move"`, or `"up"` events. Define either `on_tap` or
+`on_touch` for an action, not both, so a tap cannot execute it twice. The
+argument order is `x, y, event`.
 
 ### `on_update()` *(Optional Real-Time Loop)*
 For games or animations requiring real-time gravity or ticking (e.g. *Block Drop* piece falling):
@@ -753,7 +759,7 @@ hardware-verification limits. Further local changes do not publish updates:
 |---|---|---|---|
 | `dashboard` | **Desk Stand** | Productivity | Multi-style ambient desk clock with calendar, year progress, 12h/24h toggle, auto-sleep prevention, and 800×480 landscape stand. |
 | `hourglass` | **Hourglass** | Productivity | Expressive countdown timer with dynamic parabolic sand funnel physics, full neck passage, bottom sand accumulation mound, and auto-sleep prevention. |
-| `stopwatch` | **Stopwatch** | Productivity | Pixel cartoon stopwatch character with animated mechanical crown plunger, facial expressions, digital LCD window (`MM:SS.cc`), lap split recording, and auto-sleep prevention. |
+| `stopwatch` | **Stopwatch** | Productivity | Bounded stopwatch with clear Start/Stop/Lap/Reset controls, paged laps, and auto-sleep prevention only while timing. |
 | `solitaire` | **Solitaire** | Games | Classic 7-column Klondike Solitaire card game optimized for e-paper with draw-1 and draw-3 modes. |
 | `wifi_analyzer` | **Wi-Fi Analyzer** | Utilities | Network discovery, channel charts, selected-BSSID RSSI meter, 60-scan graphs, statistics and SD-card CSV exports in one app. |
 | `bluetooth_analyzer` | **Bluetooth Analyzer** | Utilities | BLE discovery, advertisement details/overview, selected-address/type RSSI meter, graphs and CSV exports; BLE-enabled firmware required. |

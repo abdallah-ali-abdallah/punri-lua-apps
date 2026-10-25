@@ -1,5 +1,19 @@
 # Changelog
 
+## Stopwatch 1.0.0 — 2026-10-25 (local, unpublished)
+
+### Changed
+
+- Rework Stopwatch around clear Start/Stop/Lap/Reset controls, bounded paged
+  laps, a reset confirmation, retryable saves and running-only auto-sleep
+  prevention. Existing `stopwatch.dat` snapshots remain readable.
+
+### Fixed
+
+- Keep measured labels inside their controls in portrait and landscape; prevent
+  the page indicator from overlapping Prev/Next, and make touch Reset now
+  perform the selected reset exactly once.
+
 ## Unit Convert 1.0.0 — 2026-10-25
 
 ### Added

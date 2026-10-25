@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Removed
+
+- Remove Life Counter from the source collection and local catalog. Existing
+  device installations and saved data are unaffected.
+
 ## Screen Ruler 0.1.0 — 2026-10-25 (local, unpublished)
 
 ### Added

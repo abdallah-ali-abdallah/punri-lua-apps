@@ -778,5 +778,8 @@ hardware-verification limits. Further local changes do not publish updates:
 | `blockdrop` | **Block Drop** | Games | Classic falling block puzzle with ghost piece guide and e-paper optimized refresh scheduling. |
 | `2048` | **2048** | Games | Classic 4×4 sliding tile number puzzle with high scores and smooth e-paper rendering. |
 | `dice` | **Dice Roller** | Utilities | Multi-polyhedral tabletop dice simulator (d4, d6, d8, d10, d12, d20, d100) with coin flipper and roll history. |
-| `lifecounter` | **Life Counter** | Utilities | Magic: The Gathering & card game life tracker supporting multiplayer and commander damage tracking. |
+
+Life Counter has been removed from this source collection and its local catalog.
+Existing device installations and saved data are unaffected. Its replacement is
+described in the [Counter app plan](docs/counter-plan.md); Counter is not yet implemented.
 

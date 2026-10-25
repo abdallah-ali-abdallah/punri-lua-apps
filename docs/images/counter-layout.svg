@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="820" viewBox="0 0 1600 820">
+<title>Counter app layout draft for the Xteink display</title><desc>Four monochrome screens show one, two and three counters, followed by the three-dot menu containing Reset to 0.</desc>
+<g transform="scale(0.75)">
+<rect width="2080" height="1050" fill="white"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:black} .title{font-size:36px;font-weight:bold} .caption{font-size:21px} .header{font-size:30px;font-weight:bold} .name{font-size:24px;font-weight:bold} .action{font-size:23px} .number{font-weight:400;font-variant-numeric:tabular-nums} .note{font-size:20px}</style>
+<text class="title" x="32" y="48">Counter</text>
+<text class="caption" x="32" y="82">Xteink e-ink layout draft · All counters stay visible · Reset inside each card’s menu</text>
+<text x="32" y="130" class="name" >One counter</text>
+<g transform="translate(32,158)">
+<rect x="0" y="0" width="480" height="800" rx="0" fill="white" stroke="black" stroke-width="2"/>
+<path d="M33 29 L19 43 L33 57 M20 43 H45" fill="none" stroke="black" stroke-width="3"/>
+<text x="62" y="54" class="header" >Counter</text>
+<rect x="354" y="15" width="110" height="56" rx="8" fill="white" stroke="black" stroke-width="2"/>
+<text x="409" y="51" class="action" text-anchor="middle">+ Add</text>
+<path d="M16 81 H464" stroke="black" stroke-width="2"/>
+<rect x="16" y="96.0" width="448" height="688.0" rx="10" fill="white" stroke="black" stroke-width="3"/>
+<text x="36" y="135.0" class="name" >Water today</text>
+<circle cx="430" cy="119.0" r="2.8" fill="black"/>
+<circle cx="430" cy="127.0" r="2.8" fill="black"/>
+<circle cx="430" cy="135.0" r="2.8" fill="black"/>
+<rect x="48" y="436.0" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="480.0" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="436.0" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="480.0" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="529.2" class="number" text-anchor="middle" style="font-size:180px">8</text>
+</g>
+<text x="544" y="130" class="name" >Two counters</text>
+<g transform="translate(544,158)">
+<rect x="0" y="0" width="480" height="800" rx="0" fill="white" stroke="black" stroke-width="2"/>
+<path d="M33 29 L19 43 L33 57 M20 43 H45" fill="none" stroke="black" stroke-width="3"/>
+<text x="62" y="54" class="header" >Counter</text>
+<rect x="354" y="15" width="110" height="56" rx="8" fill="white" stroke="black" stroke-width="2"/>
+<text x="409" y="51" class="action" text-anchor="middle">+ Add</text>
+<path d="M16 81 H464" stroke="black" stroke-width="2"/>
+<rect x="16" y="96.0" width="448" height="338.0" rx="10" fill="white" stroke="black" stroke-width="3"/>
+<text x="36" y="135.0" class="name" >Water today</text>
+<circle cx="430" cy="119.0" r="2.8" fill="black"/>
+<circle cx="430" cy="127.0" r="2.8" fill="black"/>
+<circle cx="430" cy="135.0" r="2.8" fill="black"/>
+<rect x="48" y="261.0" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="305.0" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="261.0" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="305.0" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="335.16" class="number" text-anchor="middle" style="font-size:124px">8</text>
+<rect x="16" y="446.0" width="448" height="338.0" rx="10" fill="white" stroke="black" stroke-width="2"/>
+<text x="36" y="485.0" class="name" >Swimming laps</text>
+<circle cx="430" cy="469.0" r="2.8" fill="black"/>
+<circle cx="430" cy="477.0" r="2.8" fill="black"/>
+<circle cx="430" cy="485.0" r="2.8" fill="black"/>
+<rect x="48" y="611.0" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="655.0" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="611.0" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="655.0" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="685.16" class="number" text-anchor="middle" style="font-size:124px">6</text>
+</g>
+<text x="1056" y="130" class="name" >Three counters</text>
+<g transform="translate(1056,158)">
+<rect x="0" y="0" width="480" height="800" rx="0" fill="white" stroke="black" stroke-width="2"/>
+<path d="M33 29 L19 43 L33 57 M20 43 H45" fill="none" stroke="black" stroke-width="3"/>
+<text x="62" y="54" class="header" >Counter</text>
+<text x="438" y="53" class="action" text-anchor="end">3/3</text>
+<path d="M16 81 H464" stroke="black" stroke-width="2"/>
+<rect x="16" y="96.0" width="448" height="221.33333333333334" rx="10" fill="white" stroke="black" stroke-width="3"/>
+<text x="36" y="135.0" class="name" >Water today</text>
+<circle cx="430" cy="119.0" r="2.8" fill="black"/>
+<circle cx="430" cy="127.0" r="2.8" fill="black"/>
+<circle cx="430" cy="135.0" r="2.8" fill="black"/>
+<rect x="48" y="202.66666666666669" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="246.66666666666669" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="202.66666666666669" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="246.66666666666669" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="264.5866666666667" class="number" text-anchor="middle" style="font-size:88px">8</text>
+<rect x="16" y="329.33333333333337" width="448" height="221.33333333333334" rx="10" fill="white" stroke="black" stroke-width="2"/>
+<text x="36" y="368.33333333333337" class="name" >Swimming laps</text>
+<circle cx="430" cy="352.33333333333337" r="2.8" fill="black"/>
+<circle cx="430" cy="360.33333333333337" r="2.8" fill="black"/>
+<circle cx="430" cy="368.33333333333337" r="2.8" fill="black"/>
+<rect x="48" y="436.00000000000006" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="480.00000000000006" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="436.00000000000006" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="480.00000000000006" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="497.9200000000001" class="number" text-anchor="middle" style="font-size:88px">6</text>
+<rect x="16" y="562.6666666666667" width="448" height="221.33333333333334" rx="10" fill="white" stroke="black" stroke-width="2"/>
+<text x="36" y="601.6666666666667" class="name" >Points</text>
+<circle cx="430" cy="585.6666666666667" r="2.8" fill="black"/>
+<circle cx="430" cy="593.6666666666667" r="2.8" fill="black"/>
+<circle cx="430" cy="601.6666666666667" r="2.8" fill="black"/>
+<rect x="48" y="669.3333333333335" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="713.3333333333335" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="669.3333333333335" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="713.3333333333335" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="731.2533333333334" class="number" text-anchor="middle" style="font-size:88px">12</text>
+</g>
+<text x="1568" y="130" class="name" >Three-dot options</text>
+<g transform="translate(1568,158)">
+<rect x="0" y="0" width="480" height="800" rx="0" fill="white" stroke="black" stroke-width="2"/>
+<path d="M33 29 L19 43 L33 57 M20 43 H45" fill="none" stroke="black" stroke-width="3"/>
+<text x="62" y="54" class="header" >Counter</text>
+<text x="438" y="53" class="action" text-anchor="end">3/3</text>
+<path d="M16 81 H464" stroke="black" stroke-width="2"/>
+<rect x="16" y="96.0" width="448" height="221.33333333333334" rx="10" fill="white" stroke="black" stroke-width="3"/>
+<text x="36" y="135.0" class="name" >Water today</text>
+<circle cx="430" cy="119.0" r="2.8" fill="black"/>
+<circle cx="430" cy="127.0" r="2.8" fill="black"/>
+<circle cx="430" cy="135.0" r="2.8" fill="black"/>
+<rect x="48" y="202.66666666666669" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="246.66666666666669" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="202.66666666666669" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="246.66666666666669" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="264.5866666666667" class="number" text-anchor="middle" style="font-size:88px">8</text>
+<rect x="16" y="329.33333333333337" width="448" height="221.33333333333334" rx="10" fill="white" stroke="black" stroke-width="2"/>
+<text x="36" y="368.33333333333337" class="name" >Swimming laps</text>
+<circle cx="430" cy="352.33333333333337" r="2.8" fill="black"/>
+<circle cx="430" cy="360.33333333333337" r="2.8" fill="black"/>
+<circle cx="430" cy="368.33333333333337" r="2.8" fill="black"/>
+<rect x="48" y="436.00000000000006" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="480.00000000000006" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="436.00000000000006" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="480.00000000000006" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="497.9200000000001" class="number" text-anchor="middle" style="font-size:88px">6</text>
+<rect x="16" y="562.6666666666667" width="448" height="221.33333333333334" rx="10" fill="white" stroke="black" stroke-width="2"/>
+<text x="36" y="601.6666666666667" class="name" >Points</text>
+<circle cx="430" cy="585.6666666666667" r="2.8" fill="black"/>
+<circle cx="430" cy="593.6666666666667" r="2.8" fill="black"/>
+<circle cx="430" cy="601.6666666666667" r="2.8" fill="black"/>
+<rect x="48" y="669.3333333333335" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="80" y="713.3333333333335" class="action" text-anchor="middle" style="font-size:42px">−</text>
+<rect x="368" y="669.3333333333335" width="64" height="64" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="400" y="713.3333333333335" class="action" text-anchor="middle" style="font-size:42px">+</text>
+<text x="240" y="731.2533333333334" class="number" text-anchor="middle" style="font-size:88px">12</text>
+<rect x="188" y="157" width="276" height="235" rx="8" fill="white" stroke="black" stroke-width="3"/>
+<text x="206" y="191" class="name" >Water today</text>
+<path d="M200 207 H452" stroke="black" stroke-width="1"/>
+<text x="210" y="245" class="action" >Rename</text>
+<rect x="200" y="264" width="252" height="56" rx="5" fill="black" stroke="black" stroke-width="0"/>
+<text x="210" y="300" class="action" style="fill:white">Reset to 0</text>
+<text x="210" y="358" class="action" >Remove</text>
+</g>
+<text x="32" y="1010" class="note" >Design reference only. Final fonts and spacing will be checked on X4 Pro and X4 Classic.</text>
+</g>
+</svg>

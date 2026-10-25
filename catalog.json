@@ -52,41 +52,6 @@
       ]
     },
     {
-      "id": "lifecounter",
-      "name": "Life Counter",
-      "version": "1.0.0",
-      "author": "Mumfee",
-      "description": "Magic: The Gathering & card game life tracker with commander mode",
-      "entry": "main.lua",
-      "min_api": 1,
-      "capabilities": [
-        "buttons",
-        "storage"
-      ],
-      "files": [
-        "manifest.json",
-        "main.lua",
-        "icon.raw"
-      ],
-      "file_integrity": [
-        {
-          "path": "manifest.json",
-          "size": 207,
-          "sha256": "2a3c441a2b8bb18b019a8eeae264ec3de03a6ac446d4a41e67207030e817b6ba"
-        },
-        {
-          "path": "main.lua",
-          "size": 2550,
-          "sha256": "764311204bb279601ca66af2ef0968dbb88dd98b88e3892996fe95f340a070fd"
-        },
-        {
-          "path": "icon.raw",
-          "size": 128,
-          "sha256": "5d1ca36c89698daccb03f06e483d8125bdbdfe7914434f0af006850e25f47a7b"
-        }
-      ]
-    },
-    {
       "id": "wordle",
       "name": "Wordle",
       "version": "1.1.0",

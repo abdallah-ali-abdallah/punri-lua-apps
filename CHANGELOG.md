@@ -1,5 +1,17 @@
 # Changelog
 
+## QR Cards Share 0.1.0 — 2026-10-25 (local, unpublished)
+
+### Added
+
+- Offline QR cards for links/text, vCard contacts, Wi-Fi credentials, and large-print emergency/return messages.
+- Version 1–10/M byte-mode QR encoding with a four-module quiet zone, structured editable storage, touch targets, and X4 Classic button controls.
+
+### Fixed
+
+- Payloads that exceed the 213-byte version-10/M limit are rejected rather than truncated; Wi-Fi and vCard delimiters are escaped before capacity checking.
+- Failed saves leave the previous SD data intact and keep the draft available to retry; corrupt saved data is not overwritten.
+
 ## Stopwatch 1.0.0 — 2026-10-25 (local, unpublished)
 
 ### Changed

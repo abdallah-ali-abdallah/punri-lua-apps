@@ -1746,6 +1746,107 @@
           "sha256": "7e4e87a91891c7d9b126580cd4a389217614fe01b7008882a6824fff566455ea"
         }
       ]
+    },
+    {
+      "id": "calculations",
+      "name": "Calculations",
+      "version": "0.1.0",
+      "author": "PUNRI",
+      "description": "Offline scientific calculator with natural fractions, powers, equations and linked graph/table workspaces.",
+      "entry": "main.lua",
+      "min_api": 2,
+      "capabilities": [
+        "buttons",
+        "storage"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "bigint.lua",
+        "decimal.lua",
+        "number.lua",
+        "parser.lua",
+        "editor.lua",
+        "engine.lua",
+        "storage.lua",
+        "i18n.lua",
+        "tools.lua",
+        "ui.lua",
+        "app.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 304,
+          "sha256": "e18afa6c6b8ae066fabe7c3f49ba458e1b3b41eb352cb1e89cd631c4d9cccdc3"
+        },
+        {
+          "path": "main.lua",
+          "size": 908,
+          "sha256": "b68e7c31aff63bd41bcb148c34ea08b651cd5e4140bb4e55ff7fff18831d0993"
+        },
+        {
+          "path": "bigint.lua",
+          "size": 3163,
+          "sha256": "cb38dd5e57107713a09140614b832ae66800b10f84aa054285d0b5bfb05a042e"
+        },
+        {
+          "path": "decimal.lua",
+          "size": 9402,
+          "sha256": "2036d1a98b3be5dc336f227e836c4e6d6a8d2e9b585e747c15bd1c862f7bd178"
+        },
+        {
+          "path": "number.lua",
+          "size": 4553,
+          "sha256": "291ed017d4a8d3190a46662d4f9957f7b0fc7c05c8b71b601aa9e02549f15e53"
+        },
+        {
+          "path": "parser.lua",
+          "size": 4923,
+          "sha256": "aac305f2ece7e01631ef10951ca62f3ebf3ddc6167bc78eb1e444d448bd432e0"
+        },
+        {
+          "path": "editor.lua",
+          "size": 6353,
+          "sha256": "beb52aabdd17918bbd659309ce34c123e993bb2f62e2b17938d5522342327047"
+        },
+        {
+          "path": "engine.lua",
+          "size": 10563,
+          "sha256": "b313efff396ecaec764a8bd8b018cb8683e1f3ba1b9dcf077cf33e626db90f40"
+        },
+        {
+          "path": "storage.lua",
+          "size": 5282,
+          "sha256": "5f15db9a5dfc14277e15c8902262f0e16c2d9a9e9ff5a8a338fd9a90d253899a"
+        },
+        {
+          "path": "i18n.lua",
+          "size": 3497,
+          "sha256": "df838b236b4bfa5b7522d27589152f25162a1ed842e22e57da62c2e153e690b3"
+        },
+        {
+          "path": "tools.lua",
+          "size": 9552,
+          "sha256": "19a250d2b9a01a3305c08e6252cb6d9220de94bfd2c2034720c701d3ec62fc22"
+        },
+        {
+          "path": "ui.lua",
+          "size": 29682,
+          "sha256": "8fa320dd8de57ed901037cbe441893d95c47981a60f9fab5049ae8de945ae098"
+        },
+        {
+          "path": "app.lua",
+          "size": 26141,
+          "sha256": "96ea94e1ceb72ab731392d4e58e778e65f4cdbef5ca9e38453daa7e4fea3883b"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "bd914c1c32952a7d9c93160ff0ae5221caa4a0ca6a725efef70b1fd6302650fc"
+        }
+      ]
     }
   ]
 }

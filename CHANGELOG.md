@@ -11,6 +11,8 @@
   approximate graph previews, tracing, zoom/pan and bracketed equation solving.
 - Statistics, small-matrix operations, complex polar conversion, unsigned base
   conversion and exact unit ratios, with retryable saves and protected future schemas.
+- Register Calculations in the App Store catalog with all runtime modules and
+  its icon, including verified package sizes and SHA-256 hashes.
 
 ### Fixed
 

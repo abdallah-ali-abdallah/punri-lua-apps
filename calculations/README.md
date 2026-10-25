@@ -5,7 +5,8 @@ first for the Xteink X4 Pro. It runs entirely in the existing Lua sandbox.
 
 ## Install
 
-Copy these files to `/.punri/applications/calculations/` on the SD card:
+Open PUNRI's **App Store**, refresh the catalog, and install **Calculations**.
+Alternatively, copy these files to `/.punri/applications/calculations/` on the SD card:
 
 ```text
 manifest.json  main.lua       app.lua       ui.lua       i18n.lua
@@ -16,7 +17,6 @@ editor.lua     storage.lua    tools.lua     icon.raw
 Open **Applications → Calculations**. No firmware or SDK patch is needed.
 PUNRI API 2 or later is required for orientation; optional text entry uses
 `has_feature("keyboard")` and reports when a firmware update is needed.
-This source package is not registered in the App Store catalog.
 
 ## Five workspaces
 

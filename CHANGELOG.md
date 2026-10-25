@@ -15,6 +15,12 @@
 
 ## Unreleased
 
+### Downloadable font catalog (local, unpublished)
+
+- Add version-2 manifest and CPFONT v4 packages for the open-source Bitter and
+  Noto Sans Arabic families. Every package is SHA-256 indexed and retains its
+  SIL Open Font License 1.1 attribution and upstream source URL.
+
 ### Changed
 
 - Document canonical PUNRI installation and private-save paths. Firmware moves

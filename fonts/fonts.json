@@ -1,0 +1,84 @@
+{
+  "version": 2,
+  "baseUrl": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/fonts/files/",
+  "families": [
+    {
+      "name": "Bitter",
+      "description": "Slab serif designed for e-ink reading",
+      "languages": "Latin, Cyrillic",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Bitter_12.cpfont",
+          "size": 639323,
+          "crc32": 979711162,
+          "sha256": "41a931a5afdc9d3a8ac7f864ba6134db4085f24b288d92a67baaf155e084dc8a"
+        },
+        {
+          "name": "Bitter_14.cpfont",
+          "size": 792884,
+          "crc32": 132869687,
+          "sha256": "d2c5ce1cd76e93eaaeaabd91f274f2872cc335ccd414be78cad0d535b085ce85"
+        },
+        {
+          "name": "Bitter_16.cpfont",
+          "size": 962898,
+          "crc32": 1257042152,
+          "sha256": "7e433a81e2fb83151435e40c274042e3873d6951b993b809ef744fdec3f7dbe7"
+        },
+        {
+          "name": "Bitter_18.cpfont",
+          "size": 1160100,
+          "crc32": 2707566984,
+          "sha256": "90725ea2634ae714add574ec2932ce595a69c580253a1ce51dd4880b257bc0cb"
+        }
+      ],
+      "license": "SIL Open Font License 1.1",
+      "licenseUrl": "https://openfontlicense.org/open-font-license-official-text/",
+      "sourceUrl": "https://github.com/google/fonts/tree/main/ofl/bitter"
+    },
+    {
+      "name": "NotoSansArabic",
+      "description": "Arabic sans-serif for connected-script reading",
+      "languages": "Arabic",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "NotoSansArabic_12.cpfont",
+          "size": 535390,
+          "crc32": 264337664,
+          "sha256": "989101f321cbc4402ad9faaa1c23a0837fa4aca020ff13c57ed8a6e0d4b1e79f"
+        },
+        {
+          "name": "NotoSansArabic_14.cpfont",
+          "size": 691100,
+          "crc32": 3497240780,
+          "sha256": "bf93b10bfd6d5f4d3abdf0ef50249cf700b391295055874dc4773472b60f8467"
+        },
+        {
+          "name": "NotoSansArabic_16.cpfont",
+          "size": 866253,
+          "crc32": 4086869993,
+          "sha256": "5863b4b9723ac6a813eb9cbfa27e48a2d3532fbda7bf38bf6292f47168278922"
+        },
+        {
+          "name": "NotoSansArabic_18.cpfont",
+          "size": 1063629,
+          "crc32": 1741353867,
+          "sha256": "670b2e0df49a9ebcf75ecc0e3aebd6865ad6ff368c64d2e70432e844ad0c39e6"
+        }
+      ],
+      "license": "SIL Open Font License 1.1",
+      "licenseUrl": "https://openfontlicense.org/open-font-license-official-text/",
+      "sourceUrl": "https://github.com/notofonts/arabic"
+    }
+  ]
+}

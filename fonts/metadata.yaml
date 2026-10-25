@@ -1,0 +1,27 @@
+# Metadata consumed by PUNRI's generate-font-manifest.py tool. Font packages
+# are generated CPFONT v4 files; their source notices are in LICENSES.md.
+families:
+  - name: Bitter
+    description: "Slab serif designed for e-ink reading"
+    languages: "Latin, Cyrillic"
+    intervals: latin-ext,cyrillic
+    sizes: [12, 14, 16, 18]
+    license: "SIL Open Font License 1.1"
+    licenseUrl: "https://openfontlicense.org/open-font-license-official-text/"
+    sourceUrl: "https://github.com/google/fonts/tree/main/ofl/bitter"
+    styles:
+      regular: {path: "builtinFonts/source/Bitter/Bitter-Regular.ttf"}
+      bold: {path: "builtinFonts/source/Bitter/Bitter-Bold.ttf"}
+      italic: {path: "builtinFonts/source/Bitter/Bitter-Italic.ttf"}
+      bolditalic: {path: "builtinFonts/source/Bitter/Bitter-BoldItalic.ttf"}
+  - name: NotoSansArabic
+    description: "Arabic sans-serif for connected-script reading"
+    languages: "Arabic"
+    intervals: arabic
+    sizes: [12, 14, 16, 18]
+    license: "SIL Open Font License 1.1"
+    licenseUrl: "https://openfontlicense.org/open-font-license-official-text/"
+    sourceUrl: "https://github.com/notofonts/arabic"
+    styles:
+      regular: {path: "builtinFonts/source/NotoSansArabic/NotoSansArabic-Regular.ttf"}
+      bold: {path: "builtinFonts/source/NotoSansArabic/NotoSansArabic-Bold.ttf"}

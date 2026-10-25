@@ -6,15 +6,18 @@ functional names independent of the firmware identity. Its BLE GAP device name i
 those values are not rewritten by the runtime.
 
 The functional globals `radio`, `ble`, `wifi`, and `net` are available in firmware
-Lua API level 3. New apps should declare `"min_api": 3`. Existing drawing and
-input APIs remain compatible. These modules do not expose raw SDK pointers.
+Lua API level 3. Lua API level 4 adds the optional HID keyboard-peripheral calls
+below; apps using them must declare `"min_api": 4`. Existing drawing and input
+APIs remain compatible. These modules do not expose raw SDK pointers.
 
 ## Availability and ownership
 
 Call `radio.capabilities()` before requesting an operation. It returns `ble`,
-`wifi`, `http`, `simulated`, `bluetooth_classic` (always false), and the radio API's
-own `api_version` (1). BLE is enabled for `x4-pro` and `x4-pro-debug`; other hardware
-profiles return `unsupported` for BLE until explicitly enabled and validated.
+`wifi`, `http`, `simulated`, `bluetooth_classic` (always false),
+`hid_keyboard_peripheral`, and the radio API's own `api_version` (2). BLE HID
+keyboard peripheral support is enabled only for `x4-pro` and `x4-pro-debug`.
+Other hardware profiles, including X4 Classic, must show an unavailable state and
+must not try to imitate HID with a custom GATT characteristic.
 
 The desktop simulator enables deterministic radio replay by default when
 `RADIO_SIMULATION` is unset. Explicit `1` also enables it; `0`, empty and invalid
@@ -98,6 +101,10 @@ and new sessions are refused until restart (`resident` true with `open` false).
 | `ble.advertise_stop` | Stop advertising |
 | `ble.server_start` | One `service` and `characteristic`, initial binary `data`; exposes read/write/notify and advertises the service |
 | `ble.server_notify` | Update server characteristic with binary `data`, notify subscribers |
+| `ble.hid_keyboard_start` | API 4; `{name="PUNRI Remote", bonding=true, timeout_ms=1000..30000}`; starts the bounded HID keyboard advertising window |
+| `ble.hid_key_tap` | API 4; one of `"up"`, `"down"`, `"left"`, `"right"`; native code sends an HID press and its matching release |
+| `ble.hid_keyboard_stop` | API 4; stop advertising and disconnect the current HID host |
+| `ble.hid_forget_pairing` | API 4; stop and delete the **current session's bonded host** only; it never erases all device bonds |
 | `ble.parse(data)` | AD fields as `{type, data}` records; malformed input returns `nil, "invalid_argument"` |
 | `ble.classify(data)` | `apple_findmy_candidate`, `unknown`, or `malformed` |
 
@@ -106,6 +113,51 @@ UUIDs accept 4, 8, or canonical 36 hexadecimal characters. Server writes arrive 
 subscription identifier are supported per session. Secure connections use the
 stack's normal behavior; application-controlled passkey/bond management and
 extended advertising are not exposed in this version.
+
+### HID keyboard peripheral (API 4)
+
+HID uses the standard HID service (`0x1812`), keyboard appearance and a report map
+with one input report containing only the four arrow usages. It is not a generic
+BLE transport and it does not expose text entry, media keys, raw report bytes,
+Bluetooth Classic, or arbitrary device-bond deletion.
+
+`ble.hid_keyboard_start` first emits `hid_state` with `state="advertising"` and
+then its terminal event. A host connection emits `state="connected"`; inspect the
+event's `bonded`, `encrypted`, and `subscribed` flags. A key is eligible only when
+all three conditions are true. A disconnected host is advertised to again only
+until the original 1–30-second window expires. Presses are native press/release
+pairs and are rate-limited to one every 60 ms to prevent accidental repeats.
+
+The v1 security policy is Bluetooth LE Secure Connections Just Works bonding:
+the link is encrypted and bonded, but there is no passkey/number comparison and
+therefore no MITM-authentication claim. `hid_forget_pairing` can remove only the
+identity captured after a successfully bonded host connected in this still-open
+radio session. A UI must explain that it cannot safely enumerate or delete
+unrelated old bonds after the app closed.
+
+```lua
+local caps = radio.capabilities()
+if not (caps.ble and caps.hid_keyboard_peripheral) then
+  -- Show an unavailable screen; do not start generic BLE advertising.
+  return
+end
+
+local request_id = assert(ble.hid_keyboard_start {
+  name = "PUNRI Remote", bonding = true, timeout_ms = 30000,
+})
+
+function on_update()
+  for i = 1, 8 do
+    local event = radio.poll()
+    if not event then break end
+    if event.kind == "hid_state" and event.state == "connected" and
+       event.encrypted and event.bonded and event.subscribed then
+      -- A tap sends both reports; Lua must not synthesize a release.
+      assert(ble.hid_key_tap("right"))
+    end
+  end
+end
+```
 
 `apple_findmy_candidate` requires a complete offline-finding manufacturer
 structure. It does not establish an AirTag model, owner, persistent identity, or

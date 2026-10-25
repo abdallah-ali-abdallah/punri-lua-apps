@@ -426,7 +426,7 @@ All shape drawing functions support a customizable line **thickness** (stroke wi
 - **`punri.version()`** *(or `punri.get_version()`)*\
   Returns the current PUNRI firmware version string (e.g. `"1.6.5.3"`).
 - **`punri.api_version`** *(or `punri.get_api_version()`)*\
-  Returns the integer API level (currently `3`). API `1` was the initial app engine release; API `2` adds sleep prevention, dynamic orientation switching, full-refresh requests, and version/feature introspection. API `3` adds the functional `radio`, `ble`, `wifi`, and `net` modules; use `radio.capabilities()` to check their availability.
+  Returns the integer API level (currently `4`). API `1` was the initial app engine release; API `2` adds sleep prevention, dynamic orientation switching, full-refresh requests, and version/feature introspection. API `3` adds the functional `radio`, `ble`, `wifi`, and `net` modules. API `4` adds the opt-in Bluetooth HID keyboard-peripheral calls; use `radio.capabilities()` to check the active build rather than assuming the board supports them.
 - **`punri.has_feature(name)`**\
   Returns `true` if a specific feature is supported (e.g. `"prevent_sleep"`, `"orientation"`, `"full_refresh"`, `"touch"`).
 
@@ -741,7 +741,10 @@ warning.
 
 ## Radio APIs
 
-Firmware API level 3 adds the functional `radio`, `ble`, `wifi`, and `net` globals.
+Firmware API level 3 adds the functional `radio`, `ble`, `wifi`, and `net` globals;
+API level 4 adds the optional BLE HID keyboard-peripheral contract. See
+[Bluetooth Page Turner](docs/bluetooth-page-turner.md) for the app's pairing and
+hardware limits.
 See [radio API contracts and tests](docs/radio-api.md) before using them. Hardware
 capabilities vary by build; desktop replay is explicitly marked as simulated.
 
@@ -763,6 +766,7 @@ hardware-verification limits. Further local changes do not publish updates:
 | `solitaire` | **Solitaire** | Games | Classic 7-column Klondike Solitaire card game optimized for e-paper with draw-1 and draw-3 modes. |
 | `wifi_analyzer` | **Wi-Fi Analyzer** | Utilities | Network discovery, channel charts, selected-BSSID RSSI meter, 60-scan graphs, statistics and SD-card CSV exports in one app. |
 | `bluetooth_analyzer` | **Bluetooth Analyzer** | Utilities | BLE discovery, advertisement details/overview, selected-address/type RSSI meter, graphs and CSV exports; BLE-enabled firmware required. |
+| `bluetooth_page_turner` | **Bluetooth Page Turner** | Utilities | Local X4 Pro Bluetooth HID arrow/page-turn remote with visible pairing, connection and simulated-replay status; not published to the catalog. |
 | `signal_meter` | **Signal Meter (legacy)** | Compatibility | Original standalone package retained for existing installs and saved data; its features now also live in Wi-Fi Analyzer. |
 | `todo` | **To-do List** | Productivity | Offline tasks with a button/touch keyboard, completion filters and transactional SD saving. |
 | `notepad` | **Notepad** | Productivity | Multiline notes with on-device editing, paged reading and SD-card plain-text exports. |

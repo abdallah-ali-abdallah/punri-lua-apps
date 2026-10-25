@@ -26,6 +26,16 @@
   the page indicator from overlapping Prev/Next, and make touch Reset now
   perform the selected reset exactly once.
 
+## Bluetooth Page Turner 0.1.0 — 2026-10-25 (local, unpublished)
+
+### Added
+
+- Local-only X4 Pro Bluetooth HID page-turn remote with encrypted bonded arrow-key reports, pairing/connection feedback, a current-host Forget pairing action, and touch/button controls.
+
+### Verification limits
+
+- Desktop replay is explicitly simulated. Physical pairing, reconnect, reader mappings, sleep/wake and Bluetooth range require X4 Pro hardware acceptance; this app is not listed in the App Store catalog.
+
 ## Unit Convert 1.0.0 — 2026-10-25
 
 ### Added

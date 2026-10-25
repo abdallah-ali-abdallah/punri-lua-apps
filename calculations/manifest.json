@@ -1,0 +1,10 @@
+{
+  "id": "calculations",
+  "name": "Calculations",
+  "version": "0.1.0",
+  "author": "PUNRI",
+  "description": "Offline scientific calculator with natural fractions, powers, equations and linked graph/table workspaces.",
+  "entry": "main.lua",
+  "min_api": 2,
+  "capabilities": ["buttons", "storage"]
+}

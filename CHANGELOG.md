@@ -1,5 +1,17 @@
 # Changelog
 
+## Calculations 0.1.0 — 2026-10-26
+
+### Added
+
+- Offline scientific calculator with natural fraction, root, power and equation
+  fields, exact rational arithmetic, 12-digit software decimal calculations,
+  scientific functions, variables, history, undo/redo and saved sessions.
+- Linked Functions, Graph and Table workspaces with portrait/landscape layouts,
+  approximate graph previews, tracing, zoom/pan and bracketed equation solving.
+- Statistics, small-matrix operations, complex polar conversion, unsigned base
+  conversion and exact unit ratios, with retryable saves and protected future schemas.
+
 ## Screen Ruler 0.1.0 — 2026-10-25 (local, unpublished)
 
 ### Added

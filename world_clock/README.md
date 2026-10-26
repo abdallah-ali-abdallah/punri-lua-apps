@@ -82,12 +82,16 @@ The application stores all instants as minutes since 2000-01-01, so its Lua
 calculations stay within signed 32-bit values beyond 2038. It supports minute
 offsets, including +05:30, +05:45, and -03:30. It refuses to claim a result
 outside the stated data range. `zones.txt` is 5.3 KiB on SD; only recently
-visible zones (at most eight) are parsed, and the 400×200 1-bit map is one
-9.8 KiB Lua string loaded once. This is a bounded 4.7 KiB increase over the
-previous map, used to keep city pins legible and geographically aligned.
-`world.raw` is generated from the editable, original CC0
-`tools/world-map.json` by `tools/generate_assets.py`; it is drawn at its
-intrinsic dimensions because `draw_sprite` has no general scaler.
+visible zones (at most eight) are parsed, and the 288×144 1-bit map is one
+5.1 KiB Lua string loaded once—the same bounded runtime footprint as the
+earlier map while keeping city pins geographically aligned.
+`world.raw` is generated from the actual Natural Earth 1:110m land polygons
+in `tools/natural-earth-110m-land.geojson`, then rasterized to black land on a
+white equirectangular background. Natural Earth data are public domain; the
+source URL and SHA-256 are pinned in `tools/world-map.json` and its requested
+attribution is **Made with Natural Earth.** The GeoJSON is a build input only,
+not part of the installed application. `draw_sprite` has no general scaler, so
+the resulting map is drawn at its intrinsic dimensions.
 
 ## Storage and recovery
 

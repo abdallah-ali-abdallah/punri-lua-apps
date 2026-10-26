@@ -193,6 +193,12 @@
 - Touch devices expose visible Exit and picker Back controls; X4 Classic continues to use its physical footer.
 - Category controls use two larger rows for easier touch and button navigation.
 
+## World Clock 0.1.1 — 2026-10-26
+
+### Changed
+
+- Replace the hand-drawn land silhouette with a black-and-white raster from real Natural Earth 1:110m public-domain land data; city dots remain visible over land and ocean.
+
 ## World Clock 0.1.0 — 2026-10-25
 
 ### Added

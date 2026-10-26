@@ -1639,7 +1639,7 @@
     {
       "id": "world_clock",
       "name": "World Clock",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "PUNRI contributors",
       "description": "Offline world times with bounded IANA timezone data.",
       "entry": "main.lua",
@@ -1665,7 +1665,7 @@
         {
           "path": "manifest.json",
           "size": 261,
-          "sha256": "1a677b353aebf4922148ad7234ddca019a5592a8128c1412f56a38d79b616489"
+          "sha256": "516166320309e0570f608147db5fdca0ecf726d4d6230cefceff531ba8db26a9"
         },
         {
           "path": "main.lua",
@@ -1684,8 +1684,8 @@
         },
         {
           "path": "cities.lua",
-          "size": 3174,
-          "sha256": "3df42fe796900b57b3ff0b18b073d5bace89c02643d79f9c47141243d4ba3541"
+          "size": 3170,
+          "sha256": "714403e07f1ce253f71eb4c120ef9e9d20bc15026bd8b6acf05ff11c6c75722b"
         },
         {
           "path": "map.lua",
@@ -1709,8 +1709,8 @@
         },
         {
           "path": "world.raw",
-          "size": 10000,
-          "sha256": "03456713d7e05427bea3e80e94d89f0924616cb5e222dd73e82e776eb65962d1"
+          "size": 5184,
+          "sha256": "099325de4464882d8f06b4ac17f6ac98fc6fb6ecf8b9ff049f0aa51dd4b2e26c"
         },
         {
           "path": "icon.raw",

@@ -6,7 +6,8 @@ local function act(action)
     elseif action == "disconnect" then Controller.stop(false)
     elseif action == "forget" then Controller.stop(true)
     elseif action == "mode" then Controller.toggle_mode()
-    elseif action == "up" or action == "down" or action == "left" or action == "right" then Controller.send(action)
+    elseif action == "up" or action == "down" or action == "left" or action == "right"
+        or action == "enter" or action == "space" then Controller.send(action)
     end
 end
 

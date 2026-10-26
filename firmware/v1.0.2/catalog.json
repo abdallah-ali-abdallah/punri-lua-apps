@@ -4,7 +4,7 @@
   "assets": [
     {
       "name": "punri-x4-pro-v1.0.2.bin",
-      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.2/punri-x4-pro-v1.0.2.bin",
+      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/45ef9ac05f186d11d88aa24368e82f52c85342ec/firmware/v1.0.2/punri-x4-pro-v1.0.2.bin",
       "size": 5817280,
       "sha256": "a74a48a02564de6c53a9097cdb9a516a985ef4e8a3353fa7b75866d3dd6de475"
     }
@@ -18,7 +18,7 @@
       "variant": "x4-pro",
       "released_at": "2026-10-26T16:37:28Z",
       "notes": "Separate Latin and non-Latin reader font sizes, including remote web controls. X4 Pro publication; Sticky deferred.",
-      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.2/punri-x4-pro-1.0-4585d.bin",
+      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/45ef9ac05f186d11d88aa24368e82f52c85342ec/firmware/v1.0.2/punri-x4-pro-1.0-4585d.bin",
       "firmware_sha256": "a74a48a02564de6c53a9097cdb9a516a985ef4e8a3353fa7b75866d3dd6de475",
       "size": 5817280,
       "supported_devices": [

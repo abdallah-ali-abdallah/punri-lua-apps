@@ -164,6 +164,8 @@ function M.update()
     end
     if not M.ready or pending then return end
     local now = punri.millis()
+    -- The firmware clock is uint32_t and wraps after about 49 days.
+    if now < last_submit then last_submit = now - 25 end
     if now - last_submit < 25 then return end
     local x, y = math.modf(clamp(dx, 127)), math.modf(clamp(dy, 127))
     if x ~= 0 or y ~= 0 then

@@ -1,4 +1,4 @@
-# Bluetooth Mouse 0.1.0
+# Bluetooth Mouse 0.1.1
 
 Bluetooth Mouse turns an X4 Pro into a foreground Bluetooth LE HID mouse named
 **PUNRI Mouse**. Its mobile-style interface has a central square touchpad with a

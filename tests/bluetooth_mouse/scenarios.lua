@@ -73,6 +73,14 @@ elseif TEST_CASE == "bounded" then
     assert(#T.moves == n)
     C.sample(1, 1, true); C.sample(2, 2, true); C.sample(nil); tick(2)
     x, y = move_sum(); assert(x == 1025 and y == -1023)
+elseif TEST_CASE == "clock_wrap" then
+    connect()
+    T.now = 4294967290
+    C.sample(0, 0, true); C.sample(5, 0, true); C.sample(nil); C.update()
+    T.now = 4
+    C.sample(0, 0, true); C.sample(5, 0, true); C.sample(nil); C.update()
+    T.now = 40; C.update()
+    local x, y = move_sum(); assert(x == 10 and y == 0 and #T.moves == 2)
 elseif TEST_CASE == "busy" then
     connect()
     T.fail_next = "busy"

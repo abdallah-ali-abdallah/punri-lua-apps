@@ -1,5 +1,11 @@
 # Changelog
 
+## Bluetooth Mouse 0.1.1 — 2026-10-27
+
+### Fixed
+
+- Keep pointer movement and clicks responsive when the device uptime clock wraps.
+
 ## Bluetooth Mouse 0.1.0 — 2026-10-27
 
 ### Added

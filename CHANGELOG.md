@@ -1,5 +1,17 @@
 # Changelog
 
+## Presenter Remote 0.2.0 — 2026-10-26
+
+### Changed
+
+- Replace Bluetooth Page Turner with Presenter Remote (`presenter_remote`) in
+  the App Store, removing the old package and catalog entry.
+- Redesign the app as a monochrome presentation clicker with prominent Next/Back
+  circles, smaller Up/Down keys, Enter/Space and a responsive landscape layout.
+- Move Forget pairing to Settings, keep pairing and connection state visible,
+  and prevent Settings navigation from sending keys to the connected host.
+
+
 ## Bluetooth Page Turner 0.1.2 — 2026-10-26
 
 ### Added

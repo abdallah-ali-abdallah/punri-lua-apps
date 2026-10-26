@@ -1720,11 +1720,11 @@
       ]
     },
     {
-      "id": "bluetooth_page_turner",
-      "name": "Bluetooth Page Turner",
-      "version": "0.1.2",
+      "id": "presenter_remote",
+      "name": "Presenter Remote",
+      "version": "0.2.0",
       "author": "PUNRI",
-      "description": "A foreground Bluetooth HID keyboard remote for X4 Pro readers.",
+      "description": "A presentation clicker with Next, Back, arrows, Enter and Space over Bluetooth HID on X4 Pro.",
       "entry": "main.lua",
       "min_api": 4,
       "capabilities": [
@@ -1740,23 +1740,23 @@
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 267,
-          "sha256": "2365f2af7e4495f19f7189874b26dc9d8768cbd272c40fa8fc2ab37b88d1d9e9"
+          "size": 288,
+          "sha256": "bb54d46b10ed80d2d9d5e3f36c3d2a3b53d164c841115d8928734648b4cff7e5"
         },
         {
           "path": "main.lua",
-          "size": 1424,
-          "sha256": "e6b0b83fe9545274419ec7f7c48b974eafdde718d9eafc5684a4cc687a20bc90"
+          "size": 2174,
+          "sha256": "593baa49b4e470576dfda0af4fc8ef60bf1d77d6454516432ab44d39ae3232e6"
         },
         {
           "path": "controller.lua",
-          "size": 6408,
-          "sha256": "609ee539da384e008c2db07def279602233a75b0a8a1d2bc65936fe122b595fb"
+          "size": 6564,
+          "sha256": "8a0d26ba63ee40cb29218031779806ed5c46aa4bbc48450b0ed95228aeac0cda"
         },
         {
           "path": "ui.lua",
-          "size": 6539,
-          "sha256": "d506163431dcd0ada7f021f44bf9c7eba191535242e6e9a2bebb8dddeee156c8"
+          "size": 10295,
+          "sha256": "cbee086ea9dfa2e1d2133aa492cf180ff650d2dd9aebae9d5b8e992f67a75de5"
         },
         {
           "path": "icon.raw",

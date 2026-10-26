@@ -1,4 +1,4 @@
--- Foreground policy for the Bluetooth Page Turner.  Pairing/bonds and HID
+-- Foreground policy for Presenter Remote. Pairing/bonds and HID
 -- reports are native radio work; this file only renders state and submits the
 -- deliberately small arrow/Enter/Space command surface.
 local M = {}
@@ -18,11 +18,13 @@ end
 local function finish_pending(kind)
     if M.pending_kind == kind then
         M.pending_id, M.pending_kind = nil, nil
+        M.pending_key = nil
     end
 end
 
 local function close_radio()
     M.pending_id, M.pending_kind, M.close_when_idle = nil, nil, false
+    M.pending_key = nil
     if radio and radio.close then radio.close() end
 end
 
@@ -50,6 +52,7 @@ function M.init()
     M.enter_space_supported = caps and caps.hid_keyboard_enter_space or false
     M.connected, M.subscribed, M.was_connected = false, false, false
     M.pending_id, M.pending_kind, M.close_when_idle, M.sent = nil, nil, false, 0
+    M.mode, M.pending_key = "arrows", nil
     if M.supported then
         M.state, M.notice = "ready", "Pair a host to begin."
     else
@@ -93,7 +96,9 @@ function M.send(key)
         request_update()
         return false
     end
-    return start_request("key", function() return ble.hid_key_tap(key) end)
+    local started = start_request("key", function() return ble.hid_key_tap(key) end)
+    if started then M.pending_key = key end
+    return started
 end
 
 function M.toggle_mode()

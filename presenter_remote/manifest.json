@@ -1,0 +1,10 @@
+{
+  "id": "presenter_remote",
+  "name": "Presenter Remote",
+  "version": "0.2.0",
+  "author": "PUNRI",
+  "description": "A presentation clicker with Next, Back, arrows, Enter and Space over Bluetooth HID on X4 Pro.",
+  "entry": "main.lua",
+  "min_api": 4,
+  "capabilities": ["buttons"]
+}

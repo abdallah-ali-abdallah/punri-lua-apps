@@ -754,7 +754,7 @@ warning.
 
 Firmware API level 3 adds the functional `radio`, `ble`, `wifi`, and `net` globals;
 API level 4 adds the optional BLE HID keyboard-peripheral contract. See
-[Bluetooth Page Turner](docs/bluetooth-page-turner.md) for the app's pairing and
+[Presenter Remote](docs/presenter-remote.md) for the app's pairing and
 hardware limits.
 See [radio API contracts and tests](docs/radio-api.md) before using them. Hardware
 capabilities vary by build; desktop replay is explicitly marked as simulated.
@@ -777,7 +777,7 @@ hardware-verification limits. Further local changes do not publish updates:
 | `solitaire` | **Solitaire** | Games | Classic 7-column Klondike Solitaire card game optimized for e-paper with draw-1 and draw-3 modes. |
 | `wifi_analyzer` | **Wi-Fi Analyzer** | Utilities | Network discovery, channel charts, selected-BSSID RSSI meter, 60-scan graphs, statistics and SD-card CSV exports in one app. |
 | `bluetooth_analyzer` | **Bluetooth Analyzer** | Utilities | BLE discovery, advertisement details/overview, selected-address/type RSSI meter, graphs and CSV exports; BLE-enabled firmware required. |
-| `bluetooth_page_turner` | **Bluetooth Page Turner** | Utilities | Local X4 Pro Bluetooth HID arrow/page-turn remote with visible pairing, connection and simulated-replay status; not published to the catalog. |
+| `presenter_remote` | **Presenter Remote** | Utilities | Presentation clicker for X4 Pro with large Next/Back keys, arrows, Enter/Space, pairing settings and visible simulation status. |
 | `signal_meter` | **Signal Meter (legacy)** | Compatibility | Original standalone package retained for existing installs and saved data; its features now also live in Wi-Fi Analyzer. |
 | `todo` | **To-do List** | Productivity | Offline tasks with a button/touch keyboard, completion filters and transactional SD saving. |
 | `notepad` | **Notepad** | Productivity | Multiline notes with on-device editing, paged reading and SD-card plain-text exports. |

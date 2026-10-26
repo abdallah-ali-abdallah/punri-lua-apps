@@ -6,12 +6,19 @@ local function act(action)
     elseif action == "disconnect" then Controller.stop(false)
     elseif action == "forget" then Controller.stop(true)
     elseif action == "mode" then Controller.toggle_mode()
+    elseif action == "settings" then
+        UI.settings_open, UI.settings_focus = true, 2
+        punri.request_update()
+    elseif action == "close_settings" then
+        UI.settings_open = false
+        punri.request_update()
     elseif action == "up" or action == "down" or action == "left" or action == "right"
         or action == "enter" or action == "space" then Controller.send(action)
     end
 end
 
 function on_init()
+    UI.settings_open, UI.settings_focus = false, 2
     Controller.init()
 end
 
@@ -25,6 +32,16 @@ end
 
 function on_button(button, pressed)
     if not pressed then return end
+    if UI.settings_open then
+        if button == "back" then act("close_settings")
+        elseif button == "confirm" then act(UI.settings_focus == 1 and "forget" or "close_settings")
+        elseif button == "left" or button == "right" or button == "up" or button == "down"
+            or button == "page_back" or button == "page_forward" then
+            UI.settings_focus = 3 - UI.settings_focus
+            punri.request_update()
+        end
+        return
+    end
     if button == "back" then
         Controller.exit()
         punri.exit()

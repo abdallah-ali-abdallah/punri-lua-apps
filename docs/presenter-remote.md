@@ -1,9 +1,23 @@
-# Bluetooth Page Turner
+# Presenter Remote
 
-`bluetooth_page_turner` is a PUNRI Lua app available in the App Store that makes a
+`presenter_remote` is a PUNRI Lua app available in the App Store that makes a
 supported X4 Pro build appear to another device as the BLE HID keyboard
 `PUNRI Remote`. It is a foreground remote: leaving the app, a Lua error, sleep,
 or selecting Disconnect stops advertising and releases the radio session.
+
+## Interface and replacement
+
+Version 0.2.0 replaces the old `bluetooth_page_turner` package and catalog entry.
+Install **Presenter Remote** from the App Store. If the old app is already on an
+SD card, uninstall **Bluetooth Page Turner** from Applications separately; a
+catalog replacement cannot erase an installed app on an offline device.
+The Bluetooth keyboard name remains **PUNRI Remote**.
+
+The portrait screen uses a tall capsule, a filled Next key, an outlined Back
+key, and large Enter/Space buttons. Landscape places the clicker beside its
+connection and mode controls. Pairing/Disconnect remains on the main screen;
+Forget pairing is in Settings. The header always shows connection state and
+labels simulator replay as **SIMULATION**.
 
 ## Hardware and compatibility
 
@@ -17,14 +31,17 @@ or selecting Disconnect stops advertising and releases the radio session.
 
 ## Pairing and use
 
-1. Open **Bluetooth Page Turner** and select **Pair / Advertise**.
+1. Open **Presenter Remote** and select **Pair / Advertise**.
 2. On the host, select **PUNRI Remote** in its Bluetooth keyboard/device list.
 3. Wait for **Connected. Keys are ready.** The app will not send a key until the
    host's encrypted, bonded HID input subscription is active.
-4. Use Up/Down/Left/Right, or the large **Enter** and **Space** buttons below the
-   arrows. **Page turns** mode keeps Left/Right plus Enter/Space visible, while
+4. Use the large **Next** (Right) and **Back** (Left) circles, the smaller
+   Up/Down controls, or **Enter** and **Space** at the bottom of the clicker. **Page turns** mode keeps Left/Right plus Enter/Space visible, while
    physical Page Back/Page Forward keys map to Left/Right.
-5. Select **Disconnect** before pairing a different host.
+5. Select **Disconnect** before pairing a different host. Open **Settings**
+   for **Forget pairing**; Back returns from Settings to the remote without
+   exiting or sending a host key. The hardware Confirm key selects the
+   highlighted Settings action, with **Back to remote** selected by default.
 
 The advertising window lasts at most 30 seconds. An already paired host can
 reconnect while that window is active; after a timeout, start a new window.

@@ -12,7 +12,7 @@ Firmware updates now use the public apps repository catalog with SHA-256 verific
 
 Filenames use main tag `1.0` and source SHA `4c24d`. The `-v<version>.bin` files are byte-identical OTA compatibility aliases.
 
-Verify with `shasum -a 256 -c SHA256SUMS` (macOS) or `sha256sum -c SHA256SUMS` (Linux).
+Verify with `shasum -a 256 -c SHA256SUMS` (macOS) or `sha256sum -c SHA256SUMS` (Linux) after downloading every BIN listed in that file. For one image, calculate its SHA-256 and compare its complete hash to its SHA256SUMS entry.
 
 Install only the image for your exact board. See the [update instructions](../README.md) for SD, web upload and online updates. These are application images, not merged factory/bootloader images.
 

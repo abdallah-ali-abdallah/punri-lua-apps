@@ -22,7 +22,7 @@ table and are not merged factory images.
 Download the release's [SHA256SUMS](v1.0.1/SHA256SUMS) beside its binaries and run:
 
 ```bash
-# macOS (download all three images to check the complete release):
+# macOS (download every BIN listed in SHA256SUMS for a complete check):
 shasum -a 256 -c SHA256SUMS
 # Linux:
 sha256sum -c SHA256SUMS

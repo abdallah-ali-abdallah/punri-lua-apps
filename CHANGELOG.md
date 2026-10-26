@@ -1,5 +1,15 @@
 # Changelog
 
+## Firmware 1.0.1 — 2026-10-26
+
+### Added
+
+- Publish Sticky, X4 Pro and X4 Classic firmware under `firmware/v1.0.1/`,
+  with a firmware catalog, SHA-256 checksums, source provenance and update
+  instructions. PUNRI online updates now use `firmware/catalog.json`.
+- Add a real HTTPS simulator acceptance path that downloads and verifies the
+  published image before writing only simulated flash.
+
 ## Downloadable fonts 1.0.1 — 2026-10-26 (local, unpublished)
 
 ### Added

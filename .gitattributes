@@ -1,1 +1,3 @@
 /fonts/files/*.cpfont binary
+
+/firmware/**/*.bin binary

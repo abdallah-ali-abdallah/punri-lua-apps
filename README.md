@@ -3,7 +3,10 @@
 Welcome to the **PUNRI Application Platform**! PUNRI features a lightweight, sandboxed **Lua 5.4** application engine that enables anyone to build, share, and install custom e-paper applications directly from SD card storage—**no firmware compilation or flashing required**.
 
 The public app repository is [punri-lua-apps](https://github.com/abdallah-ali-abdallah/punri-lua-apps).
-It stores `catalog.json` and each `<app_id>/` directory at its root. The firmware
+It stores `catalog.json` and each `<app_id>/` directory at its root.
+For firmware downloads, SHA-256 checksums and install instructions, see
+[firmware updates](firmware/README.md); firmware uses its own
+[`firmware/catalog.json`](firmware/catalog.json). The firmware
 mounts this repository as its `apps/` submodule. Examples below using `apps/`
 assume the firmware checkout; omit that prefix in a standalone app checkout.
 

@@ -3,8 +3,170 @@
   "baseUrl": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/fonts/files/",
   "families": [
     {
+      "name": "Alef",
+      "description": "Simple, legible Hebrew sans-serif (Hebrew, Latin)",
+      "languages": "Hebrew, Latin",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "Alef_12.cpfont",
+          "size": 284249,
+          "crc32": 1964698191,
+          "sha256": "a86987c592ecdb82fcf7ab7312db0f446c16cdd64fa4c1f234549df94838a009"
+        },
+        {
+          "name": "Alef_14.cpfont",
+          "size": 360356,
+          "crc32": 1391847389,
+          "sha256": "15b0c8416643492edaa1511e7b39c0f6aa033a2d81e7f22967f1ca1844800637"
+        },
+        {
+          "name": "Alef_16.cpfont",
+          "size": 444862,
+          "crc32": 990946572,
+          "sha256": "4c865cba17b1d12140c00deb1120f531bc8bca397625e8660bd5b6a5e370c74b"
+        },
+        {
+          "name": "Alef_18.cpfont",
+          "size": 546440,
+          "crc32": 2426038756,
+          "sha256": "c006526343a8ce967e7bc590e83f8ced9e56fed5bb47d789106f4a9e6bb4fa45"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/alef/Alef-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Alegreya",
+      "description": "Calligraphic serif/display (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Alegreya_12.cpfont",
+          "size": 644711,
+          "crc32": 814829824,
+          "sha256": "091684f2c6fa67e3862ee6e9823c35d7871e525d62408e61c2108236abb0ba65"
+        },
+        {
+          "name": "Alegreya_14.cpfont",
+          "size": 807997,
+          "crc32": 3984744110,
+          "sha256": "789bb38918e480e765ebb707f59729252c505dc1aa3298aaacf6d73bb5b38a46"
+        },
+        {
+          "name": "Alegreya_16.cpfont",
+          "size": 993384,
+          "crc32": 1264916318,
+          "sha256": "586ad70710e037c0db4663a3a4bddf25feb4848a3aaf51cb2f876cbedb449120"
+        },
+        {
+          "name": "Alegreya_18.cpfont",
+          "size": 1205180,
+          "crc32": 411748875,
+          "sha256": "6c54ea99ad773f207f0045f9a297387606d48fce313821d9407505b7993b751c"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/alegreya/Alegreya%5Bwght%5D.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Amiri",
+      "description": "Arabic naskh-style serif (Arabic, Latin)",
+      "languages": "Arabic, Latin",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Amiri_12.cpfont",
+          "size": 910805,
+          "crc32": 2323409385,
+          "sha256": "3b6d9f8b22b08827ab494e6bfa99244928cc26ac26461e7fdef4b926fb5b7ebe"
+        },
+        {
+          "name": "Amiri_14.cpfont",
+          "size": 1167092,
+          "crc32": 1906469076,
+          "sha256": "e921ff4f2d1601f0880b622c1ea799aa011ea96cbcf11c792de332e9dd474fda"
+        },
+        {
+          "name": "Amiri_16.cpfont",
+          "size": 1452686,
+          "crc32": 2667346023,
+          "sha256": "154f6bab3376d039ef1da5cda70a31c278fda776608f5be51d45c0ddd6d97430"
+        },
+        {
+          "name": "Amiri_18.cpfont",
+          "size": 1784377,
+          "crc32": 2605298405,
+          "sha256": "48fbcc61b2e5c03b85b0543a6795d290dfb05dedafb3610307599c5e5d52279a"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/amiri/Amiri-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "AtkinsonHyperlegibleNext",
+      "description": "Accessibility font for low vision (Latin)",
+      "languages": "Latin",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "AtkinsonHyperlegibleNext_12.cpfont",
+          "size": 424666,
+          "crc32": 3743885130,
+          "sha256": "34c16debea84a6ffa6027f1b1e60632329d3a9a8d8805658878fd1b81f3d09fc"
+        },
+        {
+          "name": "AtkinsonHyperlegibleNext_14.cpfont",
+          "size": 530798,
+          "crc32": 2772372920,
+          "sha256": "63c4e4ede5fbf62f21ec3b21c98a609e7784e845b6e5584a70aab5859e8fe592"
+        },
+        {
+          "name": "AtkinsonHyperlegibleNext_16.cpfont",
+          "size": 645355,
+          "crc32": 1448312526,
+          "sha256": "3ac57c1580dd1aa5a9abf8b1c689aafdfa878f75f0cb11a4a0dcda2fd493e741"
+        },
+        {
+          "name": "AtkinsonHyperlegibleNext_18.cpfont",
+          "size": 781971,
+          "crc32": 868736190,
+          "sha256": "36c678caf7ac5d624bdf106c62073044da0407e10bea8e095c6f472d6034b553"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/googlefonts/atkinson-hyperlegible-next/main/fonts/ttf/AtkinsonHyperlegibleNext-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
       "name": "Bitter",
-      "description": "Slab serif designed for e-ink reading",
+      "description": "Slab serif designed for e-ink (Latin, Cyrillic)",
       "languages": "Latin, Cyrillic",
       "styles": [
         "regular",
@@ -15,32 +177,822 @@
       "files": [
         {
           "name": "Bitter_12.cpfont",
-          "size": 639323,
-          "crc32": 979711162,
-          "sha256": "41a931a5afdc9d3a8ac7f864ba6134db4085f24b288d92a67baaf155e084dc8a"
+          "size": 616413,
+          "crc32": 2010241006,
+          "sha256": "5e787bd9eb98824998bf430aae5695b4cb34f41d2963eca1e384958008a7a154"
         },
         {
           "name": "Bitter_14.cpfont",
-          "size": 792884,
-          "crc32": 132869687,
-          "sha256": "d2c5ce1cd76e93eaaeaabd91f274f2872cc335ccd414be78cad0d535b085ce85"
+          "size": 766524,
+          "crc32": 604026484,
+          "sha256": "778189576a00671d32a623f62dddb8c1955084fa6adcac7501393eb0dc0876c1"
         },
         {
           "name": "Bitter_16.cpfont",
-          "size": 962898,
-          "crc32": 1257042152,
-          "sha256": "7e433a81e2fb83151435e40c274042e3873d6951b993b809ef744fdec3f7dbe7"
+          "size": 933236,
+          "crc32": 1697817138,
+          "sha256": "3939970ae1ebd3241e9a4769d5de48e3dfff4a6355221a3843a5f7c3c05563d3"
         },
         {
           "name": "Bitter_18.cpfont",
-          "size": 1160100,
-          "crc32": 2707566984,
-          "sha256": "90725ea2634ae714add574ec2932ce595a69c580253a1ce51dd4880b257bc0cb"
+          "size": 1126670,
+          "crc32": 2655981751,
+          "sha256": "d791ed86023d586fd022f456a995f3f9f8643fb0fcf36a99772615c03259c8e5"
         }
       ],
-      "license": "SIL Open Font License 1.1",
-      "licenseUrl": "https://openfontlicense.org/open-font-license-official-text/",
-      "sourceUrl": "https://github.com/google/fonts/tree/main/ofl/bitter"
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/Bitter%5Bwght%5D.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "DavidLibre",
+      "description": "Traditional Hebrew serif (Hebrew, Latin)",
+      "languages": "Hebrew, Latin",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "DavidLibre_12.cpfont",
+          "size": 281814,
+          "crc32": 4279755158,
+          "sha256": "4e16239851b7a1784c752ef03195c15df77ec60775b15ac18913f5f921566144"
+        },
+        {
+          "name": "DavidLibre_14.cpfont",
+          "size": 355618,
+          "crc32": 2748673205,
+          "sha256": "51bdc88f3585a84c21b90fa934d8814afcb424380e54530d1d255865c4cfeb2c"
+        },
+        {
+          "name": "DavidLibre_16.cpfont",
+          "size": 439606,
+          "crc32": 426870923,
+          "sha256": "e2948b817ac5502efc27726af601ca54871c9ca9e230ea888048af8aa08e66b5"
+        },
+        {
+          "name": "DavidLibre_18.cpfont",
+          "size": 542520,
+          "crc32": 1583838108,
+          "sha256": "77235e0900b4f2175dbf3c9327ce94f1f8a6f23e4797a34a564e873e288926d8"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/davidlibre/DavidLibre-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Domitian",
+      "description": "A humanist serif for literary reading (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Domitian_12.cpfont",
+          "size": 711831,
+          "crc32": 1299042240,
+          "sha256": "02ea20d889b4d7ec764259188de8ce9a1817aa08fba08b3f127199811b3feb4f"
+        },
+        {
+          "name": "Domitian_14.cpfont",
+          "size": 889898,
+          "crc32": 2170029938,
+          "sha256": "380f801f8350e907f719e64179ed252912118315cb007c04c46a1c0f64926d37"
+        },
+        {
+          "name": "Domitian_16.cpfont",
+          "size": 1088038,
+          "crc32": 2992949784,
+          "sha256": "db217be8a8232181ef0e2a9aa3a3240193f7c95c7aa00d337f0156806f7a10a4"
+        },
+        {
+          "name": "Domitian_18.cpfont",
+          "size": 1316360,
+          "crc32": 2491965786,
+          "sha256": "d6acd7512d3a8cd3d288a8c40336a9e289f1f5108b45e4010469c531b05deeb1"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://mirrors.ctan.org/fonts/domitian/opentype/Domitian-Roman.otf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "FrankRuhlLibre",
+      "description": "Hebrew serif (Hebrew, Latin)",
+      "languages": "Hebrew, Latin",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "FrankRuhlLibre_12.cpfont",
+          "size": 302807,
+          "crc32": 1393793679,
+          "sha256": "e8b79bed118601e0b8745e8eafed224969cbd5ae84aeb018e8f71286894cf689"
+        },
+        {
+          "name": "FrankRuhlLibre_14.cpfont",
+          "size": 382412,
+          "crc32": 445487283,
+          "sha256": "7ec569cadfa52148b97d3917a0b5b0f1f2069666d8151a688a57e9dd62009adf"
+        },
+        {
+          "name": "FrankRuhlLibre_16.cpfont",
+          "size": 468350,
+          "crc32": 2987997075,
+          "sha256": "fd6109a24b6b45b53c898e7c339016817e5fe0bd636e05ed690b04e819df7500"
+        },
+        {
+          "name": "FrankRuhlLibre_18.cpfont",
+          "size": 569528,
+          "crc32": 2869570927,
+          "sha256": "a6e8e12a89be153c68c2fee57a571dd0ae96a043608d0407e328e13b28cf4cce"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/frankruhllibre/FrankRuhlLibre%5Bwght%5D.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "GentiumBookPlus",
+      "description": "Scholarly serif with wide Unicode coverage (Latin, Greek, Cyrillic, IPA)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "GentiumBookPlus_12.cpfont",
+          "size": 625719,
+          "crc32": 2658410121,
+          "sha256": "8576171a4db73f80c0152f6b1ca71e1b572b5c326dfec4a1bf571bcde8fa25c6"
+        },
+        {
+          "name": "GentiumBookPlus_14.cpfont",
+          "size": 779107,
+          "crc32": 2538649896,
+          "sha256": "d5f4ae66093e88e50044675a762bb5930882da8b7d071a3e61ce76e9cb70ff51"
+        },
+        {
+          "name": "GentiumBookPlus_16.cpfont",
+          "size": 965681,
+          "crc32": 3018769329,
+          "sha256": "85631d421390e398d52c4576d659f094aa304d796de9bda9bea5fd6c15d8e4a4"
+        },
+        {
+          "name": "GentiumBookPlus_18.cpfont",
+          "size": 1186883,
+          "crc32": 4030464077,
+          "sha256": "dedb5cdbaa8d5cfeb2292e21929fd70526fd5ebc2502cdacd88ab60885e3367c"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/gentiumbookplus/GentiumBookPlus-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "IBMPlexMono",
+      "description": "Monospace for code and technical reading (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "IBMPlexMono_12.cpfont",
+          "size": 623206,
+          "crc32": 2449555100,
+          "sha256": "383466aebc47d0aa2f4b0f7fa00d004fb69e44d2117ea12d4f53dd4c4c3b0fc5"
+        },
+        {
+          "name": "IBMPlexMono_14.cpfont",
+          "size": 796332,
+          "crc32": 3569705232,
+          "sha256": "e75417f1bd2f2043e739b4c7c8fe09092aca4f2361b66ba046ce7127aedb7785"
+        },
+        {
+          "name": "IBMPlexMono_16.cpfont",
+          "size": 989081,
+          "crc32": 211859271,
+          "sha256": "2a3337975d99a621adba096c27f84cf3ff062a226983c4e164f69c2d9ddf0118"
+        },
+        {
+          "name": "IBMPlexMono_18.cpfont",
+          "size": 1233761,
+          "crc32": 25145929,
+          "sha256": "566906698bc5ff025bfbbd9d50900165cbb14f663ded19bff1d9c132483b818c"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexmono/IBMPlexMono-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "IBMPlexSans",
+      "description": "IBM corporate sans-serif (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "IBMPlexSans_12.cpfont",
+          "size": 782722,
+          "crc32": 3282109534,
+          "sha256": "2fc9dce935b2d29649851b806aed3c3d5b272142501fe6b9860953413aea23cb"
+        },
+        {
+          "name": "IBMPlexSans_14.cpfont",
+          "size": 954290,
+          "crc32": 2904762999,
+          "sha256": "a72c3f70d8854fde5b6aa7c7bde9e63c8568502ffebbb1868974ecba8687935d"
+        },
+        {
+          "name": "IBMPlexSans_16.cpfont",
+          "size": 1149217,
+          "crc32": 1036005593,
+          "sha256": "a55d8280b697b0210682fde7912c54b0606da03971808b5987f1576e4521c7b0"
+        },
+        {
+          "name": "IBMPlexSans_18.cpfont",
+          "size": 1403311,
+          "crc32": 1492195287,
+          "sha256": "abc09d06d4914b5902442d6a56eae310ac848a6e51e1d3da3d0b1dd5092fda5b"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/IBM/plex/master/packages/plex-sans/fonts/complete/ttf/IBMPlexSans-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "IBMPlexSerif",
+      "description": "Professional serif (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "IBMPlexSerif_12.cpfont",
+          "size": 732651,
+          "crc32": 2715682032,
+          "sha256": "73e88778f07b3767e852485dffb59dec7ec46441811f653d5f0a53e93e7f2dfe"
+        },
+        {
+          "name": "IBMPlexSerif_14.cpfont",
+          "size": 911847,
+          "crc32": 2885238432,
+          "sha256": "0eecb3b1fccb9d22273729a08094eda1b7c49bd64301656c0349c59eee7b7fb8"
+        },
+        {
+          "name": "IBMPlexSerif_16.cpfont",
+          "size": 1112591,
+          "crc32": 204587807,
+          "sha256": "53488603d1ddb696a0aba6c1c9a7912dc1de1d6a52d8dbd4852558bae8d36283"
+        },
+        {
+          "name": "IBMPlexSerif_18.cpfont",
+          "size": 1367504,
+          "crc32": 2764785503,
+          "sha256": "5ecb3f587df6747190d0b2d48e5842c8d3329f1f6f2f6de68c514ea5a41f1149"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexserif/IBMPlexSerif-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Inter",
+      "description": "Modern sans-serif (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Inter_12.cpfont",
+          "size": 823606,
+          "crc32": 2857567778,
+          "sha256": "f393812f7d6e99f4b872b48313863313d216e47af7129438bc1d66c596757681"
+        },
+        {
+          "name": "Inter_14.cpfont",
+          "size": 1011353,
+          "crc32": 2836989132,
+          "sha256": "aa3e449ec91b0adb5f1f9f1afefb63ed83e8375fcb4dc23cbb4a502a3db5aa06"
+        },
+        {
+          "name": "Inter_16.cpfont",
+          "size": 1231658,
+          "crc32": 3754402933,
+          "sha256": "73087f2611d2567880f730e729ca1a649c7c3bdf945ab50ef886c4ad69ad0549"
+        },
+        {
+          "name": "Inter_18.cpfont",
+          "size": 1477010,
+          "crc32": 2267355269,
+          "sha256": "4ed4141ae6236fe79e41b7421afd1f02f2e06020ec6a0eb2307c32a315779548"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "LexicaUltralegible",
+      "description": "Accessibility font for low vision / dyslexia (Latin)",
+      "languages": "Latin",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "LexicaUltralegible_12.cpfont",
+          "size": 403078,
+          "crc32": 3432246,
+          "sha256": "bf4539419bacd2ec75d7ac22071154fe8f7c284a7e8e875349cca9f009ce4c1c"
+        },
+        {
+          "name": "LexicaUltralegible_14.cpfont",
+          "size": 509082,
+          "crc32": 3244727630,
+          "sha256": "cef91c47ed78bcba3f7d6c5fa47b7385d295cdf5982ecf168bff815f34b3a4cc"
+        },
+        {
+          "name": "LexicaUltralegible_16.cpfont",
+          "size": 625218,
+          "crc32": 4089974260,
+          "sha256": "2fb7aad68cb79f3c677f3d03294c16c31ef265b72d2dacbc6628b3ad7c5fe92b"
+        },
+        {
+          "name": "LexicaUltralegible_18.cpfont",
+          "size": 757922,
+          "crc32": 1946920750,
+          "sha256": "fc5060c701080dc51d5372508f88d02fe70adeaa789676447248465aa41a5184"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/jacobxperez/lexica-ultralegible/main/fonts/ttf/LexicaUltralegible-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "LibreBaskerville",
+      "description": "A serif reimplementing the classic Baskerville (Latin)",
+      "languages": "Latin",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "LibreBaskerville_12.cpfont",
+          "size": 528258,
+          "crc32": 3800354118,
+          "sha256": "ca12cc5bca362198d32c15ef918c1d2e109d424040a4986377f99f1948dd2cc9"
+        },
+        {
+          "name": "LibreBaskerville_14.cpfont",
+          "size": 653378,
+          "crc32": 142129250,
+          "sha256": "aebbb93461c139985404c17b637537e70db56ed93cc855cfaf519a140a8f5de3"
+        },
+        {
+          "name": "LibreBaskerville_16.cpfont",
+          "size": 794727,
+          "crc32": 2927926812,
+          "sha256": "87c674c37aa6588006369ccd12223cec8ce25f07b63f6ed4cb37962138c80cb2"
+        },
+        {
+          "name": "LibreBaskerville_18.cpfont",
+          "size": 994388,
+          "crc32": 1644481491,
+          "sha256": "1d2c8524545f4424b64e75d33dc0a89387d5ef9752b5e86c7a5ec237f8c8c760"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/impallari/Libre-Baskerville/master/fonts/ttf/LibreBaskerville-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Libron",
+      "description": "Serif optimized for digital reading and e-readers (Latin)",
+      "languages": "Latin",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Libron_12.cpfont",
+          "size": 516151,
+          "crc32": 3925176410,
+          "sha256": "a488d8ce4a6445c01e349eb203ee76dc0a094869f9c56a482bffb3b6c4146912"
+        },
+        {
+          "name": "Libron_14.cpfont",
+          "size": 623218,
+          "crc32": 1673389978,
+          "sha256": "48c3661cf74194cfb10daefa51662530ca5a784f3d419df781516273c56c5b7e"
+        },
+        {
+          "name": "Libron_16.cpfont",
+          "size": 742026,
+          "crc32": 2774170942,
+          "sha256": "ce6f92d6c02e7638f9eaa39b750571de61c232330b27a45820b98cc8d7d32707"
+        },
+        {
+          "name": "Libron_18.cpfont",
+          "size": 916650,
+          "crc32": 3367658922,
+          "sha256": "bc7bd374318dad86e04324ec71b1cb5adeb5b14cd826c8a64a261360c1127775"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/nicoverbruggen/ebook-fonts/main/fonts/core/Libron-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Literata",
+      "description": "Screen-optimized serif (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Literata_12.cpfont",
+          "size": 849221,
+          "crc32": 2454341573,
+          "sha256": "df9f44c80794b7d7bc8ae0e5052a1366a445ea2e989f08ecd75746c4db553287"
+        },
+        {
+          "name": "Literata_14.cpfont",
+          "size": 1032226,
+          "crc32": 572096041,
+          "sha256": "6664b445b573fc01231ffd032f806a75620c0b0b02d00355b622a1d69efe6843"
+        },
+        {
+          "name": "Literata_16.cpfont",
+          "size": 1238827,
+          "crc32": 257286289,
+          "sha256": "beec583c42fb3f6bcd9651df7cd070669a9d595abc586b7cfacd5e235748d97f"
+        },
+        {
+          "name": "Literata_18.cpfont",
+          "size": 1536569,
+          "crc32": 603991246,
+          "sha256": "101ef66de98f03502ad02646b9eedb9e067f9a93bc4e8534d1f9c67684818ad2"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/googlefonts/literata/main/fonts/ttf/Literata-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Lora",
+      "description": "Calligraphic serif for literary reading (Latin, Cyrillic)",
+      "languages": "Latin, Cyrillic",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Lora_12.cpfont",
+          "size": 557582,
+          "crc32": 3351759524,
+          "sha256": "70dabb08d6bc317935b7557800a6da883f5524f0e21bab6fc2b74a757ab9648d"
+        },
+        {
+          "name": "Lora_14.cpfont",
+          "size": 696371,
+          "crc32": 3534849649,
+          "sha256": "15497023644421bdf99e2827055ed2f4adc545b3178c5e5918ff39331bd24208"
+        },
+        {
+          "name": "Lora_16.cpfont",
+          "size": 857926,
+          "crc32": 683358983,
+          "sha256": "a6ae0adb5dd8ec4b54ae54da0fbecf2f210058254044db0c96aac10078e60ac3"
+        },
+        {
+          "name": "Lora_18.cpfont",
+          "size": 1067549,
+          "crc32": 231009206,
+          "sha256": "49ced60a15fda7aa1f31fbbb8659c9202041e015309f1c58549a25b3d7f8714f"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/cyrealtype/Lora-Cyrillic/main/fonts/ttf/Lora-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "MaruBuri",
+      "description": "Naver's serif for screen reading (Hangul, Latin)",
+      "languages": "Korean",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "MaruBuri_10.cpfont",
+          "size": 1480606,
+          "crc32": 2814809243,
+          "sha256": "d1d4d3a738a2745991940274b46c0ff0ab7444c2d742a62dbd72f6fde733d8b3"
+        },
+        {
+          "name": "MaruBuri_12.cpfont",
+          "size": 1900437,
+          "crc32": 3043782319,
+          "sha256": "353db186689e46e83737aca21be8f5f98b589a95ec30397c9b32374fc7e836b4"
+        },
+        {
+          "name": "MaruBuri_14.cpfont",
+          "size": 2420019,
+          "crc32": 1371621684,
+          "sha256": "10bdd0161c4031832345f63007f54bb4269384bf1fb8089533f5988248a7f4c2"
+        },
+        {
+          "name": "MaruBuri_16.cpfont",
+          "size": 2994084,
+          "crc32": 3728414907,
+          "sha256": "86689d9aea6fdaf7c24d87b3207f3282afc9bf13bf8b59a83fca91e281230750"
+        },
+        {
+          "name": "MaruBuri_18.cpfont",
+          "size": 3654286,
+          "crc32": 676055491,
+          "sha256": "ee0c6474bd8affc303a58035857c142c992aa37ed9996cf0d4fbfec5d42b08d9"
+        },
+        {
+          "name": "MaruBuri_8.cpfont",
+          "size": 1123931,
+          "crc32": 2803622154,
+          "sha256": "530cc2c31a4711b1f4df09f6995013bc6d8cc8dd098fcbf3aa757b3231ce0f38"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/fonts-archive/MaruBuri/977eeff68d1d40bcef341f09c1f56cce1903bb8a/MaruBuri-Regular.otf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "MaruBuriSemiBold",
+      "description": "MaruBuri at SemiBold weight, heavier body text (Hangul, Latin)",
+      "languages": "Korean",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "MaruBuriSemiBold_10.cpfont",
+          "size": 1492073,
+          "crc32": 3089526490,
+          "sha256": "da6e4fd00714f962214f1f4458dbd248901668e62f4048acd5ce253572b9ed56"
+        },
+        {
+          "name": "MaruBuriSemiBold_12.cpfont",
+          "size": 1912171,
+          "crc32": 2576198822,
+          "sha256": "f1f687ce1d9c4e7e9ea959c5d75eee3d035ae8f3e6f78e284f6f108fccd890d1"
+        },
+        {
+          "name": "MaruBuriSemiBold_14.cpfont",
+          "size": 2446096,
+          "crc32": 3650282200,
+          "sha256": "2b502e73958d694e7dc570951c8260e69d6ac1cd0b5939c45914450988008c8b"
+        },
+        {
+          "name": "MaruBuriSemiBold_16.cpfont",
+          "size": 3045914,
+          "crc32": 1120257037,
+          "sha256": "63fd7725a976f70b445c42ba6f0eea10b9988f3c4ea3ce5f4222c546651c9d14"
+        },
+        {
+          "name": "MaruBuriSemiBold_18.cpfont",
+          "size": 3682997,
+          "crc32": 24324715,
+          "sha256": "b369edade7841c983ebae580edc100c15b1e32951d79d0943353f4c89e042249"
+        },
+        {
+          "name": "MaruBuriSemiBold_8.cpfont",
+          "size": 1139556,
+          "crc32": 3546525969,
+          "sha256": "3364db56d4638e9f3ac9dff237babf1efd64f86c875e541ad721fb685727a129"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/fonts-archive/MaruBuri/977eeff68d1d40bcef341f09c1f56cce1903bb8a/MaruBuri-SemiBold.otf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Merriweather",
+      "description": "Warm serif for long-form reading (Latin, Cyrillic)",
+      "languages": "Latin, Cyrillic",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Merriweather_12.cpfont",
+          "size": 668338,
+          "crc32": 2693328907,
+          "sha256": "d0968657ba0bb7a5c6f668bd9de9bd9131968e8331dd7ad801732771b67dc614"
+        },
+        {
+          "name": "Merriweather_14.cpfont",
+          "size": 824318,
+          "crc32": 1794036413,
+          "sha256": "e90910c177cc2a766b1ab1ed8e014bc77ff566e6c344265a087436f18ee83333"
+        },
+        {
+          "name": "Merriweather_16.cpfont",
+          "size": 1003171,
+          "crc32": 4073996380,
+          "sha256": "ca974946faea6dcbf2701416fdaba27b92336446a75b4a2a7ef9d2afb379730d"
+        },
+        {
+          "name": "Merriweather_18.cpfont",
+          "size": 1206239,
+          "crc32": 3307194467,
+          "sha256": "39f19cfc61b5856d80b1a494b81e6526635d27f49e63bc6e179f70af1b70cce3"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/SorkinType/Merriweather/master/fonts/ttf/Merriweather-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "NotoKufiArabic",
+      "description": "Arabic kufi-style sans-serif (Arabic, Latin)",
+      "languages": "Arabic, Latin",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "NotoKufiArabic_12.cpfont",
+          "size": 541352,
+          "crc32": 71284287,
+          "sha256": "fe333732bfeb78464ac54c867b96a037a15f310c6eb2c3497c70cf589192f193"
+        },
+        {
+          "name": "NotoKufiArabic_14.cpfont",
+          "size": 707549,
+          "crc32": 491834858,
+          "sha256": "51e567dae91a26ef41f2a49886316566b86a5192dbf7545f78362d0d4af5c54b"
+        },
+        {
+          "name": "NotoKufiArabic_16.cpfont",
+          "size": 881273,
+          "crc32": 1420821228,
+          "sha256": "63d1c41377a361b462763cf9b9dd49cc379d81b15190ae9531b62a5cbe03dfd8"
+        },
+        {
+          "name": "NotoKufiArabic_18.cpfont",
+          "size": 1090851,
+          "crc32": 3967818217,
+          "sha256": "6a7327442c21daf49df5566d14000815ee95c2d37c6516333c040fc380362cf7"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/notokufiarabic/NotoKufiArabic%5Bwght%5D.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "NotoNaskhArabicUI",
+      "description": "Arabic naskh tuned for screen reading (Arabic)",
+      "languages": "Arabic",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "NotoNaskhArabicUI_12.cpfont",
+          "size": 275348,
+          "crc32": 514058571,
+          "sha256": "dd7d0d58bba4d9a2b6fa40a26c6b19e6f49f80fb7698cff94d47fd9f2baa6630"
+        },
+        {
+          "name": "NotoNaskhArabicUI_14.cpfont",
+          "size": 355700,
+          "crc32": 3729256322,
+          "sha256": "51a2ec7c9c8899a2bce3ee08ba0be97f7393d40baaa92ca5b2dfee49adc0e63f"
+        },
+        {
+          "name": "NotoNaskhArabicUI_16.cpfont",
+          "size": 436911,
+          "crc32": 1266797320,
+          "sha256": "330ddb2e85013cdfb9b4a7303eec1986821e7de0705fab57f75077b743f417c0"
+        },
+        {
+          "name": "NotoNaskhArabicUI_18.cpfont",
+          "size": 546180,
+          "crc32": 1666293189,
+          "sha256": "bb694d38f2a8301ebdfc154d31a11f378d6fa3fed67a0688f830189c1e72a294"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/notofonts/notofonts.github.io/main/fonts/NotoNaskhArabicUI/hinted/ttf/NotoNaskhArabicUI-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "NotoNaskhArabicUISemiBold",
+      "description": "Noto Naskh Arabic UI at SemiBold weight, heavier body text (Arabic)",
+      "languages": "Arabic",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "NotoNaskhArabicUISemiBold_12.cpfont",
+          "size": 277244,
+          "crc32": 3544378649,
+          "sha256": "5413eb03ed7b0b3b9af62239cc8513e572e1c9e48eac54598c52d53ee9f45aa2"
+        },
+        {
+          "name": "NotoNaskhArabicUISemiBold_14.cpfont",
+          "size": 362676,
+          "crc32": 3969862857,
+          "sha256": "6aba2b32f602abd20562dc163070a0611e1ff79c4c8455d8d593c5bede904165"
+        },
+        {
+          "name": "NotoNaskhArabicUISemiBold_16.cpfont",
+          "size": 446204,
+          "crc32": 2837153288,
+          "sha256": "a8318bc321ce114881f07dce138241d0687bfa80b0aa66e09ec2599a526f49a0"
+        },
+        {
+          "name": "NotoNaskhArabicUISemiBold_18.cpfont",
+          "size": 554366,
+          "crc32": 594662564,
+          "sha256": "50d0c24d2c6bfe78d000343e927489bed0ce3db32423a8b770ae6ed8056d6439"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/notofonts/notofonts.github.io/main/fonts/NotoNaskhArabicUI/hinted/ttf/NotoNaskhArabicUI-SemiBold.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
     },
     {
       "name": "NotoSansArabic",
@@ -54,31 +1006,466 @@
         {
           "name": "NotoSansArabic_12.cpfont",
           "size": 535390,
-          "crc32": 264337664,
           "sha256": "989101f321cbc4402ad9faaa1c23a0837fa4aca020ff13c57ed8a6e0d4b1e79f"
         },
         {
           "name": "NotoSansArabic_14.cpfont",
           "size": 691100,
-          "crc32": 3497240780,
           "sha256": "bf93b10bfd6d5f4d3abdf0ef50249cf700b391295055874dc4773472b60f8467"
         },
         {
           "name": "NotoSansArabic_16.cpfont",
           "size": 866253,
-          "crc32": 4086869993,
           "sha256": "5863b4b9723ac6a813eb9cbfa27e48a2d3532fbda7bf38bf6292f47168278922"
         },
         {
           "name": "NotoSansArabic_18.cpfont",
           "size": 1063629,
-          "crc32": 1741353867,
           "sha256": "670b2e0df49a9ebcf75ecc0e3aebd6865ad6ff368c64d2e70432e844ad0c39e6"
         }
       ],
       "license": "SIL Open Font License 1.1",
       "licenseUrl": "https://openfontlicense.org/open-font-license-official-text/",
       "sourceUrl": "https://github.com/notofonts/arabic"
+    },
+    {
+      "name": "NotoSansExtended",
+      "description": "Sans-serif (Latin, Greek, Cyrillic, Georgian, Armenian, Ethiopic)",
+      "languages": "Latin, Cyrillic, Greek, Georgian, Armenian, Ethiopic",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "NotoSansExtended_12.cpfont",
+          "size": 726499,
+          "crc32": 443698883,
+          "sha256": "699be3df481d45ae76194981b9a7a53ba2e54ae40b3be237b1feaae7ea22c164"
+        },
+        {
+          "name": "NotoSansExtended_14.cpfont",
+          "size": 916505,
+          "crc32": 446289819,
+          "sha256": "e9b279516e73f19487c4a37c2d38d06111bc48024f93010ee42ecb2a60191aea"
+        },
+        {
+          "name": "NotoSansExtended_16.cpfont",
+          "size": 1130245,
+          "crc32": 378530257,
+          "sha256": "63f3c6ea962f470a45e3be936340fb23d7233e27dd0d4fb81d7ff3f1740a030c"
+        },
+        {
+          "name": "NotoSansExtended_18.cpfont",
+          "size": 1370647,
+          "crc32": 360196629,
+          "sha256": "9f78894b56c543eaf7e3c83519e22e81ea5cc0b8f0f94c82ed0d0124f383f62b"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://github.com/crosspoint-reader/crosspoint-reader/blob/develop/lib/EpdFont/scripts/sd-fonts.yaml",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "NotoSerifExtended",
+      "description": "Serif (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "NotoSerifExtended_12.cpfont",
+          "size": 746588,
+          "crc32": 1300653311,
+          "sha256": "4a2a4db41ffea39d0d784c68959479a85804aa0ef9d67b54b0e7126399430548"
+        },
+        {
+          "name": "NotoSerifExtended_14.cpfont",
+          "size": 935507,
+          "crc32": 2658731831,
+          "sha256": "0c50eaeeb0d344c085f371f5715105fede820f773cfa564f501158f247ac6508"
+        },
+        {
+          "name": "NotoSerifExtended_16.cpfont",
+          "size": 1148193,
+          "crc32": 981268230,
+          "sha256": "d1ce67eaa2ae21696b2978b88d26398ec345c73d9e3fc693d60b28789f64392d"
+        },
+        {
+          "name": "NotoSerifExtended_18.cpfont",
+          "size": 1429912,
+          "crc32": 4049659409,
+          "sha256": "e387b1358ed25ad7bbf5b30aa40d1eaf2b8d77b235a01adcf176a40e7c695b80"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/notofonts/NotoSerif/main/fonts/ttf/unhinted/instance_ttf/NotoSerif-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "OpenDyslexic",
+      "description": "Dyslexia-friendly font (Latin)",
+      "languages": "Latin",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "OpenDyslexic_10.cpfont",
+          "size": 424568,
+          "crc32": 3756803482,
+          "sha256": "31fafbcffd345b8826606fb4d0ac107c6156b7a8ba6b301606692c9db311abb1"
+        },
+        {
+          "name": "OpenDyslexic_12.cpfont",
+          "size": 557151,
+          "crc32": 432466130,
+          "sha256": "f51085e38da98c3e7423e0921bcb3554181b0791d5a5d43e94de2cfd1dd600f5"
+        },
+        {
+          "name": "OpenDyslexic_14.cpfont",
+          "size": 712561,
+          "crc32": 960249389,
+          "sha256": "334d596782a3307983252ddf7d972b2d13212b15a3e080a03f888e5f537c536a"
+        },
+        {
+          "name": "OpenDyslexic_8.cpfont",
+          "size": 313553,
+          "crc32": 930496889,
+          "sha256": "812b17de75c10680fc13a9b68d66b6cd486c1288d93008e3053d7f72383d30fa"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://github.com/crosspoint-reader/crosspoint-reader/blob/develop/lib/EpdFont/scripts/sd-fonts.yaml",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Pretendard",
+      "description": "Modern Korean sans-serif (Hangul, Latin)",
+      "languages": "Korean, Latin",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "Pretendard_10.cpfont",
+          "size": 2544893,
+          "crc32": 2375722955,
+          "sha256": "1e016c60f61fd819646a9b7186f1981d6543fe1869f835e9ee6b88fee4e1451b"
+        },
+        {
+          "name": "Pretendard_12.cpfont",
+          "size": 3377941,
+          "crc32": 1684369602,
+          "sha256": "6c94cd25726b1c2b38d12d674d6f2c16f6d4b8409286922f93e01b86febd1da7"
+        },
+        {
+          "name": "Pretendard_14.cpfont",
+          "size": 4372007,
+          "crc32": 4019733081,
+          "sha256": "7c164932e4f7594081a25c9fa8dd9562d7c3a076405e865d2f091b15753212ac"
+        },
+        {
+          "name": "Pretendard_16.cpfont",
+          "size": 5464797,
+          "crc32": 326927734,
+          "sha256": "02ac36740c05291e69813f921ce04d28ddd7e90a12e1abf39371666a0afe0987"
+        },
+        {
+          "name": "Pretendard_18.cpfont",
+          "size": 6702121,
+          "crc32": 3481926749,
+          "sha256": "b383d2e27477167207a83f946ae0183b6365fed6552e205aa41556543995507a"
+        },
+        {
+          "name": "Pretendard_8.cpfont",
+          "size": 1871847,
+          "crc32": 1482087779,
+          "sha256": "02b49a9ae4ac945c8fe83926705ea092f9c0e5395d59d33da211deac1662ef3a"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/orioncactus/pretendard/v1.3.9/packages/pretendard/dist/public/static/Pretendard-Regular.otf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "PretendardMedium",
+      "description": "Pretendard at Medium weight, slightly heavier body text (Hangul, Latin)",
+      "languages": "Korean, Latin",
+      "styles": [
+        "regular",
+        "bold"
+      ],
+      "files": [
+        {
+          "name": "PretendardMedium_10.cpfont",
+          "size": 2564411,
+          "crc32": 2661922667,
+          "sha256": "27be3b43b7bb03196abd31f7c22f23218799373180e7ab74ccd6c3c0fcdc09e4"
+        },
+        {
+          "name": "PretendardMedium_12.cpfont",
+          "size": 3465290,
+          "crc32": 47221456,
+          "sha256": "7ef37b719c0d14e3d053c6206344f1f2056839b8640cc1f10c4c4ecb0b9ac6e3"
+        },
+        {
+          "name": "PretendardMedium_14.cpfont",
+          "size": 4480117,
+          "crc32": 1660035874,
+          "sha256": "4d757ae1eb46112b772c566e4ba26240408cc9e9fc0565d82b9722fc27ed1e2c"
+        },
+        {
+          "name": "PretendardMedium_16.cpfont",
+          "size": 5573725,
+          "crc32": 3709896883,
+          "sha256": "cbcb00504c75b839ce0f774f57476528f3888a5c256e0847bc8ac7c17a155ef4"
+        },
+        {
+          "name": "PretendardMedium_18.cpfont",
+          "size": 6876331,
+          "crc32": 3299718064,
+          "sha256": "9a80203eb4561c6746152ffb3bd76172c2ef02a31ee4970a7e1eea2f13034c3b"
+        },
+        {
+          "name": "PretendardMedium_8.cpfont",
+          "size": 1894972,
+          "crc32": 3009773317,
+          "sha256": "c0dc9d8968de16e9bb42d038a63e2f21632e5c62eb81cb6e181053bb72c7c58c"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/orioncactus/pretendard/v1.3.9/packages/pretendard/dist/public/static/Pretendard-Medium.otf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "RIDIBatang",
+      "description": "RIDI's e-book serif, single weight (Hangul, Latin)",
+      "languages": "Korean",
+      "styles": [
+        "regular"
+      ],
+      "files": [
+        {
+          "name": "RIDIBatang_10.cpfont",
+          "size": 1389281,
+          "crc32": 621319191,
+          "sha256": "560f4f5771dff964dc3dbc3e143a6e52b600fc0575d281fb91ea21e4cfcf0d68"
+        },
+        {
+          "name": "RIDIBatang_12.cpfont",
+          "size": 1844045,
+          "crc32": 3975131436,
+          "sha256": "ce86938587050ee67c91d5533e3915d41cd186235823ee7c35fdd05795f91c05"
+        },
+        {
+          "name": "RIDIBatang_14.cpfont",
+          "size": 2393673,
+          "crc32": 2051365901,
+          "sha256": "b421173c2f3e5c1f216835a1398eb0cb95e8a87dc9d49f6ee6027efde137531b"
+        },
+        {
+          "name": "RIDIBatang_16.cpfont",
+          "size": 3092055,
+          "crc32": 2498014329,
+          "sha256": "5efac04d5d929eb9eb7d9da1a921ba5130de31d9b03ec4db724b09587e34e3d1"
+        },
+        {
+          "name": "RIDIBatang_18.cpfont",
+          "size": 3812251,
+          "crc32": 1153701854,
+          "sha256": "73e126898650755760b157908f4c5c50027e242cc25a7d2075eebb6887a45505"
+        },
+        {
+          "name": "RIDIBatang_8.cpfont",
+          "size": 984833,
+          "crc32": 1859197840,
+          "sha256": "3561f81ee8a75515d5003a00193324e889a358922fdcfc8ff65a41c3dbba83c9"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/fonts-archive/RIDIBatang/f1628238e56fd41c12451dfc7d975527b61ebfc7/RIDIBatang.otf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "SourceCodePro",
+      "description": "Adobe monospace with excellent hinting (Latin)",
+      "languages": "Latin",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "SourceCodePro_12.cpfont",
+          "size": 375554,
+          "crc32": 823061595,
+          "sha256": "b7f9f69dfc92a3c07331a9cbadb9de493cd0857ba0d737b4b66488048ed8f97e"
+        },
+        {
+          "name": "SourceCodePro_14.cpfont",
+          "size": 476418,
+          "crc32": 556035384,
+          "sha256": "b644d44e64289255fd3960be15ba6a2013aa2605f0ec2a27b628c94045b66734"
+        },
+        {
+          "name": "SourceCodePro_16.cpfont",
+          "size": 587976,
+          "crc32": 3474370456,
+          "sha256": "1db5796cb8b9132c6b3843e9195229f66e749bb70c17b7ec230007c576282843"
+        },
+        {
+          "name": "SourceCodePro_18.cpfont",
+          "size": 719803,
+          "crc32": 686181759,
+          "sha256": "ba83ec7856d576dccd38fc8fecfd59f95f0e1d4bd6f2314b60156a5d906dc18e"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/adobe-fonts/source-code-pro/release/TTF/SourceCodePro-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "SourceSans3",
+      "description": "Adobe humanist sans-serif (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "SourceSans3_12.cpfont",
+          "size": 722493,
+          "crc32": 2394698018,
+          "sha256": "68edfbec1ee348a35a1ab8044ee0c0e63b0bbcb5e0dded67c82f9ebd79f78b07"
+        },
+        {
+          "name": "SourceSans3_14.cpfont",
+          "size": 877834,
+          "crc32": 917656015,
+          "sha256": "45405059a61157cea55a63aec4c525fa1af5a00a83050625a05d25b4628fcfe7"
+        },
+        {
+          "name": "SourceSans3_16.cpfont",
+          "size": 1057001,
+          "crc32": 791106681,
+          "sha256": "445f552a3048501e219118c1834165967fa2c27b45b570aef6f1bdaa9ccac0be"
+        },
+        {
+          "name": "SourceSans3_18.cpfont",
+          "size": 1262428,
+          "crc32": 2898306933,
+          "sha256": "06ccdd06cb111b4eec2c56d7ae48528ebac534f67571f27f4603b47a51a86142"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/adobe-fonts/source-sans/release/TTF/SourceSans3-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "SourceSerif4",
+      "description": "Adobe transitional serif (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "SourceSerif4_12.cpfont",
+          "size": 740300,
+          "crc32": 1058383082,
+          "sha256": "d4cf7829ec6e933f095b5eb824fbe0a5359a09dc5d771bcc829ac9e954ef377f"
+        },
+        {
+          "name": "SourceSerif4_14.cpfont",
+          "size": 917505,
+          "crc32": 331650294,
+          "sha256": "63d3e2959b78860765d11a00908b1fe722e962d99a9b5a717592f61284856806"
+        },
+        {
+          "name": "SourceSerif4_16.cpfont",
+          "size": 1115598,
+          "crc32": 713256484,
+          "sha256": "dd02242fd103447b979791e2510d9561ff08f0d30df6390c5af921eb1d8bc72b"
+        },
+        {
+          "name": "SourceSerif4_18.cpfont",
+          "size": 1344862,
+          "crc32": 2306500680,
+          "sha256": "f181790a5149486866f94bf4e9b0cb9bd9e4be80e4fde8c71a9730a0217cecfd"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/adobe-fonts/source-serif/release/TTF/SourceSerif4-Regular.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
+    },
+    {
+      "name": "Vollkorn",
+      "description": "A serif for bread and butter use by Friedrich Althausen (Latin, Greek, Cyrillic)",
+      "languages": "Latin, Cyrillic, Greek",
+      "styles": [
+        "regular",
+        "bold",
+        "italic",
+        "bolditalic"
+      ],
+      "files": [
+        {
+          "name": "Vollkorn_12.cpfont",
+          "size": 783728,
+          "crc32": 1645205700,
+          "sha256": "409020d0b862a6ceefccc4d75cdc1e8050da62cb6273c3943106e969c167a848"
+        },
+        {
+          "name": "Vollkorn_14.cpfont",
+          "size": 959840,
+          "crc32": 3710731477,
+          "sha256": "0427adc1476aac4e7b2bc481f04a655f0a32511d3f970d1af491431fd52c249f"
+        },
+        {
+          "name": "Vollkorn_16.cpfont",
+          "size": 1160696,
+          "crc32": 3339384948,
+          "sha256": "db9a85a99198c0b6b11fdb0859430d7dd361404ca7ae7372af16e73fab9745f5"
+        },
+        {
+          "name": "Vollkorn_18.cpfont",
+          "size": 1392482,
+          "crc32": 1345096426,
+          "sha256": "1c40907cadb2b33deed070b22f35b57f1f1bdb320c00f9327983fb5b669173c1"
+        }
+      ],
+      "license": "Open-source font license; see source URL",
+      "licenseUrl": "https://github.com/crosspoint-reader/crosspoint-fonts#license",
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/vollkorn/Vollkorn%5Bwght%5D.ttf",
+      "upstreamRelease": "https://github.com/crosspoint-reader/crosspoint-fonts/releases/tag/sd-fonts-m1-b4"
     }
   ]
 }

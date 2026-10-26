@@ -22,6 +22,16 @@ python3 scripts/generate-font-manifest.py \
   --output apps/fonts/fonts.json
 ```
 
+`files/` is deliberately **flat**. The reader validates `file.name` as a
+filename, then downloads `baseUrl + file.name`; do not place a published asset
+inside a per-family subdirectory. The catalog validation test must pass before
+publishing a change.
+
+The Midad-compatible families are copied byte-for-byte from the stable
+CrossPoint font release. `metadata.yaml` records the release and upstream
+source for every family so the same open-source provenance is retained when a
+package is refreshed.
+
 Do not hand-edit `fonts.json`, `files/*.cpfont`, their sizes, or SHA-256
 digests. The app-store `catalog.json` intentionally does not list font assets:
 they are firmware data, not installable Lua applications.

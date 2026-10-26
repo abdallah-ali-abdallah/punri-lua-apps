@@ -1,5 +1,20 @@
 # Changelog
 
+## Downloadable fonts 1.0.1 — 2026-10-26 (local, unpublished)
+
+### Added
+
+- Add the 34-family, 146-package open-source Midad-compatible CrossPoint font
+  collection, with Noto Sans Arabic retained as an additional Arabic family.
+  Every package is size- and SHA-256-indexed with upstream release/source
+  provenance.
+
+### Fixed
+
+- Flatten the published CPFONT assets beneath `fonts/files/`. The reader
+  downloads `baseUrl + filename`, so the previous per-family folders produced
+  a 404 reported incorrectly as an interrupted network download.
+
 ## Screen Ruler 0.2.0 — 2026-10-26
 
 ### Added

@@ -71,11 +71,11 @@ HTTPS repository; these are not separately signed firmware packages.
 Use the firmware repository's
 [publication guide](https://github.com/abdallah-ali-abdallah/punri/blob/main/docs/development/firmware-publication.md).
 Run tests manually before publication and commit the validated source.
-`make firmware-publish` builds and publishes **X4 Pro and X4 Classic only**;
+`make firmware-publish` builds and publishes **X4 Pro only**;
 it runs no unit tests, coverage, simulator builds, smoke checks or OTA installation
 tests. Firmware identity, sizes, SHA-256 values and public files are still checked.
-Sticky remains available through historical release folders and manual builds,
-and is omitted from future publication catalogs.
+Sticky and X4 Classic remain available through historical release folders and
+manual builds, and are omitted from future publication catalogs.
 
 `scripts/publish_firmware.py` prepares local release files and `--check` verifies
 them. The publisher selects a new numeric OTA version by default; an explicit

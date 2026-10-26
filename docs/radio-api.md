@@ -14,7 +14,7 @@ APIs remain compatible. These modules do not expose raw SDK pointers.
 
 Call `radio.capabilities()` before requesting an operation. It returns `ble`,
 `wifi`, `http`, `simulated`, `bluetooth_classic` (always false),
-`hid_keyboard_peripheral`, and the radio API's own `api_version` (2). BLE HID
+`hid_keyboard_peripheral`, `hid_keyboard_enter_space`, and the radio API's own `api_version` (2). BLE HID
 keyboard peripheral support is enabled only for `x4-pro` and `x4-pro-debug`.
 Other hardware profiles, including X4 Classic, must show an unavailable state and
 must not try to imitate HID with a custom GATT characteristic.
@@ -102,7 +102,7 @@ and new sessions are refused until restart (`resident` true with `open` false).
 | `ble.server_start` | One `service` and `characteristic`, initial binary `data`; exposes read/write/notify and advertises the service |
 | `ble.server_notify` | Update server characteristic with binary `data`, notify subscribers |
 | `ble.hid_keyboard_start` | API 4; `{name="PUNRI Remote", bonding=true, timeout_ms=1000..30000}`; starts the bounded HID keyboard advertising window |
-| `ble.hid_key_tap` | API 4; one of `"up"`, `"down"`, `"left"`, `"right"`; native code sends an HID press and its matching release |
+| `ble.hid_key_tap` | API 4; `"up"`, `"down"`, `"left"`, `"right"`; builds with `hid_keyboard_enter_space` also accept `"enter"` and `"space"`. Native code sends a press and matching release. |
 | `ble.hid_keyboard_stop` | API 4; stop advertising and disconnect the current HID host |
 | `ble.hid_forget_pairing` | API 4; stop and delete the **current session's bonded host** only; it never erases all device bonds |
 | `ble.parse(data)` | AD fields as `{type, data}` records; malformed input returns `nil, "invalid_argument"` |
@@ -117,7 +117,7 @@ extended advertising are not exposed in this version.
 ### HID keyboard peripheral (API 4)
 
 HID uses the standard HID service (`0x1812`), keyboard appearance and a report map
-with one input report containing only the four arrow usages. It is not a generic
+with one input report for the four arrows plus Enter and Space. It is not a generic
 BLE transport and it does not expose text entry, media keys, raw report bytes,
 Bluetooth Classic, or arbitrary device-bond deletion.
 

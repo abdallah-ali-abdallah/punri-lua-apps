@@ -1,9 +1,10 @@
 -- Foreground policy for the Bluetooth Page Turner.  Pairing/bonds and HID
 -- reports are native radio work; this file only renders state and submits the
--- deliberately small arrow-key command surface.
+-- deliberately small arrow/Enter/Space command surface.
 local M = {}
 
 M.supported, M.simulated = false, false
+M.enter_space_supported = false
 M.state, M.notice = "unavailable", "Checking Bluetooth HID support"
 M.connected, M.subscribed, M.was_connected = false, false, false
 M.pending_id, M.pending_kind = nil, nil
@@ -46,6 +47,7 @@ function M.init()
     local caps = radio and radio.capabilities and radio.capabilities() or nil
     M.supported = caps and caps.ble and caps.hid_keyboard_peripheral or false
     M.simulated = caps and caps.simulated or false
+    M.enter_space_supported = caps and caps.hid_keyboard_enter_space or false
     M.connected, M.subscribed, M.was_connected = false, false, false
     M.pending_id, M.pending_kind, M.close_when_idle, M.sent = nil, nil, false, 0
     if M.supported then
@@ -81,6 +83,11 @@ function M.stop(forget)
 end
 
 function M.send(key)
+    if (key == "enter" or key == "space") and not M.enter_space_supported then
+        M.notice = "Enter and Space require updated firmware."
+        request_update()
+        return false
+    end
     if not M.supported or M.state ~= "connected" or not M.subscribed then
         M.notice = "Connect and finish pairing before sending a key."
         request_update()
@@ -91,7 +98,7 @@ end
 
 function M.toggle_mode()
     M.mode = M.mode == "arrows" and "pages" or "arrows"
-    M.notice = M.mode == "pages" and "Page mode: Left and Right turn pages." or "Arrow mode: all four keys are shown."
+    M.notice = M.mode == "pages" and "Page mode: Left/Right, Enter and Space." or "Arrow mode: all six keys are shown."
     request_update()
 end
 

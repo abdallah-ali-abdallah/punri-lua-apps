@@ -1,12 +1,14 @@
 -- Layout is recomputed from the live renderer dimensions, so portrait and
 -- landscape simulator/device profiles share the same bounded controls.
 local M = {}
-local layout = {controls = {{}, {}, {}, {}, {}, {}, {}}}
+-- Two extra fixed control records are allocated once with the module and reused.
+local layout = {controls = {{}, {}, {}, {}, {}, {}, {}, {}, {}}}
 
 local function set_control(index, id, label, x, y, width, height)
     local control = layout.controls[index]
     control.id, control.label = id, label
     control.x, control.y, control.w, control.h = x, y, width, height
+    control.prominent = id == "enter" or id == "space"
 end
 
 local function draw_wrapped(x, y, width, text, font, style, max_lines)
@@ -25,8 +27,11 @@ function M.compute()
     local top = (metrics.top_padding or 0) + (metrics.header_height or 48) + 8
     local bottom = height - (metrics.button_hints_height or 40) - 8
     local content_w = width - side * 2
-    local action_h = math.max(32, math.min(48, math.floor((bottom - top) / 7)))
     local small_line_h = punri.line_height("small")
+    -- Six rows share the usable height: three actions, two arrow rows and one
+    -- large Enter/Space row. Keep two status lines and the state line clear.
+    local reserved_text_h = small_line_h * 3 + 14
+    local action_h = math.max(30, math.min(48, math.floor((bottom - top - reserved_text_h - 42) / 6)))
     layout.w, layout.h, layout.side, layout.top, layout.bottom = width, height, side, top, bottom
     set_control(1, "primary", "Pair / Advertise", side, top, content_w, action_h)
     set_control(2, "mode", "Mode: Arrow keys", side, top + action_h + 6, content_w, action_h)
@@ -36,11 +41,11 @@ function M.compute()
     -- Reserve two measured status lines and one measured state line.  Lua text
     -- coordinates are top-left, not baselines, so all vertical centering below
     -- is derived from line_height instead of a guessed pixel offset.
-    local reserved_text_h = small_line_h * 3 + 14
-    local available_h = math.max(action_h * 2 + 10, bottom - pad_top - reserved_text_h)
+    local available_h = bottom - pad_top - reserved_text_h
+    local large_h = math.max(48, math.min(84, math.floor((available_h - 16) / 3)))
     -- Reserve a two-line status area below the pad even on the 480-pixel
     -- landscape simulator; controls must never cover an error/retry message.
-    local key_h = math.max(30, math.min(72, math.floor((available_h - 12) / 2)))
+    local key_h = math.max(30, math.min(72, math.floor((available_h - large_h - 16) / 2)))
     local key_w = math.max(42, math.min(math.floor((content_w - 12) / 3), 110))
     local center_x = math.floor((width - key_w) / 2)
     local left_x = center_x - key_w - 6
@@ -49,7 +54,11 @@ function M.compute()
     set_control(5, "left", "Left", left_x, pad_top + key_h + 8, key_w, key_h)
     set_control(6, "down", "Down", center_x, pad_top + key_h + 8, key_w, key_h)
     set_control(7, "right", "Right", right_x, pad_top + key_h + 8, key_w, key_h)
-    layout.status_y = layout.controls[7].y + layout.controls[7].h + 8
+    local large_y = pad_top + key_h * 2 + 16
+    local large_w = math.floor((content_w - 12) / 2)
+    set_control(8, "enter", "Enter", side, large_y, large_w, large_h)
+    set_control(9, "space", "Space", side + large_w + 12, large_y, content_w - large_w - 12, large_h)
+    layout.status_y = large_y + large_h + 8
     layout.state_y = bottom - small_line_h
     layout.small_line_h = small_line_h
     return layout
@@ -58,9 +67,14 @@ end
 local function button(rect, active)
     if active then punri.rect_dither(rect.x, rect.y, rect.w, rect.h, false) end
     punri.rounded_rect(rect.x, rect.y, rect.w, rect.h, 5, false, active and 2 or 1)
-    local line_h = punri.line_height("ui10")
+    local font = rect.prominent and "ui12" or "ui10"
+    local line_h = punri.line_height(font)
     punri.text(rect.x + math.floor(rect.w / 2), rect.y + math.floor((rect.h - line_h) / 2), rect.label,
-               "ui10", active and "bold" or "regular", "center", true)
+               font, (active or rect.prominent) and "bold" or "regular", "center", true)
+end
+
+local function key_visible(control, controller)
+    return controller.mode ~= "pages" or control.id == "left" or control.id == "right" or control.prominent
 end
 
 function M.draw(controller)
@@ -90,11 +104,9 @@ function M.draw(controller)
     button(mode, false)
     button(forget, false)
 
-    local keys_visible = controller.mode ~= "pages"
     for index = 4, #l.controls do
         local control = l.controls[index]
-        local show = keys_visible or control.id == "left" or control.id == "right"
-        if show then button(control, controller.pending_kind == "key") end
+        if key_visible(control, controller) then button(control, controller.pending_kind == "key") end
     end
     draw_wrapped(l.side, l.status_y, l.w - l.side * 2, controller.notice, "small", "regular", 2)
     punri.text(l.side, l.state_y, "State: " .. controller.state .. " / keys sent: " .. controller.sent,
@@ -110,7 +122,7 @@ function M.hit(x, y, controller)
             if control.id == "primary" then return controller.connected and "disconnect" or "pair" end
             if control.id == "mode" then return "mode" end
             if control.id == "forget" then return "forget" end
-            if controller.mode ~= "pages" or control.id == "left" or control.id == "right" then return control.id end
+            if key_visible(control, controller) then return control.id end
         end
     end
     return nil

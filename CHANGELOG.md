@@ -29,6 +29,10 @@
 
 ### Added
 
+- Add large, bold Enter and Space controls below the Bluetooth Page Turner
+  arrows in both modes and orientations. Older firmware keeps arrow controls
+  usable and explains when the new keys need a firmware update.
+
 - Register Daily Track, QR Cards Share, Unit Convert, Screen Ruler, World Clock,
   and Bluetooth Page Turner in the local catalog with their runtime modules,
   assets and current API requirements. QR Cards Share includes its license notice.

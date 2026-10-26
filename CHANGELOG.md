@@ -1,5 +1,14 @@
 # Changelog
 
+## Notepad 1.0.1 — 2026-10-27
+
+### Fixed
+
+- Offer the system-keyboard update to existing Notepad installations. The earlier
+  keyboard integration kept version 1.0.0, so the App Store did not offer it as an
+  update. Version 1.0.1 delivers the same system keyboard used by To-do List for
+  note titles and multiline text, preserving saved notes and text exports.
+
 ## Bluetooth Mouse 0.1.1 — 2026-10-27
 
 ### Fixed

@@ -1,0 +1,42 @@
+{
+  "version": "1.0.3.8",
+  "source_repository": "https://github.com/abdallah-ali-abdallah/punri",
+  "source_commit": "532fc6399eb85574265c44d43c36d8282d073f3d",
+  "sdk_commit": "b784446302c076b4b5a622627867f0c80905cc50",
+  "released_at": "2026-10-26T23:12:35Z",
+  "build_command": "PUNRI_RELEASE_VERSION=1.0.3.8 pio run -e x4-pro",
+  "variants": [
+    "x4-pro"
+  ],
+  "source_tag": "1.0",
+  "artifact_suffix": "1.0-532fc",
+  "source_snapshot": {
+    "commit": "532fc6399eb85574265c44d43c36d8282d073f3d",
+    "tree": "be125b74f38e9313cec5be34273af955d73ae8ec",
+    "modified": false,
+    "submodules": {
+      "apps": {
+        "commit": "2962ebe1a193963f5ad164e9f3ba2a73a2693dae",
+        "tree": "fd4eea06e7fbc5a8cc62b545f5d07b5af69db531",
+        "modified": false
+      },
+      "assets/tabler-icons": {
+        "commit": "8ac7d81b72ece11072ef25ea9fd92e80c6f3c9fc",
+        "tree": "8dbcfd0777e655020629841e052d38dd4ab4f496",
+        "modified": false
+      },
+      "freeink-sdk": {
+        "commit": "b784446302c076b4b5a622627867f0c80905cc50",
+        "tree": "bc0cf056d36f3e839c37fde7611a80643e90f609",
+        "modified": false,
+        "submodules": {
+          "libs/assets/Icons/lucide": {
+            "commit": "c81680e066f45b640743ca78ae36cdedda3f0318",
+            "tree": "8eae8d7f6398d5aba9c8f8a3f779e9408a5a7488",
+            "modified": false
+          }
+        }
+      }
+    }
+  }
+}

@@ -4,19 +4,19 @@
   "assets": [
     {
       "name": "punri-sticky-v1.0.1.bin",
-      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.1/punri-sticky-v1.0.1.bin",
+      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/7b0ab632600c22da1d2cdedacd7bc3a7c2b9c5b7/firmware/v1.0.1/punri-sticky-v1.0.1.bin",
       "size": 5512624,
       "sha256": "b846b8d7896e3a27aa86e07036f32a9ef8a94af56794578bbe06dafa31df8bee"
     },
     {
       "name": "punri-x4-pro-v1.0.1.bin",
-      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.1/punri-x4-pro-v1.0.1.bin",
+      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/7b0ab632600c22da1d2cdedacd7bc3a7c2b9c5b7/firmware/v1.0.1/punri-x4-pro-v1.0.1.bin",
       "size": 5811808,
       "sha256": "3f6999e5eaf8bb815655746848954da08c4b7dfee6e5d5bf46489b7387ed620e"
     },
     {
       "name": "punri-x4-classic-v1.0.1.bin",
-      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.1/punri-x4-classic-v1.0.1.bin",
+      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/7b0ab632600c22da1d2cdedacd7bc3a7c2b9c5b7/firmware/v1.0.1/punri-x4-classic-v1.0.1.bin",
       "size": 5432976,
       "sha256": "a751eb07667129a9b6d6a36c4c648c64a92cf1ba46d8cb6274a997ced1e64175"
     }
@@ -30,7 +30,7 @@
       "variant": "sticky",
       "released_at": "2026-10-26T15:30:39Z",
       "notes": "Firmware updates now use the public apps repository catalog with SHA-256 verification.",
-      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.1/punri-sticky-1.0-08807.bin",
+      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/7b0ab632600c22da1d2cdedacd7bc3a7c2b9c5b7/firmware/v1.0.1/punri-sticky-1.0-08807.bin",
       "firmware_sha256": "b846b8d7896e3a27aa86e07036f32a9ef8a94af56794578bbe06dafa31df8bee",
       "size": 5512624,
       "supported_devices": [
@@ -46,7 +46,7 @@
       "variant": "x4-pro",
       "released_at": "2026-10-26T15:30:39Z",
       "notes": "Firmware updates now use the public apps repository catalog with SHA-256 verification.",
-      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.1/punri-x4-pro-1.0-08807.bin",
+      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/7b0ab632600c22da1d2cdedacd7bc3a7c2b9c5b7/firmware/v1.0.1/punri-x4-pro-1.0-08807.bin",
       "firmware_sha256": "3f6999e5eaf8bb815655746848954da08c4b7dfee6e5d5bf46489b7387ed620e",
       "size": 5811808,
       "supported_devices": [
@@ -62,7 +62,7 @@
       "variant": "x4-classic",
       "released_at": "2026-10-26T15:30:39Z",
       "notes": "Firmware updates now use the public apps repository catalog with SHA-256 verification.",
-      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.1/punri-x4-classic-1.0-08807.bin",
+      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/7b0ab632600c22da1d2cdedacd7bc3a7c2b9c5b7/firmware/v1.0.1/punri-x4-classic-1.0-08807.bin",
       "firmware_sha256": "a751eb07667129a9b6d6a36c4c648c64a92cf1ba46d8cb6274a997ced1e64175",
       "size": 5432976,
       "supported_devices": [

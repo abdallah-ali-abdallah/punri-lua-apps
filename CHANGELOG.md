@@ -1,5 +1,13 @@
 # Changelog
 
+## Native quote fonts — 2026-10-26
+
+### Added
+
+- Add a separate quote-font catalog with Amiri, Noto Serif and Frank Ruhl Libre
+  Regular at native 20/24-point sizes, shared across all 28 quotation languages.
+  Include pinned sources, licenses, generation tooling and exact download hashes.
+
 ## Presenter Remote 0.2.0 — 2026-10-26
 
 ### Changed

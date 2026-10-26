@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "sizes": [
+    20,
+    24
+  ],
+  "profiles": {
+    "amiri": {
+      "family": "QuoteAmiri",
+      "url": "https://raw.githubusercontent.com/google/fonts/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/amiri/Amiri-Regular.ttf",
+      "sha256": "ab391c4147d054c48976e98322ad0eefe1427aa0e0502a12a4c75d80a70cfcd7",
+      "licenseUrl": "https://raw.githubusercontent.com/google/fonts/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/amiri/OFL.txt",
+      "intervals": "latin-ext,arabic",
+      "axes": {}
+    },
+    "noto-serif": {
+      "family": "QuoteNotoSerif",
+      "url": "https://raw.githubusercontent.com/google/fonts/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/notoserif/NotoSerif%5Bwdth,wght%5D.ttf",
+      "sha256": "4d8e6761424656867019081a1a01336f3cb086982682698714054fc33f782713",
+      "licenseUrl": "https://raw.githubusercontent.com/google/fonts/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/notoserif/OFL.txt",
+      "intervals": "latin-ext,cyrillic,vietnamese,(0x0300-0x036F)",
+      "axes": {
+        "wght": 400,
+        "wdth": 100
+      }
+    },
+    "frank-ruhl-libre": {
+      "family": "QuoteFrankRuhlLibre",
+      "url": "https://raw.githubusercontent.com/google/fonts/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/frankruhllibre/FrankRuhlLibre%5Bwght%5D.ttf",
+      "sha256": "f9bf26966681037aae894b031bd0dcf2c1bfdfa128dd0640cf276fe62a338a43",
+      "licenseUrl": "https://raw.githubusercontent.com/google/fonts/e7db6ca603fd4862010383ff17ffd6cc4ffac1c0/ofl/frankruhllibre/OFL.txt",
+      "intervals": "latin-ext,hebrew",
+      "axes": {
+        "wght": 400
+      }
+    }
+  }
+}

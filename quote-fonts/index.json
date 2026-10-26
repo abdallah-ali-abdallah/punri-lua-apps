@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "formatVersion": 4,
+  "languages": {
+    "AR": "amiri",
+    "BE": "noto-serif",
+    "CA": "noto-serif",
+    "CAV": "noto-serif",
+    "CS": "noto-serif",
+    "DA": "noto-serif",
+    "DE": "noto-serif",
+    "EN": "noto-serif",
+    "ES": "noto-serif",
+    "FI": "noto-serif",
+    "FR": "noto-serif",
+    "HE": "frank-ruhl-libre",
+    "HU": "noto-serif",
+    "IT": "noto-serif",
+    "KK": "noto-serif",
+    "LT": "noto-serif",
+    "NL": "noto-serif",
+    "PL": "noto-serif",
+    "PT": "noto-serif",
+    "PT2": "noto-serif",
+    "RO": "noto-serif",
+    "RU": "noto-serif",
+    "SI": "noto-serif",
+    "SK": "noto-serif",
+    "SV": "noto-serif",
+    "TR": "noto-serif",
+    "UK": "noto-serif",
+    "VI": "noto-serif"
+  },
+  "profiles": {
+    "amiri": {
+      "family": "QuoteAmiri",
+      "files": {
+        "20": {
+          "file": "files/amiri/QuoteAmiri_20.cpfont",
+          "size": 413891,
+          "sha256": "8934c62a9e9e5e8563c2efb8576b837cbdc761cd653be93e0558d26323e85145"
+        },
+        "24": {
+          "file": "files/amiri/QuoteAmiri_24.cpfont",
+          "size": 576007,
+          "sha256": "c330181dc2f4c43028c17806d682c2402ec5933499dce3b8bc9aff27faa14692"
+        }
+      },
+      "license": "licenses/amiri/OFL.txt",
+      "sourceSha256": "ab391c4147d054c48976e98322ad0eefe1427aa0e0502a12a4c75d80a70cfcd7"
+    },
+    "noto-serif": {
+      "family": "QuoteNotoSerif",
+      "files": {
+        "20": {
+          "file": "files/noto-serif/QuoteNotoSerif_20.cpfont",
+          "size": 276801,
+          "sha256": "fcca5763e654b34dd9efd0295e8aaaa23d1b1ac1e403b8ae41a125389c747125"
+        },
+        "24": {
+          "file": "files/noto-serif/QuoteNotoSerif_24.cpfont",
+          "size": 382358,
+          "sha256": "318a81feea2581b2c23f08629d96ff0319e89ec0e975b31741732388d8d31427"
+        }
+      },
+      "license": "licenses/noto-serif/OFL.txt",
+      "sourceSha256": "4d8e6761424656867019081a1a01336f3cb086982682698714054fc33f782713"
+    },
+    "frank-ruhl-libre": {
+      "family": "QuoteFrankRuhlLibre",
+      "files": {
+        "20": {
+          "file": "files/frank-ruhl-libre/QuoteFrankRuhlLibre_20.cpfont",
+          "size": 73650,
+          "sha256": "cbe61f7832d09a212293e9bff8b1b0b6cfa20f297dbdb1078dbf7571fb90ae87"
+        },
+        "24": {
+          "file": "files/frank-ruhl-libre/QuoteFrankRuhlLibre_24.cpfont",
+          "size": 98908,
+          "sha256": "5bb7e9dda1e39362247d0d97490b5d79671f469f6d9ab5ba4d4b4f0ed04884fe"
+        }
+      },
+      "license": "licenses/frank-ruhl-libre/OFL.txt",
+      "sourceSha256": "f9bf26966681037aae894b031bd0dcf2c1bfdfa128dd0640cf276fe62a338a43"
+    }
+  }
+}

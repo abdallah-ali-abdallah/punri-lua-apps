@@ -4,6 +4,9 @@
 
 ### Added
 
+- Add clean one-command firmware publication with validated replacement,
+  main-tag/source-hash download names and commit-pinned OTA URLs.
+
 - Publish Sticky, X4 Pro and X4 Classic firmware under `firmware/v1.0.1/`,
   with a firmware catalog, SHA-256 checksums, source provenance and update
   instructions. PUNRI online updates now use `firmware/catalog.json`.

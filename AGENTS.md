@@ -2,9 +2,11 @@
 
 This public repository owns downloadable Lua applications and `catalog.json`.
 The `firmware/` folder also owns explicitly published PUNRI firmware images,
-a separate firmware catalog, checksums and update instructions. Never overwrite
-a published version folder or change the root application catalog for a firmware
-release. Prepare and verify firmware releases with the parent firmware repo's
+a separate firmware catalog, checksums and update instructions. An explicitly
+requested `make firmware-publish` operation may replace the current version
+through new Git commits, with verified commit-pinned download URLs. Never force
+push history or change the root application catalog for a firmware release.
+Prepare and verify firmware files with the parent repo's
 `scripts/publish_firmware.py`; see `firmware/README.md`.
 
 The firmware consumes it as its `apps/` submodule; runtime/HAL changes belong in

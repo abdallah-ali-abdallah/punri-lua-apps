@@ -72,7 +72,14 @@ Use the firmware repository's
 [publication guide](https://github.com/abdallah-ali-abdallah/punri/blob/main/docs/development/firmware-publication.md).
 Build and test all three boards, commit validated source, then build the final
 versioned images. `scripts/publish_firmware.py` prepares release files and
-`--check` verifies them before publication. Publish the apps commit before
-advancing the firmware's apps submodule. Do not overwrite a versioned release,
-change application versions, or regenerate the root app catalog for a firmware
-release. Hardware acceptance is separate from build and simulator validation.
+`--check` verifies them before publication. `make firmware-publish` performs the
+complete clean-build, test and publication flow, replacing the current version
+through new Git commits. Download filenames contain the latest main tag and
+first five source-commit characters, for example
+`punri-x4-pro-1.0.1-45abc.bin`. OTA aliases retain the old filename convention.
+Catalog URLs pin the image commit, so older catalogs keep their matching bytes
+after replacement. Increasing the OTA version is required for installed devices
+to offer another update; replacing the same version only refreshes its download.
+Publish the apps commit before advancing the firmware's apps submodule. Never
+force push history, change application versions or regenerate the root app
+catalog for a firmware release. Hardware acceptance remains a separate check.

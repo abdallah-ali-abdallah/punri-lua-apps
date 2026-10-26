@@ -2,15 +2,17 @@
 
 Firmware updates now use the public apps repository catalog with SHA-256 verification.
 
-[Firmware source](https://github.com/abdallah-ali-abdallah/punri/tree/4c24dd3f368f6f7377c856b4861387a132aa0126) (`4c24dd3f368f6f7377c856b4861387a132aa0126`). FreeInk SDK: `b784446302c076b4b5a622627867f0c80905cc50`.
+[Firmware source base](https://github.com/abdallah-ali-abdallah/punri/tree/08807353760656a8b3ef43435e95dfa285f78bd7) (`08807353760656a8b3ef43435e95dfa285f78bd7`). FreeInk SDK: `b784446302c076b4b5a622627867f0c80905cc50`.
+
+Built from a working-source snapshot, including local changes. Source tree: `f6840fff745fddf9c7d92c9a6f57f331bcd5233b`. The base commit alone does not describe these inputs; `build.json` records the source and submodule tree fingerprints.
 
 | Device | Firmware |
 | --- | --- |
-| sticky | [punri-sticky-1.0-4c24d.bin](punri-sticky-1.0-4c24d.bin) |
-| x4-pro | [punri-x4-pro-1.0-4c24d.bin](punri-x4-pro-1.0-4c24d.bin) |
-| x4-classic | [punri-x4-classic-1.0-4c24d.bin](punri-x4-classic-1.0-4c24d.bin) |
+| sticky | [punri-sticky-1.0-08807.bin](punri-sticky-1.0-08807.bin) |
+| x4-pro | [punri-x4-pro-1.0-08807.bin](punri-x4-pro-1.0-08807.bin) |
+| x4-classic | [punri-x4-classic-1.0-08807.bin](punri-x4-classic-1.0-08807.bin) |
 
-Filenames use main tag `1.0` and source SHA `4c24d`. The `-v<version>.bin` files are byte-identical OTA compatibility aliases.
+Filenames use source tag `1.0` and base SHA `08807`. The `-v<version>.bin` files are byte-identical OTA compatibility aliases.
 
 Verify with `shasum -a 256 -c SHA256SUMS` (macOS) or `sha256sum -c SHA256SUMS` (Linux) after downloading every BIN listed in that file. For one image, calculate its SHA-256 and compare its complete hash to its SHA256SUMS entry.
 

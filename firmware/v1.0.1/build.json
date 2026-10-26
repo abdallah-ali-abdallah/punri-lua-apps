@@ -1,8 +1,10 @@
 {
   "version": "1.0.1",
   "source_repository": "https://github.com/abdallah-ali-abdallah/punri",
-  "source_commit": "745eebd62254ce3cec91d8e15f1faa7c1679f34d",
+  "source_commit": "4c24dd3f368f6f7377c856b4861387a132aa0126",
   "sdk_commit": "b784446302c076b4b5a622627867f0c80905cc50",
-  "released_at": "2026-10-26T02:25:49Z",
-  "build_command": "PUNRI_RELEASE_VERSION=1.0.1 pio run -e sticky -e x4-pro -e x4-classic"
+  "released_at": "2026-10-26T10:48:19Z",
+  "build_command": "PUNRI_RELEASE_VERSION=1.0.1 pio run -e sticky -e x4-pro -e x4-classic",
+  "source_tag": "1.0",
+  "artifact_suffix": "1.0-4c24d"
 }

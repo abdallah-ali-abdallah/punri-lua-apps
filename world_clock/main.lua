@@ -13,6 +13,7 @@ local MAX_FAVORITES = 6
 local settings = {home = nil, use24 = true, favorites = {}}
 local screen, cursor, list_page = "setup", 1, 1
 local selected_id, chooser = "cairo", nil
+local chooser_title, chooser_hint, map_frame = nil, nil, nil
 local read_only_state, state_notice = false, nil
 local pending_settings, pending_after, return_screen = nil, nil, nil
 local snapshot_utc, snapshot_source, snapshot_problem = nil, nil, nil
@@ -152,6 +153,7 @@ end
 
 local function set_screen(value)
     screen = value
+    map_frame = nil
     cursor, list_page = 1, 1
     request_draw()
 end
@@ -302,7 +304,7 @@ local function draw_setup()
 end
 
 local function draw_map()
-    local width, _, _, top, bottom = ui.content_bounds()
+    local width, height, _, top, bottom = ui.content_bounds()
     local city_value = city_clock(selected_id)
     local home_value = city_clock(settings.home)
     local selected = cities.get(selected_id)
@@ -318,11 +320,18 @@ local function draw_map()
         ui.centered_line(top, width, selected.name, "ui12", "bold")
         top = top + punri.line_height("ui12")
     end
-    local map_x, map_y = map.origin(width, top + 8, bottom - 44)
+    local map_instruction = map.asset_error and "Map asset unavailable; choose a time-zone region or Cities." or
+        "Tap a marker or time-zone region"
+    ui.centered_line(top, width, map_instruction, "small", "regular")
+    top = top + punri.line_height("small") + 4
+    map_frame = map.layout(width, height, top + 8, bottom)
     input.begin()
-    map.draw(map_x, map_y, selected_id)
-    input.add("map", map_x, map_y, map.width, map.height)
-    if map.asset_error then ui.message(16, map_y + map.height + 4, width - 32, "Map asset unavailable; city list still works.", 2) end
+    map.draw(map_frame, selected_id)
+    input.add("map", map_frame.x, map_frame.y, map_frame.width, map_frame.height)
+    for _, selector in ipairs(map_frame.selectors) do
+        ui.button(selector.x, selector.y, selector.w, selector.h, selector.region.label, false)
+        input.add("region:" .. selector.region.id, selector.x, selector.y, selector.w, selector.h)
+    end
     add_actions(width, bottom, {
         {id = "cities", label = "Cities"},
         {id = "favorites", label = "Favorites"},
@@ -424,8 +433,8 @@ end
 
 local function draw_chooser()
     local width, _, _, top, bottom = ui.content_bounds()
-    punri.header("Choose city")
-    ui.message(16, top, width - 32, "Markers are close together. Choose a city.")
+    punri.header(chooser_title or "Choose city")
+    ui.message(16, top, width - 32, chooser_hint or "Markers are close together. Choose a city.")
     input.begin()
     local row_height = ui.row_height(false)
     for index, id in ipairs(chooser or {}) do
@@ -477,14 +486,30 @@ local function pick_city(id, destination)
     set_screen(destination or "detail")
 end
 
+local function open_chooser(ids, title, hint)
+    chooser = ids
+    chooser_title = title or "Choose city"
+    chooser_hint = hint or "Markers are close together. Choose a city."
+    screen, cursor, list_page = "chooser", 1, 1
+    map_frame = nil
+    request_draw()
+end
+
 local function handle_tap(action, x, y)
     if not action then return end
     if action == "map" then
-        local width, _, _, top, bottom = ui.content_bounds()
-        local mx, my = map.origin(width, top + 35, bottom - 45)
-        local matches = map.hit(x, y, mx, my)
+        if not map_frame then return end
+        local matches = map.hit(x, y, map_frame)
         if #matches == 1 then pick_city(matches[1], "detail")
-        elseif #matches > 1 then chooser, screen, cursor = matches, "chooser", 1; request_draw() end
+        elseif #matches > 1 then
+            open_chooser(matches, "Choose city", "Markers are close together. Choose a city.")
+        else
+            local region = map.region_at(x, y, map_frame)
+            if region then open_chooser(region.city_ids, region.label, "Choose a common city in this time-zone region.") end
+        end
+    elseif action:match("^region:") then
+        local region = cities.region(action:sub(#"region:" + 1))
+        if region then open_chooser(region.city_ids, region.label, "Choose a common city in this time-zone region.") end
     elseif action == "cities" then set_screen("list")
     elseif action == "favorites" then set_screen("favorites")
     elseif action == "details" then set_screen("detail")

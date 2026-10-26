@@ -204,6 +204,7 @@
 
 - Failed preference writes remain retryable without replacing the prior saved settings; corrupt saved state remains untouched.
 - Use font-measured, UTF-8-safe control labels and dynamic two-line row heights so selected cities, offset values, retry actions, and long storage-recovery actions remain visible in portrait and landscape.
+- Align map markers and touch targets through one shared layout frame, enlarge the map for legible geography, and add visual common-time-zone city selectors.
 
 ## To-do List 1.1.0 — 2026-10-25
 

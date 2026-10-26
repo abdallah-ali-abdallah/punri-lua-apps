@@ -1669,8 +1669,8 @@
         },
         {
           "path": "main.lua",
-          "size": 25525,
-          "sha256": "92742e1504b4b1db7bc53484beecfe998f45c2c6616bdf5bf6287a4cb294c737"
+          "size": 26706,
+          "sha256": "222d6b59a0fa57b322cb79563f42d9d4d24d59051b8df98a0850ab4d37326f5e"
         },
         {
           "path": "time_math.lua",
@@ -1684,13 +1684,13 @@
         },
         {
           "path": "cities.lua",
-          "size": 2110,
-          "sha256": "0f2ae715eb3e1f2e4e7f4e65b081c2d4e70f7811ee1b4aba6fefebdcbcda6c1a"
+          "size": 3174,
+          "sha256": "3df42fe796900b57b3ff0b18b073d5bace89c02643d79f9c47141243d4ba3541"
         },
         {
           "path": "map.lua",
-          "size": 1545,
-          "sha256": "4f568fe19f2d433b6a45a143a5368880bfc60eb5732754f2b67cb58630003bdf"
+          "size": 3861,
+          "sha256": "e6015f0cf53518c725930559cb0ec1848494ae74bc66c9ec9385c4655c4957a9"
         },
         {
           "path": "ui.lua",
@@ -1709,8 +1709,8 @@
         },
         {
           "path": "world.raw",
-          "size": 5184,
-          "sha256": "c057ae62e33409228a5014b3656493eb85c6d1896899cc2a81d4fe9c17ec76ae"
+          "size": 10000,
+          "sha256": "03456713d7e05427bea3e80e94d89f0924616cb5e222dd73e82e776eb65962d1"
         },
         {
           "path": "icon.raw",

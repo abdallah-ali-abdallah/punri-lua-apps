@@ -13,6 +13,13 @@
 - Add a real HTTPS simulator acceptance path that downloads and verifies the
   published image before writing only simulated flash.
 
+## World Clock 0.1.2 — 2026-10-26
+
+### Changed
+
+- Expand the World Clock map to use nearly the full portrait width and place
+  its four regional city selectors in one large, touch-friendly column.
+
 ## Downloadable fonts 1.0.1 — 2026-10-26 (local, unpublished)
 
 ### Added

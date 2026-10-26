@@ -3,10 +3,11 @@ local cities = punri.dofile("cities.lua")
 local M = {width = cities.map_width, height = cities.map_height, asset_error = false}
 local bitmap = nil
 local BYTES = M.width * M.height / 8
-local HIT_RADIUS = 11
+local HIT_RADIUS = 14
 local SIDE_MARGIN = 12
-local SELECTOR_GAP = 8
-local SELECTOR_HEIGHT = 30
+local SELECTOR_GAP = 10
+local PORTRAIT_SELECTOR_HEIGHT = 48
+local LANDSCAPE_SELECTOR_HEIGHT = 42
 
 function M.load()
     local candidate = punri.read_file("world.raw", BYTES)
@@ -25,35 +26,36 @@ function M.layout(screen_width, screen_height, top, bottom)
     local frame = {width = M.width, height = M.height, selectors = {}}
     frame.x = math.floor((screen_width - M.width) / 2)
     if screen_width > screen_height then
+        frame.x = SIDE_MARGIN
         frame.y = math.floor((top + bottom - M.height) / 2)
-        local side_width = math.max(104, math.floor((screen_width - M.width) / 2) - 2 * SIDE_MARGIN)
-        local left_x, right_x = SIDE_MARGIN, screen_width - SIDE_MARGIN - side_width
-        local first_y = frame.y + 22
+        local side_width = screen_width - M.width - 3 * SIDE_MARGIN
+        local first_x = frame.x + M.width + SIDE_MARGIN
+        local selector_block = #cities.regions * LANDSCAPE_SELECTOR_HEIGHT +
+            (#cities.regions - 1) * SELECTOR_GAP
+        local first_y = frame.y + math.floor((M.height - selector_block) / 2)
         for index, region in ipairs(cities.regions) do
-            local left_column = index <= 2
             frame.selectors[index] = {
                 region = region,
-                x = left_column and left_x or right_x,
-                y = first_y + ((index - 1) % 2) * (SELECTOR_HEIGHT + SELECTOR_GAP),
+                x = first_x,
+                y = first_y + (index - 1) * (LANDSCAPE_SELECTOR_HEIGHT + SELECTOR_GAP),
                 w = side_width,
-                h = SELECTOR_HEIGHT,
+                h = LANDSCAPE_SELECTOR_HEIGHT,
             }
         end
     else
-        local selector_rows = 2 * SELECTOR_HEIGHT + SELECTOR_GAP
-        local selector_top = bottom - 44 - selector_rows
-        frame.y = math.floor((top + selector_top - M.height) / 2)
-        local selector_width = math.floor((screen_width - 2 * SIDE_MARGIN - SELECTOR_GAP) / 2)
+        local selector_block = #cities.regions * PORTRAIT_SELECTOR_HEIGHT +
+            (#cities.regions - 1) * SELECTOR_GAP
+        local total_height = M.height + SELECTOR_GAP + selector_block
+        frame.y = top + math.max(0, math.floor((bottom - top - total_height) / 2))
+        local selector_width = screen_width - 2 * SIDE_MARGIN
         local first_y = frame.y + M.height + SELECTOR_GAP
         for index, region in ipairs(cities.regions) do
-            local column = (index - 1) % 2
-            local row = math.floor((index - 1) / 2)
             frame.selectors[index] = {
                 region = region,
-                x = SIDE_MARGIN + column * (selector_width + SELECTOR_GAP),
-                y = first_y + row * (SELECTOR_HEIGHT + SELECTOR_GAP),
+                x = SIDE_MARGIN,
+                y = first_y + (index - 1) * (PORTRAIT_SELECTOR_HEIGHT + SELECTOR_GAP),
                 w = selector_width,
-                h = SELECTOR_HEIGHT,
+                h = PORTRAIT_SELECTOR_HEIGHT,
             }
         end
     end
@@ -65,8 +67,8 @@ function M.draw(frame, selected_id)
     for _, city in ipairs(cities.all) do
         local mx, my = frame.x + city.x, frame.y + city.y
         -- Black-outline/white-center pins remain visible on ocean and land.
-        local outer = city.id == selected_id and 6 or 4
-        local inner = city.id == selected_id and 4 or 2
+        local outer = city.id == selected_id and 8 or 5
+        local inner = city.id == selected_id and 5 or 3
         punri.circle(mx, my, outer, true, true)
         punri.circle(mx, my, inner, true, false)
         if city.id == selected_id then punri.circle(mx, my, 2, true, true) end

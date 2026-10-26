@@ -70,11 +70,17 @@ HTTPS repository; these are not separately signed firmware packages.
 
 Use the firmware repository's
 [publication guide](https://github.com/abdallah-ali-abdallah/punri/blob/main/docs/development/firmware-publication.md).
-Build and test all three boards, commit validated source, then build the final
-versioned images. `scripts/publish_firmware.py` prepares release files and
-`--check` verifies them before publication. `make firmware-publish` performs the
-complete clean-build, test and publication flow, replacing the current version
-through new Git commits. Download filenames contain the latest main tag and
+Run tests manually before publication and commit the validated source.
+`make firmware-publish` builds and publishes **X4 Pro and X4 Classic only**;
+it runs no unit tests, coverage, simulator builds, smoke checks or OTA installation
+tests. Firmware identity, sizes, SHA-256 values and public files are still checked.
+Sticky remains available through historical release folders and manual builds,
+and is omitted from future publication catalogs.
+
+`scripts/publish_firmware.py` prepares local release files and `--check` verifies
+them. The publisher selects a new numeric OTA version by default; an explicit
+`VERSION` can replace the current version through new Git commits.
+Download filenames contain the latest main tag and
 first five source-commit characters, for example
 `punri-x4-pro-1.0.1-45abc.bin`. OTA aliases retain the old filename convention.
 Catalog URLs pin the image commit, so older catalogs keep their matching bytes

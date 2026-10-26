@@ -1,5 +1,16 @@
 # Changelog
 
+## Bluetooth Mouse 0.1.0 — 2026-10-27
+
+### Added
+
+- Add Bluetooth Mouse for X4 Pro: a central grid touchpad, large left/right
+  click buttons, three pointer speeds and portrait/landscape layouts.
+- Add explicit pairing/disconnect and current-host forget controls, secure-host
+  readiness checks, bounded motion/click queues and radio cleanup on exit.
+- Require firmware Lua API 5 with native Bluetooth mouse support. Simulator
+  replay and automated tests do not establish physical Bluetooth acceptance.
+
 ## Native quote fonts — 2026-10-26
 
 ### Added
@@ -18,7 +29,6 @@
   circles, smaller Up/Down keys, Enter/Space and a responsive landscape layout.
 - Move Forget pairing to Settings, keep pairing and connection state visible,
   and prevent Settings navigation from sending keys to the connected host.
-
 
 ## Bluetooth Page Turner 0.1.2 — 2026-10-26
 

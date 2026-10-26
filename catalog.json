@@ -1766,6 +1766,53 @@
       ]
     },
     {
+      "id": "bluetooth_mouse",
+      "name": "Bluetooth Mouse",
+      "version": "0.1.0",
+      "author": "PUNRI",
+      "description": "A wireless Bluetooth mouse for X4 Pro with a grid touchpad, left/right clicks and three pointer speeds. Requires firmware API 5.",
+      "entry": "main.lua",
+      "min_api": 5,
+      "capabilities": [
+        "buttons",
+        "touch"
+      ],
+      "files": [
+        "manifest.json",
+        "main.lua",
+        "controller.lua",
+        "ui.lua",
+        "icon.raw"
+      ],
+      "file_integrity": [
+        {
+          "path": "manifest.json",
+          "size": 330,
+          "sha256": "b2107deec462102804cee6e84c7219185b269658c8d4ec8744eaf400096d11de"
+        },
+        {
+          "path": "main.lua",
+          "size": 1784,
+          "sha256": "ed9586fc7e9c15c066d7373ce985ce2e1e6f75bad917ee8eee58b66e126327f5"
+        },
+        {
+          "path": "controller.lua",
+          "size": 7204,
+          "sha256": "6e510b7adf9ee51a5ff5dd739072bbe581f43bea679f431a523759f797dfb519"
+        },
+        {
+          "path": "ui.lua",
+          "size": 7095,
+          "sha256": "cc7322bcce7692044fefc60539c69ac80f8ebf6efc9a9656257073f6a988c114"
+        },
+        {
+          "path": "icon.raw",
+          "size": 128,
+          "sha256": "5d195b5b50c042139a69db5577ea1c447cd6cdf81cc6a47f047994e1d8cc70bf"
+        }
+      ]
+    },
+    {
       "id": "calculations",
       "name": "Calculations",
       "version": "0.1.0",

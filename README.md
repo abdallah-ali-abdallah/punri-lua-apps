@@ -777,6 +777,7 @@ hardware-verification limits. Further local changes do not publish updates:
 | `solitaire` | **Solitaire** | Games | Classic 7-column Klondike Solitaire card game optimized for e-paper with draw-1 and draw-3 modes. |
 | `wifi_analyzer` | **Wi-Fi Analyzer** | Utilities | Network discovery, channel charts, selected-BSSID RSSI meter, 60-scan graphs, statistics and SD-card CSV exports in one app. |
 | `bluetooth_analyzer` | **Bluetooth Analyzer** | Utilities | BLE discovery, advertisement details/overview, selected-address/type RSSI meter, graphs and CSV exports; BLE-enabled firmware required. |
+| `bluetooth_mouse` | **Bluetooth Mouse** | Utilities | Wireless X4 Pro touchpad with a light grid, left/right clicks and three pointer speeds; requires firmware API 5. |
 | `presenter_remote` | **Presenter Remote** | Utilities | Presentation clicker for X4 Pro with large Next/Back keys, arrows, Enter/Space, pairing settings and visible simulation status. |
 | `signal_meter` | **Signal Meter (legacy)** | Compatibility | Original standalone package retained for existing installs and saved data; its features now also live in Wi-Fi Analyzer. |
 | `todo` | **To-do List** | Productivity | Offline tasks with a button/touch keyboard, completion filters and transactional SD saving. |
@@ -795,3 +796,6 @@ Life Counter has been removed from this source collection and its local catalog.
 Existing device installations and saved data are unaffected. Its replacement is
 described in the [Counter app plan](docs/counter-plan.md); Counter is not yet implemented.
 
+Lua API 5 adds native BLE HID mouse reports and `punri.get_touch()` live logical
+contact coordinates. See [Bluetooth Mouse](docs/bluetooth-mouse.md) for setup,
+compatibility and verification.

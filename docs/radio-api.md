@@ -207,3 +207,27 @@ by testing app exit, forced errors, sleep/wake and reading on the actual reader.
 To verify the identity on an X4 Pro, start a Lua BLE server, connect from a phone,
 and read the Device Name characteristic (`0x2A00`) in Generic Access (`0x1800`);
 the expected value is `PUNRI`.
+
+### HID mouse peripheral (Lua API 5)
+
+`radio.capabilities().hid_mouse_peripheral` reports native mouse support.
+`ble.hid_mouse_start{name="PUNRI Mouse", bonding=true, timeout_ms=30000}` uses
+standard mouse appearance and the HID service with Report ID 2. The payload is
+three bytes: left/right button bits, signed relative X, signed relative Y.
+The Report Reference descriptor carries the ID; it is not prefixed to the value.
+
+- `ble.hid_mouse_move{dx=-127..127, dy=-127..127}` sends one relative report.
+- `ble.hid_mouse_click("left"|"right")` sends a native press/release pair.
+- `ble.hid_mouse_stop{}` disconnects/stops; `radio.close()` also tears down safely.
+- `ble.hid_forget_pairing{}` retains the same current-session-only bond policy.
+
+Mouse operations use the existing request ID/completion and `hid_state`
+contract, require encryption, bonding and input subscription, and are limited
+to one report operation every 16 ms. Keyboard and mouse reports cannot be sent
+into each other's sessions. These operations add no raw HID or arbitrary bond
+management surface.
+
+`punri.get_touch()` returns logical `x, y` while a contact is held and `nil`
+otherwise, honoring orientation and input gating without allocating a table.
+It is sampled by `on_update`; existing tap/swipe callbacks remain unchanged.
+See [Bluetooth Mouse](bluetooth-mouse.md).

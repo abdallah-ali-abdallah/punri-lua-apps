@@ -1,5 +1,6 @@
 -- Bezel-safe e-paper UI; identical copies in the two standalone analyzers.
-local U = {w = 0, h = 0, margin = 0, top = 0, bottom = 0, body = 0, row_h = 0, per_page = 0}
+local F = punri.dofile("press_feedback.lua")
+local U = {feedback = F, w = 0, h = 0, margin = 0, top = 0, bottom = 0, body = 0, row_h = 0, per_page = 0}
 local digit_masks = {63,6,91,79,102,109,125,7,127,111}
 
 function U.layout()
@@ -36,8 +37,11 @@ function U.toolbar(labels, focus)
         local x = U.margin + math.floor((i - 1) * width)
         local chosen = i == focus
         punri.rounded_rect(x + 2, U.top, math.floor(width) - 4, 40, 5, chosen)
+        F.target(i, x + 2, U.top, math.floor(width) - 4, 40, label ~= "Wait", "rounded", 5, chosen)
+        local ink = F.paint(i)
+        if ink == nil then ink = not chosen end
         punri.text(x + math.floor(width / 2), U.top + 8, U.clip(label, width - 12, "ui10"),
-            "ui10", "regular", "center", not chosen)
+            "ui10", "regular", "center", ink)
     end
 end
 
@@ -66,16 +70,19 @@ function U.networks(rows, focus, bluetooth, target)
         local row = target and i == 1 and target or rows[i - offset]
         local y, chosen = U.body + (i - first) * U.row_h, focus == i + 4
         punri.rounded_rect(U.margin, y + 2, U.w - U.margin * 2, U.row_h - 4, 5, chosen)
+        F.target(i + 4, U.margin, y + 2, U.w - U.margin * 2, U.row_h - 4, true, "rounded", 5, chosen)
+        local ink = F.paint(i + 4)
+        if ink == nil then ink = not chosen end
         local name = row.name ~= "" and row.name or (bluetooth and "(unnamed device)" or "(hidden SSID)")
         if row == target then name = "Resume: " .. name end
         punri.text(U.margin + 10, y + 8, U.clip(name, U.w - U.margin * 2 - 112),
-            "ui12", "regular", "left", not chosen)
+            "ui12", "regular", "left", ink)
         punri.text(U.w - U.margin - 10, y + 8, row == target and "Saved" or (row.rssi .. " dBm"),
-            "small", "bold", "right", not chosen)
+            "small", "bold", "right", ink)
         local detail = row.address .. (row == target and "" or (bluetooth and ("  Type " .. tostring(row.address_type)) or
             ("  Ch " .. tostring(row.channel))))
         punri.text(U.margin + 10, y + 12 + punri.line_height("ui12"),
-            U.clip(detail, U.w - U.margin * 2 - 20, "small"), "small", "regular", "left", not chosen)
+            U.clip(detail, U.w - U.margin * 2 - 20, "small"), "small", "regular", "left", ink)
     end
     if #rows == 0 and not target then punri.centered_text(U.body + 32,
         bluetooth and "Press Scan to find BLE devices" or "Press Scan to find networks", "ui12") end

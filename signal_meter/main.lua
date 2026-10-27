@@ -178,6 +178,15 @@ local function draw_meter()
     punri.centered_text(graph_y + graph_h + 12, "Last 60 scans; gaps have no valid RSSI.", "small")
 end
 
+local function feedback_activate(index)
+    local F = ui.feedback
+    if F.busy() then return end
+    if index == 1 or index == 3 or index >= 5 then
+        if F.defer(index, function() activate(index) end) then return end
+    else F.press(index) end
+    activate(index)
+end
+
 function on_init()
     ui.layout()
     scan.init()
@@ -193,6 +202,7 @@ function on_init()
 end
 
 function on_update()
+    ui.feedback.update()
     local result = scan.update()
     if result then
         if role == "measure" and target and result ~= "cancelled" then record(result) end
@@ -212,6 +222,7 @@ function on_update()
 end
 
 function on_draw()
+    ui.feedback.begin(screen)
     ui.begin("Signal Meter", scan.simulated)
     if screen == "choose" then
         labels[1], labels[2], labels[3] = "Exit", scan.request and "Cancel" or "Scan", "Target"
@@ -228,13 +239,14 @@ function on_draw()
     if target_dirty then footer = "TARGET NOT SAVED: Export retries the SD write" end
     if scan.partial() then footer = "PARTIAL SCAN / " .. footer end
     ui.footer(footer)
+    ui.feedback.finish()
 end
 
 function on_button(btn, pressed)
     if not pressed then return end
     ui.layout()
-    if btn == "back" then activate(1); return
-    elseif btn == "confirm" then activate(focus); return end
+    if btn == "back" then feedback_activate(1); return
+    elseif btn == "confirm" then feedback_activate(focus); return end
     local total = screen == "choose" and #scan.rows + 4 or 4
     if btn == "left" then focus = (focus - 2) % total + 1
     elseif btn == "right" then focus = focus % total + 1
@@ -246,10 +258,10 @@ end
 function on_tap(x, y)
     ui.layout()
     local action = ui.toolbar_hit(x, y)
-    if action then focus = action; activate(action); return end
+    if action then focus = action; feedback_activate(action); return end
     if screen == "choose" then
         local index = ui.network_hit(x, y, focus, #scan.rows)
-        if index then focus = index + 4; activate(focus) end
+        if index then focus = index + 4; feedback_activate(focus) end
     end
 end
 

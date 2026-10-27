@@ -1,10 +1,13 @@
 {
   "id": "qr_cards_share",
   "name": "QR Cards Share",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "PUNRI Community",
   "description": "Create offline QR cards for links, contacts, Wi-Fi, and emergency return details.",
   "entry": "main.lua",
   "min_api": 2,
-  "capabilities": ["buttons", "storage"]
+  "capabilities": [
+    "buttons",
+    "storage"
+  ]
 }

@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 -- Sudoku game for PUNRI (Lua)
 -- Faithful reproduction of SudokuActivity.h with procedural generation and difficulty picker
 
@@ -158,11 +173,13 @@ function on_draw()
 
     local ngSel = (row == 10 and not picker)
     punri.rect(ngx, by, bw, bh, ngSel)
-    punri.text(ngx + math.floor(bw / 2), by + 10, "New Game", 10, true, "center", not ngSel)
+    local ngInk = press_ink("new_game", ngx, by, bw, bh, ngSel, "rect", 0, not picker)
+    punri.text(ngx + math.floor(bw / 2), by + 10, "New Game", 10, true, "center", ngInk)
 
     local hSel = (row == 11 and not picker)
     punri.rect(hx, by, bw, bh, hSel)
-    punri.text(hx + math.floor(bw / 2), by + 10, "Hint", 10, true, "center", not hSel)
+    local hintInk = press_ink("hint", hx, by, bw, bh, hSel, "rect", 0, not picker and not solved)
+    punri.text(hx + math.floor(bw / 2), by + 10, "Hint", 10, true, "center", hintInk)
 
     -- Difficulty Modal Dialog (Faithful reproduction of SudokuActivity.h)
     if picker then
@@ -180,17 +197,19 @@ function on_draw()
         for i = 1, 3 do
             local txt = (i == pick_diff) and ("[ " .. lbls[i] .. " ]") or lbls[i]
             local tx = mx + (i - 1) * secW + math.floor(secW / 2)
-            punri.text(tx, my + 60, txt, 0, false, "center", false)
+            local ink = press_ink("difficulty:" .. i, mx + (i - 1) * secW + 4, my + 48,
+                secW - 8, 48, true, "rounded", 5, true)
+            punri.text(tx, my + 60, txt, 0, false, "center", PRESS.active("difficulty:" .. i) and ink or false)
         end
     end
 
     -- Button hints
     if picker then
-        punri.button_hints("Cancel", "Select", "<-", "->")
+        press_hints("Cancel", "Select", "<-", "->")
     elseif solved then
-        punri.button_hints("Back", "New Game", "", "")
+        press_hints("Back", "New Game", "", "")
     else
-        punri.button_hints("Back", "Select", "Up", "Down")
+        press_hints("Back", "Select", "Up", "Down")
     end
 end
 
@@ -271,7 +290,7 @@ function on_tap(x, y)
         local mh = 110
         local mx = math.floor((w - mw) / 2)
         local my = math.floor((h - mh) / 2) - 20
-        if x >= mx and x <= mx + mw and y >= my and y <= my + mh then
+        if x >= mx and x < mx + mw and y >= my + 48 and y < my + 96 then
             local secW = math.floor(mw / 3)
             local tapped = math.floor((x - mx) / secW) + 1
             if tapped >= 1 and tapped <= 3 then new_game(tapped) end
@@ -340,3 +359,20 @@ function on_tap(x, y)
         elseif x >= hx and x <= hx + bw then apply_hint() end
     end
 end
+
+local press_sudoku_tap = on_tap
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return picker and "picker" or "game" end,
+    transition = function(id) return id == "footer:back" or id == "new_game" or id == "hint" or id:sub(1, 11) == "difficulty:" or id == "footer:confirm" and (picker or solved or row == 10) end,
+    map_button = function(button) if button == "confirm" and not picker then if row == 10 then return "new_game" elseif row == 11 then return "hint" end end end,
+    tap = function(x, y)
+        local id = PRESS.hit(x, y)
+        if id and id:sub(1, 7) == "footer:" then on_button(id:sub(8), true)
+        elseif id == "new_game" then picker = true; punri.request_update()
+        elseif id == "hint" then apply_hint(); punri.request_update()
+        elseif id and id:sub(1, 11) == "difficulty:" then new_game(tonumber(id:sub(12))); punri.request_update()
+        elseif not picker then press_sudoku_tap(x, y) end
+    end
+})

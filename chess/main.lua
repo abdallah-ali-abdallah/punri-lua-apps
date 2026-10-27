@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 G = { board = {}, history = {}, dirty = {}, diff = 2, mode = "ai_white", menu_i = 1 }
 
 function mark_dirty_sq(s)
@@ -47,3 +62,11 @@ on_exit = function() dofile("save.lua") end
 dofile("load.lua"); collectgarbage()
 punri.log("CHESS READY: " .. collectgarbage("count") .. " KB")
 
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return G.menu and "menu" or "board" end,
+    invalidate = function() G.need_full_draw = true end,
+    transition = function(id) return id == "footer:back" or G.menu and id ~= "footer:left" and id ~= "footer:right" end,
+    map_button = function(button) if button == "confirm" and G.menu then return "menu:" .. G.menu_i end end
+})

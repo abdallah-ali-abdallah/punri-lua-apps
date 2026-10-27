@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 local w, h = 480, 800
 if punri.get_bounds then
     w, h = punri.get_bounds()
@@ -164,7 +179,8 @@ end
 
 local function draw_btn(x, y, bw, bh, txt, sel, fid)
     punri.rounded_rect(x, y, bw, bh, 6, sel)
-    punri.text(x + math.floor(bw / 2), y + math.floor((bh - 14) / 2), txt, fid or 10, true, "center", not sel)
+    local ink = press_ink("add", x, y, bw, bh, sel, "rounded", 6, true)
+    punri.text(x + math.floor(bw / 2), y + math.floor((bh - 14) / 2), txt, fid or 10, true, "center", ink)
 end
 
 local function draw_cup(cx, cy, pct)
@@ -353,7 +369,7 @@ local function draw_today()
         draw_btn(cx - 90, 690, 180, 46, "+ " .. fmt(step_amount, true), true, 11)
     end
 
-    punri.button_hints("Exit", "Settings", "-" .. fmt(step_amount, true), "+" .. fmt(step_amount, true))
+    press_hints("Exit", "Settings", "-" .. fmt(step_amount, true), "+" .. fmt(step_amount, true))
 end
 
 local function draw_history()
@@ -424,7 +440,7 @@ local function draw_history()
         end
     end
 
-    punri.button_hints("Back", "Settings", nil, nil)
+    press_hints("Back", "Settings", nil, nil)
 end
 
 local function draw_settings()
@@ -453,13 +469,15 @@ local function draw_settings()
         -- Background card
         punri.rounded_rect(card_x, ry, card_w, row_h, 8, sel)
 
+        local id = i == 5 and "history" or "setting:" .. i
+        local ink = press_ink(id, card_x, ry, card_w, row_h, sel, "rounded", 8, true)
         -- Left column: Title and Subtitle
         local pad = 18
-        punri.text(card_x + pad, ry + 14, it[1], 12, true, "left", not sel)
-        punri.text(card_x + pad, ry + 38, it[2], 9, false, "left", not sel)
+        punri.text(card_x + pad, ry + 14, it[1], 12, true, "left", ink)
+        punri.text(card_x + pad, ry + 38, it[2], 9, false, "left", ink)
 
         -- Right column: Value Badge
-        punri.text(card_x + card_w - pad, ry + 25, it[3], 12, true, "right", not sel)
+        punri.text(card_x + card_w - pad, ry + 25, it[3], 12, true, "right", ink)
     end
 
     -- Clean Instructions Card
@@ -478,7 +496,7 @@ local function draw_settings()
     punri.text(lx, infoy + 152, "• Confirm / Select (Button 2):", 10, true, "left", true)
     punri.text(lx + 20, infoy + 174, "Activate row or open history", 10, false, "left", true)
 
-    punri.button_hints("Back", "Select", "Up", "Down")
+    press_hints("Back", "Select", "Up", "Down")
 end
 
 function on_draw()
@@ -596,8 +614,7 @@ function on_button(btn)
     end
 end
 
-function on_touch(action, tx, ty)
-    if action ~= "tap" and action ~= "click" then return end
+function on_tap(tx, ty)
     if show_history then
         if ty > 700 or ty < 80 then
             show_history, in_settings = false, true
@@ -649,3 +666,26 @@ function on_touch(action, tx, ty)
         return
     end
 end
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return show_history and "history" or in_settings and "settings" or "today" end,
+    transition = function(id) return id == "footer:back" or id == "footer:confirm" or id == "settings" or id == "history" or id == "setting:4" end,
+    map_button = function(button)
+        if button == "confirm" and in_settings then return settings_sel == 5 and "history" or "setting:" .. settings_sel end
+        if in_settings and (button == "up" or button == "down" or button == "page_back" or button == "page_forward") and settings_sel <= 3 then return "setting:" .. settings_sel end
+    end,
+    map_tap = function(x, y)
+        if not in_settings and not show_history and y >= 120 and y <= 390 and math.abs(x - w // 2) <= 120 then return "add" end
+    end,
+    tap = function(x, y)
+        local id = PRESS.hit(x, y)
+        if not id and not in_settings and not show_history and y >= 120 and y <= 390 and math.abs(x - w // 2) <= 120 then id = "add" end
+        if id and id:sub(1, 7) == "footer:" then on_button(id:sub(8), true)
+        elseif id == "settings" then in_settings = true; punri.request_update()
+        elseif id == "add" then add_water(step_amount); punri.request_update()
+        elseif id == "history" then settings_sel = 5; on_button("confirm", true)
+        elseif id and id:sub(1, 8) == "setting:" then settings_sel = tonumber(id:sub(9)); on_button("confirm", true)
+        end
+    end
+})

@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 -- Dice Roller application for PUNRI (Lua)
 -- Faithful reproduction of DiceSimActivity.h
 
@@ -179,7 +194,7 @@ function on_draw()
     end
 
     -- 6. Footer Button Hints (matching DiceSimActivity.h exactly)
-    punri.button_hints("Back", "Reset", "Dice", "Roll")
+    press_hints("Back", "Reset", "Dice", "Roll")
 end
 
 function on_button(btn, pressed)
@@ -219,3 +234,10 @@ function on_tap(x, y)
     -- Tap center: roll
     roll_dice()
 end
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return "dice" end,
+    transition = function(id) return id == "footer:back" end,
+    map_tap = function(x, y) return "footer:right" end
+})

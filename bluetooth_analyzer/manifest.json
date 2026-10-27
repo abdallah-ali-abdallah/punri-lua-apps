@@ -1,10 +1,13 @@
 {
   "id": "bluetooth_analyzer",
   "name": "Bluetooth Analyzer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "PUNRI",
   "description": "BLE discovery, advertisement details, RSSI monitoring, graphs and SD-card CSV exports. Requires BLE-enabled firmware (X4 Pro).",
   "entry": "main.lua",
   "min_api": 3,
-  "capabilities": ["buttons", "storage"]
+  "capabilities": [
+    "buttons",
+    "storage"
+  ]
 }

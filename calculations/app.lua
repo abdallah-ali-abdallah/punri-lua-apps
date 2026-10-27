@@ -343,17 +343,36 @@ return function(E, Editor, Store, Tools, UI, I)
         local effective = id == "action" and value or id
         self:changed(not TRANSIENT[effective])
     end
+    function App:activate_control(c, index, x, y)
+        local F = UI.feedback
+        if F.busy() then return end
+        self.state.focus = index
+        local value = c.id == "plot" and {x = x or c.x + c.w / 2, y = y or c.y + c.h / 2} or c.value
+        local effective = c.id == "action" and c.value or c.id
+        local immediate = effective == "key" or effective == "field" or effective == "angle" or effective == "format"
+            or effective == "toggle_function" or effective == "trace_left" or effective == "trace_right"
+            or effective == "zoom_in" or effective == "zoom_out" or effective == "plot"
+            or effective == "history_prev" or effective == "history_next" or effective == "prev_field" or effective == "next_field"
+        local id = UI.feedback_id(c)
+        if not immediate and F.defer(id, function() self:dispatch(c.id, value) end) then return end
+        F.press(id)
+        self:dispatch(c.id, value)
+    end
     function App:tap(x, y)
         local c, index = UI.hit(x, y)
         if not c then return end
-        self.state.focus = index
-        self:dispatch(c.id, c.id == "plot" and {x = x, y = y} or c.value)
+        self:activate_control(c, index, x, y)
     end
     function App:button(button, pressed)
         if not pressed then return end
         local s = self.state
-        if button == "back" then self:dispatch("back"); return end
-        if button == "confirm" then local c = UI.controls[s.focus]; if c then self:dispatch(c.id, c.id == "plot" and {x = c.x + c.w / 2, y = c.y + c.h / 2} or c.value) end; return end
+        if UI.feedback.busy() then return end
+        if button == "back" then
+            if not UI.feedback.defer("footer_back", function() self:dispatch("back") end) then self:dispatch("back") end
+            return
+        end
+        if button == "confirm" then local c = UI.controls[s.focus]; if c then self:activate_control(c, s.focus) end; return end
+        if button == "left" or button == "right" then UI.feedback.press("footer_" .. button) end
         local delta = button == "left" and -1 or button == "right" and 1 or nil
         if button == "page_back" then delta = -5 elseif button == "page_forward" then delta = 5 end
         if button == "up" or button == "down" then
@@ -370,6 +389,7 @@ return function(E, Editor, Store, Tools, UI, I)
         self:changed(false)
     end
     function App:update()
+        UI.feedback.update()
         local s = self.state
         if s.job then
             local ok, problem = pcall(Tools.solve_step, s.job)

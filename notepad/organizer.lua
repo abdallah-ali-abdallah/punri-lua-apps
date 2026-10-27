@@ -1,6 +1,8 @@
 -- Common offline organizer, packaged independently in Todo and Notepad.
 -- Keep these two copies identical: apps cannot read outside their own sandbox.
 local editor = punri.dofile("text_editor.lua")
+local F = editor.feedback
+editor.feedback = F
 local MAGIC = "PUNRI_ORGANIZER_1\n"
 local MAX_FILE = 32768
 local FILTERS = {"All tasks", "Open tasks", "Done tasks"}
@@ -23,7 +25,7 @@ return function(config)
         local m = punri.get_metrics()
         margin = math.max(12, m.content_side_padding)
         top = m.top_padding + m.header_height + 12
-        bottom = h - m.button_hints_height - 12
+        bottom = h - math.max(40, m.button_hints_height or 0) - 12
         row_h = math.max(48, punri.line_height("ui12") + 20)
         list_top = top + (tasks and screen == "list" and 80 or 44)
         per_page = math.max(1, math.floor((bottom - list_top - 32) / row_h))
@@ -256,9 +258,14 @@ return function(config)
     end
 
     local function draw_row(y, label, chosen)
+        local id = "row:" .. y
+        F.target(id, margin, y + 2, w - margin * 2, row_h - 4, true, "rounded", 6, chosen)
+        if chosen then F.focus = id end
         punri.rounded_rect(margin, y + 2, w - margin * 2, row_h - 4, 6, chosen)
+        local ink = F.paint(id)
+        if ink == nil then ink = not chosen end
         punri.text(margin + 12, y + 10, editor.clip(label, w - margin * 2 - 24),
-            "ui12", "regular", "left", not chosen)
+            "ui12", "regular", "left", ink)
     end
 
     function on_init()
@@ -288,21 +295,24 @@ return function(config)
         punri.header(config.name, tasks and tostring(#records) .. "/80" or tostring(#records) .. "/24")
         local label_x = margin
         if punri.has_touch() then
-            punri.rounded_rect(margin, top, 80, 34, 4, false)
-            punri.text(margin + 40, top + 5, screen == "list" and "Exit" or "Back", "ui10", "regular", "center")
+            F.button("back", margin, top, 80, 34, screen == "list" and "Exit" or "Back", "ui10", false, true, 4)
             label_x = margin + 92
         end
         if read_error then
             punri.centered_text(top + 40, "Saved data unavailable", "ui12", "bold")
             punri.centered_text(top + 80, "Back up items.dat and check the SD card.", "small")
             punri.centered_text(top + 112, "The app will not replace your data.", "small")
-            punri.button_hints("Exit", "", "", "")
+            F.footer({"Exit", "", "", ""}, {"back", "confirm", "left", "right"})
             return
         end
         if screen == "list" then
             local label = tasks and FILTERS[filter] .. (punri.has_touch() and " (tap to filter)" or " (side: filter)") or
                 "Select a note to read or edit"
-            punri.text(label_x, top + 6, editor.clip(label, w - margin - label_x, "small"), "small")
+            if tasks then
+                F.target("filter", label_x, top, w - margin - label_x, 34, true, "rounded", 4, false)
+                local ink = F.paint("filter")
+                punri.text(label_x, top + 6, editor.clip(label, w - margin - label_x, "small"), "small", "regular", "left", ink == nil or ink)
+            else punri.text(label_x, top + 6, editor.clip(label, w - margin - label_x, "small"), "small") end
             if tasks then punri.text(margin, top + 44, completion, "small") end
             for i = first, math.min(#visible, first + per_page - 1) do
                 local index = visible[i]
@@ -318,7 +328,7 @@ return function(config)
                 punri.centered_text(list_top + row_h * #visible + 18,
                     tasks and "No tasks in this view" or "No notes yet", "small")
             end
-            punri.button_hints("Exit", "Select", "Up", "Down")
+            F.footer({"Exit", "Select", "Up", "Down"}, {"back", "confirm", "left", "right"})
         elseif screen == "quick" or screen == "clear" then
             local label = screen == "clear" and ("Clear all " .. tostring(#records) .. " tasks?") or "Quick actions"
             punri.text(label_x, top + 6, label, "ui12", "bold")
@@ -330,18 +340,17 @@ return function(config)
                     draw_row(list_top + (i - 1) * row_h, label, i == menu_selected)
                 end
             end
-            punri.button_hints("Back", "Select", "Up", "Down")
+            F.footer({"Back", "Select", "Up", "Down"}, {"back", "confirm", "left", "right"})
         elseif screen == "note" then
             note_layout()
             if punri.has_touch() then
-                punri.rounded_rect(w - margin - 100, top, 100, 34, 4, false)
-                punri.text(w - margin - 50, top + 5, "Actions", "ui10", "regular", "center")
+                F.button("actions", w - margin - 100, top, 100, 34, "Actions", "ui10", false, true, 4)
             end
             punri.text(margin, list_top, editor.clip(records[active].title, w - margin * 2, "ui12"), "ui12", "bold")
             local line_h = punri.line_height("ui12") + 4
             if #page_lines == 0 then page_lines[1] = "Empty note. Select Actions to edit." end
             for i, line in ipairs(page_lines) do punri.text(margin + 8, list_top + 36 + (i - 1) * line_h, line, "ui12") end
-            punri.button_hints("Back", "Actions", "Prev", "Next")
+            F.footer({"Back", "Actions", "Prev", "Next"}, {"back", "confirm", "left", "right"})
         else
             punri.text(label_x, top + 6, editor.clip(records[active].title, w - margin - label_x), "ui12", "bold")
             if screen == "delete" then
@@ -353,7 +362,7 @@ return function(config)
                     draw_row(list_top + (i - 1) * row_h, label, i == menu_selected)
                 end
             end
-            punri.button_hints("Back", "Select", "Up", "Down")
+            F.footer({"Back", "Select", "Up", "Down"}, {"back", "confirm", "left", "right"})
         end
         local footer = status
         if footer == "" then
@@ -458,6 +467,45 @@ return function(config)
             elseif direction == "right" then turn_page(-1) end
         end
         punri.request_update()
+    end
+
+    -- Keep the pulse separate from selection and from the editor model.
+    local draw_now, tap_now, button_now = on_draw, on_tap, on_button
+    local dispatching = false
+    local function dispatch(callback, a, b)
+        dispatching = true
+        callback(a, b)
+        dispatching = false
+    end
+    function on_draw()
+        F.begin(screen)
+        F.focus = nil
+        draw_now()
+        F.finish()
+    end
+    function on_update() F.update() end
+    function on_tap(x, y)
+        if F.busy() then return end
+        local id = F.hit(x, y)
+        if id and y >= h - math.max(36, punri.get_metrics().button_hints_height or 40) then
+            if id == "left" or id == "right" then F.press(id); dispatch(button_now, id, true)
+            else F.defer(id, function() dispatch(button_now, id, true) end) end
+            return
+        end
+        if not id then tap_now(x, y); return end
+        local immediate = id == "filter" or (screen == "editor" and id ~= "back" and id ~= "editor_type" and id ~= "key:4:6")
+        if immediate then F.press(id); dispatch(tap_now, x, y)
+        else F.defer(id, function() dispatch(tap_now, x, y) end) end
+    end
+    function on_button(btn, pressed)
+        if dispatching then button_now(btn, pressed); return end
+        if not pressed or F.busy() then return end
+        local id = (btn == "back" or btn == "confirm" or btn == "left" or btn == "right") and btn or nil
+        if screen == "editor" and btn == "confirm" then id = editor.focus_id() end
+        if not id then button_now(btn, pressed); return end
+        local immediate = btn == "left" or btn == "right" or (screen == "editor" and id ~= "back" and id ~= "editor_type" and id ~= "key:4:6")
+        if immediate then F.press(id); dispatch(button_now, btn, pressed)
+        elseif not F.defer(id, function() dispatch(button_now, btn, pressed) end) then button_now(btn, pressed) end
     end
 
     function on_exit()

@@ -4,7 +4,7 @@ local top_y, bot_h = 50, 48
 if punri.get_metrics then
   local m = punri.get_metrics()
   top_y = (m.top_padding or 0) + (m.header_height or 44) + 4
-  bot_h = m.button_hints_height or 48
+  bot_h = math.max(40, m.button_hints_height or 0)
 end
 L_HINT_H = bot_h
 L_X = (L_W - 384) // 2
@@ -110,7 +110,7 @@ end
 function on_draw()
   if G.menu then
     dofile("menu.lua"); collectgarbage()
-    punri.button_hints("Back", "Select", "Up", "Down")
+    press_hints("Back", "Select", "Up", "Down")
     return
   end
 
@@ -123,7 +123,7 @@ function on_draw()
     end
     local b1 = G.sel_sq and "Deselect" or "Menu"
     local b2 = G.sel_sq and "Move" or "Select"
-    punri.button_hints(b1, b2, "Up", "Down")
+    press_hints(b1, b2, "Up", "Down")
     return
   end
 
@@ -140,6 +140,6 @@ function on_draw()
   draw_status()
   local b1 = G.sel_sq and "Deselect" or "Menu"
   local b2 = G.game_over and "New Game" or (G.sel_sq and "Move" or "Select")
-  punri.button_hints(b1, b2, "Up", "Down")
+  press_hints(b1, b2, "Up", "Down")
 end
 draw = on_draw

@@ -1,5 +1,215 @@
 # Changelog
 
+## Dice Roller 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Wordle 1.1.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## 2048 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Sudoku 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Block Drop 1.0.2 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Codex: Ink & Iron 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Water Tracker 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+### Fixed
+
+- Route touch taps through the current firmware callback and match visible
+  controls to their touch targets.
+
+## Stopwatch 1.1.0 — 2026-10-27
+
+### Changed
+
+- Replace the previous Stopwatch interface with an original digital chronograph,
+  large responsive controls and a lap/split ledger, preserving saved sessions.
+- Add half-second button feedback, reset confirmation and visible save/retry flows.
+
+## Desk Stand 1.0.3 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+### Fixed
+
+- Route touch taps through the current firmware callback and match visible
+  controls to their touch targets.
+
+## Hourglass 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+### Fixed
+
+- Route touch taps through the current firmware callback and match visible
+  controls to their touch targets.
+
+## Solitaire 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+### Fixed
+
+- Route touch taps through the current firmware callback and match visible
+  controls to their touch targets.
+
+## Chess 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Wi-Fi Analyzer 1.1.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Bluetooth Analyzer 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Signal Meter 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Notepad 1.0.2 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Radio Scanner 0.1.2 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Tic-tac-toe 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## To-do List 1.1.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Daily Track 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## QR Cards Share 0.1.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Unit Convert 1.0.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Screen Ruler 0.2.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## World Clock 0.1.3 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Presenter Remote 0.2.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Bluetooth Mouse 0.1.2 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
+## Calculations 0.1.1 — 2026-10-27
+
+### Changed
+
+- Show a visible button press for half a second, then restore the current normal
+  appearance without blocking application input or background updates.
+
 ## Notepad 1.0.1 — 2026-10-27
 
 ### Fixed

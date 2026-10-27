@@ -6,12 +6,12 @@ function screen.draw()
     punri.header("Game Over", "Your Journey Ends")
     local m = punri.get_metrics()
     local topY = m.top_padding + m.header_height + 2
-    local bottomY = h - m.button_hints_height - 2
+    local bottomY = h - math.max(40, m.button_hints_height or 0) - 2
     draw_page_frame(topY, bottomY)
 
     punri.centered_text(250, "THOU HAST FALLEN", "ui12", "bold", true)
     punri.centered_text(290, "Thy verses dissolve into forgotten dust.", "small", "regular", true)
-    punri.button_hints("Back", "Retry", "", "")
+    press_hints("Back", "Retry", "", "")
 end
 
 function screen.on_button(btn, pressed)

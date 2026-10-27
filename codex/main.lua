@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 -- Codex: Ink & Iron for PUNRI (Lua)
 -- Modular roguelike deckbuilder with dynamic screen loading and low heap footprint
 
@@ -101,7 +116,7 @@ end
 
 function on_tap(x, y)
     local m = punri.get_metrics()
-    if y > h - m.button_hints_height then
+    if y > h - math.max(40, m.button_hints_height or 0) then
         if x < w / 4 then
             on_button("back", true)
         elseif x < w / 2 then
@@ -118,3 +133,25 @@ function on_tap(x, y)
         active_screen.on_tap(x, y)
     end
 end
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return active_screen_name or "loading" end,
+    transition = function(id)
+        return id == "footer:back" or active_screen_name == "title" or active_screen_name == "scriptorium"
+            or active_screen_name == "outcome" or active_screen_name == "game_over" or active_screen_name == "victory"
+            or id:sub(1, 10) == "deck_menu:" or id:sub(1, 7) == "reward:" or id:sub(1, 5) == "shop:"
+            or id:sub(1, 5) == "hand:" and tonumber(id:sub(6)) == state.selectedHandIdx
+    end,
+    map_button = function(button)
+        if button == "confirm" and active_screen then return active_screen.press_id end
+    end,
+    tap = function(x, y)
+        local id = PRESS.hit(x, y)
+        if id and id:sub(1, 7) == "footer:" then on_button(id:sub(8), true)
+        elseif id and active_screen and active_screen.press_action then
+            active_screen.press_action(id, x, y)
+            if pending_screen then apply_screen_transition() end
+        end
+    end
+})

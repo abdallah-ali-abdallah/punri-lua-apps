@@ -322,6 +322,15 @@ local function draw_info()
     if #info_lines == 0 then punri.centered_text(ui.body + 100, "Scan to obtain details", "small") end
 end
 
+local function feedback_activate(index)
+    local F = ui.feedback
+    if F.busy() then return end
+    if index == 1 or index == 3 or index >= 5 then
+        if F.defer(index, function() activate(index) end) then return end
+    else F.press(index) end
+    activate(index)
+end
+
 function on_init()
     ui.layout()
     scan.init(bluetooth)
@@ -342,6 +351,7 @@ function on_init()
 end
 
 function on_update()
+    ui.feedback.update()
     -- LuaAppActivity calls Update after dispatching the current input batch.
     raw_page_seen, alias_focus, alias_info_page = false, nil, nil
     local result = scan.update()
@@ -368,6 +378,7 @@ function on_update()
 end
 
 function on_draw()
+    ui.feedback.begin(screen)
     ui.begin(title, scan.simulated, bluetooth)
     if screen == "choose" or screen == "analysis" then
         labels[1] = screen == "choose" and "Exit" or "Back"
@@ -394,6 +405,7 @@ function on_draw()
     if target_dirty then footer = "TARGET NOT SAVED: Export retries the SD write" end
     if scan.partial() then footer = "PARTIAL: " .. footer end
     ui.footer(footer)
+    ui.feedback.finish()
 end
 
 function on_button(btn, pressed)
@@ -411,8 +423,8 @@ function on_button(btn, pressed)
         if not alias_focus then alias_focus, alias_info_page = focus, info_page end
     end
     ui.layout()
-    if btn == "back" then activate(1); return
-    elseif btn == "confirm" then activate(focus); return end
+    if btn == "back" then feedback_activate(1); return
+    elseif btn == "confirm" then feedback_activate(focus); return end
     if screen == "info" and (btn == "up" or btn == "page_back" or btn == "down" or btn == "page_forward") then
         local pages = math.max(1, math.ceil(#info_lines / info_per_page()))
         local direction = (btn == "up" or btn == "page_back") and -1 or 1
@@ -430,10 +442,10 @@ end
 function on_tap(x, y)
     ui.layout()
     local action = ui.toolbar_hit(x, y)
-    if action then focus = action; activate(action); return end
+    if action then focus = action; feedback_activate(action); return end
     if screen == "choose" then
         local index = ui.network_hit(x, y, focus, #scan.rows + (target and 1 or 0))
-        if index then focus = index + 4; activate(focus) end
+        if index then focus = index + 4; feedback_activate(focus) end
     end
 end
 

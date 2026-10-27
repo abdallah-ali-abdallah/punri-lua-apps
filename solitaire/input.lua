@@ -142,8 +142,7 @@ function on_swipe(dir)
     end
 end
 
-function on_touch(action, tx, ty)
-    if action ~= "tap" and action ~= "click" then return end
+function on_tap(tx, ty)
 
     if show_reset_confirm then
         local dw = math.min(w - 48, 380)
@@ -189,12 +188,6 @@ function on_touch(action, tx, ty)
         else
             nav_down()
         end
-        return
-    end
-
-    if ty <= 50 and tx >= (w - 120) then
-        show_reset_confirm = true
-        if punri.request_update then punri.request_update() end
         return
     end
 

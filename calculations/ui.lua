@@ -1,7 +1,8 @@
 -- The bounded command list is rebuilt on a state change, never per draw tick.
 -- Native drawing and touch hit tests consume the very same rectangles.
+local F = punri.dofile("press_feedback.lua")
 return function(I, P, N, D)
-    local U = {commands = {}, controls = {}, width = 0, height = 0, MAX_COMMANDS = 2400}
+    local U = {feedback = F, commands = {}, controls = {}, width = 0, height = 0, MAX_COMMANDS = 2400}
     local fonts = {"ui12", "ui10", "small"}
     local function command(kind, a, b, c, d, e, f, g)
         if #U.commands >= U.MAX_COMMANDS then return end
@@ -27,8 +28,9 @@ return function(I, P, N, D)
     function U.button(id, value, label, x, y, w, h, active, icon)
         local index = #U.controls + 1
         local selected = index == U.state.focus
-        U.controls[index] = {id = id, value = value, label = label, x = x, y = y, w = w, h = h}
+        U.controls[index] = {id = id, value = value, label = label, x = x, y = y, w = w, h = h, dark = active == true}
         U.rect(x, y, w, h, active, selected and 3 or 1)
+        command("feedback", index)
         if icon then
             local cx, cy = x + w // 2, y + h // 2
             if icon == "fraction" then
@@ -51,6 +53,7 @@ return function(I, P, N, D)
             local font = width(text, "ui10") <= w - 10 and height("ui10") <= h - 4 and "ui10" or "small"
             centered(x, y, w, h, text, font, active and "bold" or "regular", not active)
         end
+        command("feedback_end")
         return index
     end
     local function grid(items, x, y, w, h, columns, id)
@@ -133,9 +136,11 @@ return function(I, P, N, D)
                 U.controls[#U.controls + 1] = {id = "field", value = {p = node.p, q = node.q}, label = box.text, x = x, y = y, w = box.w, h = box.h}
             end
             if node.k == "slot" or selected then U.rect(x, y, box.w, box.h, false, selected and 2 or 1) end
+            if node.p > 0 then command("feedback", #U.controls) end
             -- A math atom is measured with six pixels of padding. Ordinary
             -- buttons reserve ten; using that wrapper here ellipsizes digits.
             if box.text ~= "" then U.text(x + 3, y + (box.h - height(box.font)) // 2, box.text, box.font) end
+            if node.p > 0 then command("feedback_end") end
         elseif box.items then
             for _, item in ipairs(box.items) do draw_model(item, x, y + (box.h - item.h) // 2, clip, editor); x = x + item.w + 2 end
         elseif box.k == "fraction" then
@@ -216,13 +221,15 @@ return function(I, P, N, D)
         U.rect(r.x, entry_y, leftw, entry_h, false, 2)
         expression(s.editor, r.x + 8, entry_y + 6, leftw - 16, entry_h - 48)
         local label = s.error and "Edit" or s.editor.source ~= s.evaluated and "Last answer" or s.ans.approx and "Approximate" or "Answer"
+        U.controls[#U.controls + 1] = {id = "answer", label = s.answer, x = r.x + 6, y = entry_y + entry_h - 44, w = leftw - 12, h = 38}
+        command("feedback", #U.controls)
         U.text(r.x + 8, entry_y + entry_h - height("small") - 8, I.t(label), "small")
         local result = s.error and I.t(s.error) or s.answer
         local result_font = width(result, "ui12", "bold") <= leftw - 116 and "ui12" or "small"
         if s.error then
             centered(r.x + 8, entry_y + entry_h - 42, leftw - 16, 38, result, "small", "bold")
         else U.text(r.x + leftw - 10, entry_y + entry_h - height(result_font) - 7, fit(result, leftw - 110, result_font, "bold"), result_font, "bold", "right") end
-        U.controls[#U.controls + 1] = {id = "answer", label = s.answer, x = r.x + 6, y = entry_y + entry_h - 44, w = leftw - 12, h = 38}
+        command("feedback_end")
         for i, template in ipairs(TEMPLATES) do
             local cw = (leftw - 24) // 5
             U.button(template[1] == "text" and "text" or "template", template[1], template[1] == "text" and (s.linear and "Natural" or "Text") or template[2],
@@ -315,7 +322,7 @@ return function(I, P, N, D)
         U.commands, U.controls = {}, {}
         I.locale = s.locale
         local header_h, top = math.max(52, math.min(metrics.header_height or 60, height("ui12") + 24)), metrics.top_padding or 0
-        local footer_h = math.max(36, metrics.button_hints_height or 36)
+        local footer_h = math.max(40, metrics.button_hints_height or 0)
         local nav_h = s.expanded and s.view == "graph" and not s.sheet and 0 or 50
         local r = {x = metrics.content_side_padding or 12, y = top + header_h + nav_h + 8}
         r.w, r.h = w - 2 * r.x, h - footer_h - 8 - r.y
@@ -399,18 +406,35 @@ return function(I, P, N, D)
         elseif s.view == "table" then table_view(s, r)
         else tools(s, r) end
         U.line(0, h - footer_h, w, h - footer_h)
-        centered(0, h - footer_h, w // 3, footer_h, I.t("Back"), "small")
-        centered(w // 3, h - footer_h, w // 3, footer_h, s.save_failed and I.t("Save failed") or "OK · " .. I.t("Select"), "small")
-        centered(2 * w // 3, h - footer_h, w // 3, footer_h, "< > · " .. I.t("Next"), "small")
         if s.focus > #U.controls then s.focus = #U.controls end
     end
+    function U.feedback_id(control)
+        local value = type(control.value) == "string" or type(control.value) == "number"
+        return control.id .. ":" .. (value and tostring(control.value) or "") .. ":" .. control.x .. ":" .. control.y
+    end
     function U.draw()
+        local s = U.state
+        F.begin(s.view .. "/" .. (s.sheet and s.sheet.kind or ""))
+        for _, c in ipairs(U.controls) do
+            if c.id ~= "plot" then F.target(U.feedback_id(c), c.x, c.y, c.w, c.h, true, "rect", 0, c.dark) end
+        end
         punri.clear()
+        local ink
         for _, c in ipairs(U.commands) do
-            if c[1] == "text" then punri.text(c[2], c[3], c[4], c[5], c[6], c[7], c[8])
-            elseif c[1] == "line" then punri.line(c[2], c[3], c[4], c[5], c[6])
+            if c[1] == "feedback" then ink = F.paint(U.feedback_id(U.controls[c[2]]))
+            elseif c[1] == "feedback_end" then ink = nil
+            elseif c[1] == "text" then
+                local color = c[8]
+                if ink ~= nil then color = ink end
+                punri.text(c[2], c[3], c[4], c[5], c[6], c[7], color)
+            elseif c[1] == "line" then punri.line(c[2], c[3], c[4], c[5], c[6], ink ~= false)
+            elseif ink ~= nil then
+                if c[6] then punri.rect(c[2], c[3], c[4], c[5], true, ink)
+                else punri.rect(c[2], c[3], c[4], c[5], false, c[7], ink) end
             else punri.rect(c[2], c[3], c[4], c[5], c[6], c[7]) end
         end
+        F.footer({I.t("Back"), I.t("Select"), "<", ">"}, {"footer_back", "footer_confirm", "footer_left", "footer_right"})
+        F.finish()
     end
     function U.hit(x, y)
         for i = #U.controls, 1, -1 do local c = U.controls[i]; if x >= c.x and x < c.x + c.w and y >= c.y and y < c.y + c.h then return c, i end end

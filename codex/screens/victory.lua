@@ -6,12 +6,12 @@ function screen.draw()
     punri.header("Victory!", "The Grimoire is Complete")
     local m = punri.get_metrics()
     local topY = m.top_padding + m.header_height + 2
-    local bottomY = h - m.button_hints_height - 2
+    local bottomY = h - math.max(40, m.button_hints_height or 0) - 2
     draw_page_frame(topY, bottomY)
 
     punri.centered_text(250, "THE CODEX IS WRITTEN", "ui12", "bold", true)
     punri.centered_text(290, "Thou hast conquered all 15 Pages of Chapter 1!", "small", "regular", true)
-    punri.button_hints("Back", "Play Again", "", "")
+    press_hints("Back", "Play Again", "", "")
 end
 
 function screen.on_button(btn, pressed)

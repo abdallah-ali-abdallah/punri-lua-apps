@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 -- 2048 game for PUNRI (Lua)
 -- Faithful reproduction of TwoZeroFourEightActivity.h
 
@@ -257,9 +272,9 @@ function on_draw()
         punri.rect(modalX + 2, modalY + 2, modalW - 4, modalH - 4, false)
         punri.centered_text(modalY + math.floor(modalH / 2) - fontYOffset, "RESET GAME?", 0, true, false)
 
-        punri.button_hints("Cancel", "Confirm", "", "")
+        press_hints("Cancel", "Confirm", "", "")
     else
-        punri.button_hints("Back", "Reset", "Up", "Down")
+        press_hints("Back", "Reset", "Up", "Down")
     end
 end
 
@@ -334,3 +349,9 @@ end
 function on_exit()
     save_state()
 end
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return showResetConfirm and "confirm" or "game" end,
+    transition = function(id) return id == "footer:back" or id == "footer:confirm" end
+})

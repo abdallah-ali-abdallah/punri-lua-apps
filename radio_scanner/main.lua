@@ -1,5 +1,6 @@
 -- Local SD app; radio access uses the functional modules.
 local display = ink
+local Feedback = punri.dofile("press_feedback.lua")
 local rows, mode, request_id = {}, "BLE", nil
 local status, simulated, dropped = "Ready", false, 0
 local dirty, last_redraw = true, 0
@@ -48,6 +49,7 @@ function on_init()
     redraw()
 end
 function on_update()
+    Feedback.update()
     if request_id then
         for i=1,8 do
             local event = radio.poll()
@@ -65,6 +67,7 @@ function on_update()
     end
 end
 function on_draw()
+    Feedback.begin("scanner")
     display.clear()
     local width, height = display.get_bounds()
     display.header("Radio Scanner", (simulated and "SIMULATED / " or "") .. mode .. " / " .. status)
@@ -77,18 +80,22 @@ function on_draw()
     end
     if #rows == 0 then display.text(20, y, "No observations", "ui12") end
     display.text(20, height-85, #rows .. " observations / " .. dropped .. " dropped", "small")
-    display.button_hints("Exit", request_id and "Cancel" or "Scan", "BLE", "Wi-Fi")
+    Feedback.footer({"Exit", request_id and "Cancel" or "Scan", "BLE", "Wi-Fi"})
+    Feedback.finish()
 end
 function on_button(button, pressed)
-    if not pressed then return end
+    if not pressed or Feedback.busy() then return end
+    local id = button == "back" and 1 or button == "confirm" and 2 or (button == "up" or button == "left") and 3 or (button == "down" or button == "right") and 4
+    if button == "back" and Feedback.defer(1, function() stop(); display.exit() end) then return end
+    Feedback.press(id)
     if button == "back" then stop(); display.exit()
     elseif button == "confirm" then if request_id then radio.cancel() else start() end
     elseif button == "up" or button == "left" then stop(); mode="BLE"; status="Ready"; rows={}; redraw()
     elseif button == "down" or button == "right" then stop(); mode="Wi-Fi"; status="Ready"; rows={}; redraw() end
 end
 function on_tap(x,y)
-    local width, height = display.get_bounds()
-    if y < height/2 then on_button(mode == "BLE" and "down" or "up",true)
-    else on_button("confirm",true) end
+    local id = Feedback.hit(x, y)
+    local buttons = {"back", "confirm", "left", "right"}
+    if id then on_button(buttons[id], true) end
 end
 function on_exit() stop() end

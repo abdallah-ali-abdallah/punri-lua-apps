@@ -8,35 +8,37 @@ function coup_on(c)
            (c.couplet == "AfterScript" and m == "Script")
 end
 
-function draw_card_item(x, y, cw, ch, c, isSel)
+function draw_card_item(x, y, cw, ch, c, isSel, id)
     if not c then return end
     local coup = coup_on(c)
     punri.rect(x, y, cw, ch, true, false)
     punri.rounded_rect(x, y, cw, ch, 4, false, isSel and 2 or 1)
-    punri.circle(x + 13, y + 13, 9, true)
-    punri.text(x + 9, y + 4, tostring(c.cost), "small", "bold", "center", false)
-    punri.text(x + cw - 6, y + 6, c.meter, "small", "bold", "right", true)
+    local ink = true
+    if id then ink = press_ink(id, x, y, cw, ch, false, "rounded", 4, true) end
+    punri.circle(x + 13, y + 13, 9, true, 1, ink)
+    punri.text(x + 9, y + 4, tostring(c.cost), "small", "bold", "center", not ink)
+    punri.text(x + cw - 6, y + 6, c.meter, "small", "bold", "right", ink)
     local divY = y + 26
-    punri.line(x + 3, divY, x + cw - 3, divY)
+    punri.line(x + 3, divY, x + cw - 3, divY, 1, ink)
     local nRes = punri.wrapped_text(c.name, cw - 6, "small", "regular", 2)
     local ty = divY + 4
     for _, l in ipairs(nRes and nRes.lines or {}) do
-        punri.text(x + math.floor(cw / 2), ty, l, "small", "bold", "center", true)
+        punri.text(x + math.floor(cw / 2), ty, l, "small", "bold", "center", ink)
         ty = ty + punri.line_height("small") - 1
     end
     ty = ty + 3
     local dRes = punri.wrapped_text(c.desc, cw - 6, "small", "regular", 3)
     for _, dl in ipairs(dRes and dRes.lines or {}) do
-        punri.text(x + math.floor(cw / 2), ty, dl, "small", "regular", "center", true)
+        punri.text(x + math.floor(cw / 2), ty, dl, "small", "regular", "center", ink)
         ty = ty + punri.line_height("small") + 2
     end
     if c.cDesc then
         local bH = 44
         local by = y + ch - bH - 4
-        punri.rect(x + 3, by, cw - 6, bH, coup)
+        punri.rect(x + 3, by, cw - 6, bH, coup, 1, ink)
         local t1 = coup and "COUPLET" or "Couplet:"
-        punri.text(x + math.floor(cw / 2), by + 3, t1, "small", coup and "bold" or "regular", "center", not coup)
-        punri.text(x + math.floor(cw / 2), by + 3 + punri.line_height("small"), c.cDesc, "small", "bold", "center", not coup)
+        punri.text(x + math.floor(cw / 2), by + 3, t1, "small", coup and "bold" or "regular", "center", coup ~= ink)
+        punri.text(x + math.floor(cw / 2), by + 3 + punri.line_height("small"), c.cDesc, "small", "bold", "center", coup ~= ink)
     end
 end
 

@@ -185,6 +185,10 @@ deliver `"down"`, `"move"`, or `"up"` events. Define either `on_tap` or
 argument order is `x, y, event`.
 
 ### `on_update()` *(Optional Real-Time Loop)*
+All released apps use the shared [button feedback](docs/button-feedback.md)
+module to show a 500 ms press state. Keep its update callback running even when
+the app's main clock, game or radio operation is idle.
+
 For games or animations requiring real-time gravity or ticking (e.g. *Block Drop* piece falling):
 ```lua
 local last_tick = 0

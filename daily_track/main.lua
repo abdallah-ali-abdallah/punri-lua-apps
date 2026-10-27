@@ -245,6 +245,21 @@ local function perform(action)
     return true
 end
 
+-- Only navigation waits for the visible pulse. Counters/undo remain immediate.
+local perform_now = perform
+perform = function(action)
+    if not action or ui.feedback.busy() then return false end
+    local kind, value = action:match("^([^:]+):(.+)$")
+    local transition = kind == "details" or kind == "edit" or kind == "add"
+        or action == "manage" or action == "today" or action == "confirm_date"
+        or action == "manual_date" or action == "confirm_delete" or action == "cancel_delete" or action == "exit"
+        or (kind == "edit_action" and (tonumber(value) <= 3 or tonumber(value) >= 6))
+    local target = action == "manage" and screen == "edit" and "edit_action:7" or action
+    if transition and ui.feedback.defer(target, function() perform_now(action) end) then return true end
+    if not transition then ui.feedback.press(target) end
+    return perform_now(action)
+end
+
 function on_init()
     local loaded, load_error = storage.load()
     local observed = calendar.local_date()
@@ -391,6 +406,7 @@ function on_touch(x, y, event)
 end
 
 function on_update()
+    ui.feedback.update()
     if state and clock_confirmed and not protected_data then
         local observed = calendar.local_date()
         if observed and observed ~= state.date then

@@ -1,7 +1,8 @@
 -- Rendering is deliberately passive: it writes no files and emits reusable
 -- hit rectangles only.  main.lua maps those rectangles to the same actions as
 -- physical buttons.
-local ui = {}
+local F = punri.dofile("press_feedback.lua")
+local ui = {feedback = F}
 local calendar = punri.dofile("calendar.lua")
 local model = punri.dofile("model.lua")
 
@@ -57,6 +58,9 @@ end
 
 local function button(view, x, y, w, h, label, action, selected)
     punri.rounded_rect(x, y, w, h, 5, selected and true or false)
+    F.target(action, x, y, w, h, true, "rounded", 5, selected)
+    local ink = F.paint(action)
+    if ink == nil then ink = not selected end
     -- `punri.text` uses the top of the glyph box, not a baseline.  The UI_10
     -- font is taller than the old fixed 14-pixel estimate on the X4 display,
     -- which put the lower half of labels outside short controls.  Centre using
@@ -65,7 +69,7 @@ local function button(view, x, y, w, h, label, action, selected)
     local line_h = punri.line_height("ui10")
     local shown = fit_text(label, math.max(1, w - 12), "ui10", "regular")
     punri.text(x + math.floor(w / 2), y + math.floor((h - line_h) / 2), shown,
-        "ui10", "regular", "center", not selected)
+        "ui10", "regular", "center", ink)
     hit(view, x, y, w, h, action)
 end
 
@@ -276,15 +280,16 @@ local function draw_details(state, view, tracker, message)
     else
         punri.text(margin, info_y, fit_text("X complete   . logged below goal   outline empty", w - margin * 2, "small", "regular"), "small")
     end
-    local gap, count = 6, 4
+    local gap, count = 6, 5
     local button_w = math.floor((w - margin * 2 - gap * (count - 1)) / count)
     button(view, margin, control_y, button_w, footer_h, "Edit", "edit:" .. tracker.id, false)
     button(view, margin + (button_w + gap), control_y, button_w, footer_h, "Prev", "month_prev", false)
-    button(view, margin + (button_w + gap) * 2, control_y, button_w, footer_h, "Today", "month_current", false)
-    button(view, margin + (button_w + gap) * 3, control_y, button_w, footer_h, "Back", "today", false)
+    button(view, margin + (button_w + gap) * 2, control_y, button_w, footer_h, "Next", "month_next", false)
+    button(view, margin + (button_w + gap) * 3, control_y, button_w, footer_h, "Today", "month_current", false)
+    button(view, margin + (button_w + gap) * 4, control_y, button_w, footer_h, "Back", "today", false)
     if message and message ~= "" then punri.text(margin, control_y - punri.line_height("small") - 3,
         fit_text(message, w - margin * 2, "small", "regular"), "small") end
-    punri.button_hints("Back", "Edit", "Prev", "Today")
+    punri.button_hints("Back", "Edit", "Prev", "Next")
 end
 
 local function draw_confirm(view, candidate, backward, message)
@@ -339,6 +344,7 @@ local function draw_delete(view, tracker, message)
 end
 
 function ui.draw(state, view, screen, tracker, candidate, message)
+    F.begin(screen)
     ui.begin(view)
     punri.clear()
     if screen == "today" then draw_today(state, view, message)
@@ -349,6 +355,7 @@ function ui.draw(state, view, screen, tracker, candidate, message)
     elseif screen == "error" then draw_error(view, message)
     else draw_confirm(view, candidate, screen == "clock_back", message) end
     retry_button(view, message, screen)
+    F.finish()
 end
 
 return ui

@@ -3,7 +3,9 @@
 
 local Ruler = Ruler or dofile("ruler.lua")
 local Calibration = Calibration or dofile("calibration.lua")
-local UI = {}
+local F = punri.dofile("press_feedback.lua")
+local UI = {feedback = F, ids = {}}
+function UI.key(rect) return math.floor(rect.y) * 4096 + math.floor(rect.x) end
 
 local function metrics()
     return (punri.get_metrics and punri.get_metrics()) or { top_padding = 4, button_hints_height = 44, content_side_padding = 12 }
@@ -62,8 +64,33 @@ function UI.draw_button(rect, label, selected)
     local line_height = punri.line_height("small")
     local visible = UI.fit_button_label(label, math.max(1, rect.w - 12), style)
     punri.rounded_rect(rect.x, rect.y, rect.w, rect.h, 5, selected == true, 1, true)
+    local id = UI.key(rect)
+    UI.ids[label] = id
+    if selected then F.focus = id end
+    F.target(id, rect.x, rect.y, rect.w, rect.h, true, "rounded", 5, selected)
+    local ink = F.paint(id)
+    if ink == nil then ink = not selected end
     punri.text(rect.x + rect.w // 2, rect.y + math.max(0, (rect.h - line_height) // 2), visible,
-        "small", style, "center", not selected)
+        "small", style, "center", ink)
+end
+
+-- Calibration has a dedicated reference lane. Vertical references use a
+-- narrow left rail, while explanatory text and controls stay to its right.
+local calibration_layout = {}
+function UI.calibration_layout(axis)
+    local w, h = UI.bounds()
+    local edge, m, l = UI.safe_edge(), metrics(), calibration_layout
+    if axis == "x" then
+        l.start, l.fixed = edge + 10, h - 160
+        l.text_x, l.text_w, l.control_x = edge, w - edge * 2, edge
+        l.maximum = w - l.start - edge - 10
+    else
+        l.start = math.max(100, (m.top_padding or 0) + (m.header_height or 48) + 20)
+        l.fixed, l.text_x, l.control_x = edge + 12, edge + 46, edge + 46
+        l.text_w, l.maximum = w - l.text_x - edge, h - edge - l.start
+    end
+    l.control_w = w - l.control_x - edge
+    return l
 end
 
 function UI.unit_label(units)
@@ -298,15 +325,16 @@ function UI.clean_exit_control()
     return { x = w - 70, y = h - 30, w = 64, h = 24 }
 end
 
-function UI.draw_message(title, lines, controls)
+function UI.draw_message(title, lines, controls, text_x, text_width)
     local w, h = UI.bounds()
     local edge = UI.safe_edge()
+    text_x, text_width = text_x or edge, text_width or (w - edge * 2)
     punri.header(title)
     local y = math.max(88, edge + 70)
     for _, line in ipairs(lines) do
-        local wrapped = punri.wrapped_text(line, w - edge * 2, "ui10", "regular", 3)
+        local wrapped = punri.wrapped_text(line, text_width, "ui10", "regular", 3)
         for _, wrapped_line in ipairs(wrapped.lines or { line }) do
-            punri.text(edge, y, wrapped_line, "ui10", "regular", "left", true)
+            punri.text(text_x, y, wrapped_line, "ui10", "regular", "left", true)
             y = y + punri.line_height("ui10")
         end
         y = y + 8

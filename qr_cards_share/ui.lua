@@ -1,6 +1,7 @@
 -- Rendering only. Input targets are regenerated on each draw and consumed by input.lua.
 
-local UI = {targets = {}}
+local F = punri.dofile("press_feedback.lua")
+local UI = {targets = {}, feedback = F}
 local floor = math.floor
 
 local function bounds()
@@ -28,6 +29,14 @@ end
 
 local function content_top(metrics, gap)
     return (metrics.top_padding or 0) + (metrics.header_height or 70) + (gap or 12)
+end
+
+local function feedback_ink(id, x, y, width, height, selected, enabled)
+    F.target(id, x, y, width, height, enabled, "rounded", 8, selected)
+    if selected then F.focus = id end
+    local ink = F.paint(id)
+    if ink == nil then ink = not selected end
+    return ink
 end
 
 local function selected_ink(selected)
@@ -94,7 +103,9 @@ end
 
 local function button(id, x, y, width, label, selected)
     punri.rounded_rect(x, y, width, 44, 8, selected or false, 2, true)
-    box_label(x, y, width, 44, label, "ui10", "bold", not selected)
+    local enabled = not (UI.empty and (id == "previous" or id == "next"))
+    local ink = feedback_ink(id, x, y, width, 44, selected, enabled)
+    box_label(x, y, width, 44, label, "ui10", "bold", ink)
     add_target(id, x, y, width, 44)
 end
 
@@ -141,7 +152,7 @@ local function draw_library(app)
         local card, selected = app.cards[index], index == app.selection
         local row_height, card_height = 90, 84
         punri.rounded_rect(14, y, width - 28, card_height, 8, selected, selected and false or 2, selected and false or true)
-        local ink = selected_ink(selected)
+        local ink = feedback_ink("open:" .. index, 14, y, width - 28, card_height, selected)
         value_text(25, y + 5, width - 50, punri.line_height("small"), (selected and "> " or "") .. Cards.label_for(card.type), "small", "bold", ink)
         value_text(25, y + 7 + punri.line_height("small"), width - 50, punri.line_height("ui12"), card_title(card), "ui12", "bold", ink)
         value_text(25, y + 9 + punri.line_height("small") + punri.line_height("ui12"), width - 50, punri.line_height("small"), "Changed: " .. (card.modified or "Clock unavailable"), "small", "regular", ink)
@@ -166,7 +177,8 @@ local function draw_type_picker(app)
     for index, item in ipairs(Cards.types) do
         local selected = index == app.type_selection
         punri.rounded_rect(18, y, width - 36, row_height, 8, selected, 2, true)
-        value_text(32, y, width - 64, row_height, item.label, "ui12", "bold", selected_ink(selected))
+        local ink = feedback_ink("type:" .. item.id, 18, y, width - 36, row_height, selected)
+        value_text(32, y, width - 64, row_height, item.label, "ui12", "bold", ink)
         add_target("type:" .. item.id, 18, y, width - 36, row_height)
         y = y + row_height + 10
     end
@@ -190,7 +202,8 @@ local function draw_actions(app)
         local label = choices[index]
         local selected = index == app.action_selection
         punri.rounded_rect(18, y, width - 36, row_height, 7, selected, selected and false or 2, selected and false or true)
-        value_text(32, y, width - 64, row_height, label, "ui10", selected and "bold" or "regular", selected_ink(selected))
+        local ink = feedback_ink("action:" .. index, 18, y, width - 36, row_height, selected)
+        value_text(32, y, width - 64, row_height, label, "ui10", selected and "bold" or "regular", ink)
         add_target("action:" .. index, 18, y, width - 36, row_height)
         y = y + row_height + gap
     end
@@ -255,8 +268,8 @@ local function draw_form(app)
         local selected = index == app.form_index
         local value = card.fields[field]
         local display = field == "password" and (value == "" and "(empty)" or "Saved value hidden") or (value == "" and "(empty)" or value)
-        local ink = selected_ink(selected)
         punri.rounded_rect(16, y, width - 32, row_height, 8, selected, 2, true)
+        local ink = feedback_ink("field:" .. index, 16, y, width - 32, row_height, selected)
         value_text(28, y + 5, width - 56, punri.line_height("small"), Cards.display_field(field), "small", "bold", ink)
         value_text(28, y + 7 + punri.line_height("small"), width - 56, punri.line_height("ui10"), display, "ui10", "regular", ink)
         add_target("field:" .. index, 16, y, width - 32, row_height)
@@ -278,8 +291,10 @@ local function draw_confirmation(app)
     local left, button_width = 24, floor((width - 64) / 2)
     punri.rounded_rect(left, height / 2, button_width, 48, 8, keep, keep and false or 2, keep and false or true)
     punri.rounded_rect(width - left - button_width, height / 2, button_width, 48, 8, not keep, (not keep) and false or 2, (not keep) and false or true)
-    box_label(left, height / 2, button_width, 48, "Keep", "ui10", "bold", selected_ink(keep))
-    box_label(width - left - button_width, height / 2, button_width, 48, "Delete", "ui10", "bold", selected_ink(not keep))
+    local keep_ink = feedback_ink("keep", left, height / 2, button_width, 48, keep)
+    local delete_ink = feedback_ink("delete", width - left - button_width, height / 2, button_width, 48, not keep)
+    box_label(left, height / 2, button_width, 48, "Keep", "ui10", "bold", keep_ink)
+    box_label(width - left - button_width, height / 2, button_width, 48, "Delete", "ui10", "bold", delete_ink)
     add_target("keep", left, height / 2, button_width, 48)
     add_target("delete", width - left - button_width, height / 2, button_width, 48)
     message(app, width, height / 2 + 65, 2)
@@ -352,6 +367,9 @@ local function draw_qr(app)
 end
 
 function UI.draw(app)
+    F.begin(app.screen)
+    UI.empty = app.screen == "library" and #app.cards == 0
+    F.focus = nil
     if app.screen == "library" then draw_library(app)
     elseif app.screen == "type" then draw_type_picker(app)
     elseif app.screen == "actions" then draw_actions(app)
@@ -362,6 +380,7 @@ function UI.draw(app)
     elseif app.screen == "wifi_privacy" then draw_privacy(app, true)
     elseif app.screen == "qr" then draw_qr(app)
     else draw_library(app) end
+    F.finish()
 end
 
 return UI

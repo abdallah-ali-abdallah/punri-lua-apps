@@ -7,7 +7,7 @@ end
 function screen.draw()
     local m = punri.get_metrics()
     local ty = m.top_padding + m.header_height + 2
-    local by = h - m.button_hints_height - 2
+    local by = h - math.max(40, m.button_hints_height or 0) - 2
     draw_page_frame(ty, by)
 
     punri.header("Codex Delve", "Victory")
@@ -30,10 +30,11 @@ function screen.draw()
     local ch = 220
     local sx = math.floor((w - (cw * n)) / 2)
     for i = 1, n do
-        draw_card_item(sx + (i - 1) * cw, (sel == i) and (y - 6) or y, cw - 4, ch, kCards[state.cardRewards[i] + 1], (sel == i))
+        draw_card_item(sx + (i - 1) * cw, (sel == i) and (y - 6) or y, cw - 4, ch, kCards[state.cardRewards[i] + 1], (sel == i), "reward:" .. i)
     end
 
-    punri.button_hints("Skip", "Take", "<", ">")
+    screen.press_id = "reward:" .. sel
+    press_hints("Skip", "Take", "<", ">")
 end
 
 function screen.on_button(btn, pressed)
@@ -81,6 +82,14 @@ function screen.on_tap(x, y)
             end
             return
         end
+    end
+end
+
+function screen.press_action(id)
+    local index = tonumber(id:match("^reward:(%d+)$"))
+    if index then
+        if (state.rewardIdx or 1) == index then table.insert(state.deck, state.cardRewards[index]); advance_floor()
+        else state.rewardIdx = index; punri.request_update() end
     end
 end
 

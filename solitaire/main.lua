@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 dofile("suits.lua")
 dofile("engine.lua")
 dofile("input.lua")
@@ -58,10 +73,12 @@ local function draw_reset_dialog()
     local b2_x = dx + dw - bw - 12
 
     punri.rounded_rect(b1_x, by, bw, bh, 5, false, 1, true)
-    punri.text(b1_x + math.floor(bw / 2), by + 8, "Cancel", 10, true, "center", true)
+    local cancel_ink = press_ink("cancel_reset", b1_x, by, bw, bh, false, "rounded", 5, true)
+    punri.text(b1_x + math.floor(bw / 2), by + 8, "Cancel", 10, true, "center", cancel_ink)
 
     punri.rounded_rect(b2_x, by, bw, bh, 5, true, true)
-    punri.text(b2_x + math.floor(bw / 2), by + 8, "Reset", 10, true, "center", false)
+    local reset_ink = press_ink("confirm_reset", b2_x, by, bw, bh, true, "rounded", 5, true)
+    punri.text(b2_x + math.floor(bw / 2), by + 8, "Reset", 10, true, "center", reset_ink)
 end
 
 function on_draw()
@@ -69,7 +86,11 @@ function on_draw()
     punri.clear()
 
     local cx = math.floor(w / 2)
-    punri.header("Solitaire", "Klondike")
+    punri.header("Solitaire", "")
+    if not show_reset_confirm then
+        local metrics = punri.get_metrics()
+        PRESS.button("reset", w - 116, (metrics.top_padding or 4) + math.max(0, (metrics.header_height or 70) - 38), 108, 34, "New game", "small", false, true, 5)
+    end
 
     local total_slots = 7
     local card_w = 56
@@ -174,10 +195,10 @@ function on_draw()
 
     if show_reset_confirm then
         draw_reset_dialog()
-        punri.button_hints("Cancel", "Reset", "", "")
+        press_hints("Cancel", "Reset", "", "")
     else
         local act_label = (sel_zone > 0) and "Move" or "Select"
-        punri.button_hints("Exit", act_label, "Up", "Down")
+        press_hints("Exit", act_label, "Up", "Down")
     end
 end
 
@@ -218,3 +239,19 @@ end
 function on_exit()
     save_game()
 end
+
+local press_solitaire_tap = on_tap
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return show_reset_confirm and "confirm" or "cards" end,
+    transition = function(id) return id == "footer:back" or id == "reset" or id == "cancel_reset" or id == "confirm_reset" end,
+    tap = function(x, y)
+        local id = PRESS.hit(x, y)
+        if id == "reset" then show_reset_confirm = true; punri.request_update()
+        elseif id == "cancel_reset" then show_reset_confirm = false; punri.request_update()
+        elseif id == "confirm_reset" then show_reset_confirm = false; new_game(); punri.request_update()
+        elseif id and id:sub(1, 7) == "footer:" then on_button(id:sub(8), true)
+        else press_solitaire_tap(x, y) end
+    end
+})

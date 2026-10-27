@@ -47,7 +47,7 @@ function screen.draw()
     punri.header(cur.title, cur.sub)
 
     local ty = m.top_padding + m.header_height + 2
-    draw_page_frame(ty, h - m.button_hints_height - 2)
+    draw_page_frame(ty, h - math.max(40, m.button_hints_height or 0) - 2)
 
     ty = draw_codex_stats(ty + 6)
     draw_miniature_frame(172, ty, 136, 136)
@@ -69,10 +69,12 @@ function screen.draw()
         local canAfford = not (c[5] < 0 and state.gold < -c[5])
         local iy = ty + ((i - 1) * 82)
         punri.rect(22, iy, w - 44, 74, sel)
-        punri.text(36, iy + 8, c[1], "ui12", "bold", "left", not sel)
-        punri.text(36, iy + 36, canAfford and c[2] or ("[Requires " .. (-c[5]) .. " Gold]"), "small", "regular", "left", not sel)
+        local ink = press_ink("choice:" .. i, 22, iy, w - 44, 74, sel, "rect", 0, canAfford)
+        punri.text(36, iy + 8, c[1], "ui12", "bold", "left", ink)
+        punri.text(36, iy + 36, canAfford and c[2] or ("[Requires " .. (-c[5]) .. " Gold]"), "small", "regular", "left", ink)
     end
-    punri.button_hints("", "Select", "<", ">")
+    screen.press_id = "choice:" .. choiceIdx
+    press_hints("", "Select", "<", ">")
 end
 
 function screen.on_button(btn, pressed)
@@ -109,6 +111,11 @@ function screen.on_tap(x, y)
             return
         end
     end
+end
+
+function screen.press_action(id)
+    local index = tonumber(id:match("^choice:(%d+)$"))
+    if index then choiceIdx = index; screen.on_button("confirm", true) end
 end
 
 return screen

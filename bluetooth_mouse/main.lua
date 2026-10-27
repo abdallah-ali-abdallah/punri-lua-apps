@@ -8,13 +8,14 @@ function on_init()
 end
 
 function on_update()
+    UI.feedback.update()
     Mouse.update()
     if settings or not Mouse.supported then return end
     local x, y = punri.get_touch()
     Mouse.sample(x, y, x and UI.in_pad(x, y) or false)
 end
 
-function on_draw() UI.draw(Mouse, settings) end
+function on_draw() UI.draw(Mouse, settings); UI.feedback.finish() end
 
 local function act(action)
     if action == "pair" then Mouse.start()
@@ -31,15 +32,32 @@ local function act(action)
 end
 
 -- Only the tap callback: the firmware also sends a compatibility on_touch tap.
-function on_tap(x, y) act(UI.hit(x, y, Mouse, settings)) end
+local function feedback_action(action)
+    if not action or UI.feedback.busy() then return end
+    local id = (action == "pair" or action == "disconnect") and "primary" or action
+    if action == "settings" or action == "close_settings" or action == "exit" then
+        if UI.feedback.defer(id, function() act(action) end) then return end
+    else UI.feedback.press(id) end
+    act(action)
+end
+function on_tap(x, y)
+    local id = UI.feedback.hit(x, y)
+    if not id and not Mouse.ready and not UI.feedback.busy() then
+        local action = UI.hit(x, y, Mouse, settings)
+        if action == "left" or action == "right" then feedback_action(action) end
+        return
+    end
+    if id == "primary" then id = (Mouse.connected or Mouse.state == "advertising" or Mouse.state == "connecting") and "disconnect" or "pair" end
+    feedback_action(id)
+end
 
 function on_button(button, pressed)
     if not pressed then return end
-    if button == "back" then act(settings and "close_settings" or "exit")
+    if button == "back" then feedback_action(settings and "close_settings" or "exit")
     elseif not settings and button == "confirm" then
-        act((Mouse.connected or Mouse.state == "advertising" or Mouse.state == "connecting") and "disconnect" or "pair")
-    elseif not settings and (button == "page_back" or button == "left") then act("left")
-    elseif not settings and (button == "page_forward" or button == "right") then act("right")
+        feedback_action((Mouse.connected or Mouse.state == "advertising" or Mouse.state == "connecting") and "disconnect" or "pair")
+    elseif not settings and (button == "page_back" or button == "left") then feedback_action("left")
+    elseif not settings and (button == "page_forward" or button == "right") then feedback_action("right")
     end
 end
 

@@ -207,7 +207,7 @@ local function main_state()
     return {
         categories = Units.categories, category = category, from = current_from(), to = current_to(), input = input,
         result_text = result_text, result_error = result_error or notice, focus = focus, key_index = key_index,
-        save_failed = save_failed, picker_target = picker_target,
+        save_failed = save_failed, picker_target = picker_target, picker_index = picker_index,
     }
 end
 
@@ -221,10 +221,12 @@ function on_init()
 end
 
 function on_draw()
+    UI.feedback.begin(mode)
     width, height = punri.get_bounds()
     metrics = punri.get_metrics()
     UI.compute(width, height, metrics, #Units.categories)
     if mode == "picker" then UI.draw_picker(main_state()) else UI.draw_main(main_state()) end
+    UI.feedback.finish()
 end
 
 function on_button(button, pressed)
@@ -347,4 +349,38 @@ if _G.TEST_APP == "unit_convert" then
         layout = function() return UI.layout() end,
         categories = function() return Units.categories end,
     }
+end
+
+local tap_now, button_now = on_tap, on_button
+local dispatching = false
+local function dispatch(callback, a, b)
+    dispatching = true; callback(a, b); dispatching = false
+end
+function on_update() UI.feedback.update() end
+function on_tap(x, y)
+    local F = UI.feedback
+    if F.busy() then return end
+    local id = F.hit(x, y)
+    if not id then return end
+    local footer = y >= height - math.max(36, metrics.button_hints_height or 40)
+    if footer then
+        local transition = id == "back" or (id == "confirm" and (mode == "picker" or focus == 2 or focus == 3))
+        if transition then F.defer(id, function() dispatch(button_now, id, true) end)
+        else F.press(id); dispatch(button_now, id, true) end
+        return
+    end
+    local transition = id == "back" or id == "from" or id == "to" or id:match("^unit:")
+        or (punri.has_touch() and id == "key:" .. UI.key_count())
+    if transition then F.defer(id, function() dispatch(tap_now, x, y) end)
+    else F.press(id); dispatch(tap_now, x, y) end
+end
+function on_button(button, pressed)
+    if dispatching then button_now(button, pressed); return end
+    local F = UI.feedback
+    if not pressed or F.busy() then return end
+    local id = (button == "back" or button == "confirm" or button == "left" or button == "right") and button or nil
+    local transition = button == "back" or (button == "confirm" and (mode == "picker" or focus == 2 or focus == 3
+        or (focus == 5 and key_index > #UI.keys)))
+    if transition and F.defer(id, function() dispatch(button_now, button, pressed) end) then return end
+    F.press(id); dispatch(button_now, button, pressed)
 end

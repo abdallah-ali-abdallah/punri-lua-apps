@@ -34,7 +34,7 @@ function screen.draw()
     local m = punri.get_metrics()
     punri.header("Scriptorium", "Ch.1 Pg " .. state.floor .. "/15")
     local ty = m.top_padding + m.header_height + 2
-    draw_page_frame(ty, h - m.button_hints_height - 2)
+    draw_page_frame(ty, h - math.max(40, m.button_hints_height or 0) - 2)
 
     ty = draw_codex_stats(ty + 6)
     draw_miniature_frame(330, ty + 10, 136, 136)
@@ -61,10 +61,15 @@ function screen.draw()
         end
 
         if sel then punri.rect(20, iy - 2, 300, 26, true) end
-        punri.text(26, iy + 2, it, "small", sel and "bold" or "regular", "left", not sel)
+        local enabled = i == 7 or (i <= 3 and shop_state.cards[i] >= 0 and state.gold >= 35 + i * 10)
+            or (i >= 4 and i <= 5 and shop_state.relics[i - 3] >= 0 and state.gold >= 95 + (i - 3) * 15)
+            or (i == 6 and not shop_state.heal and state.gold >= 35)
+        local ink = press_ink("shop:" .. i, 20, iy - 2, 300, 26, sel, "rect", 0, enabled)
+        punri.text(26, iy + 2, it, "small", sel and "bold" or "regular", "left", ink)
         iy = iy + 30
     end
-    punri.button_hints("Leave", "Buy", "Prev", "Next")
+    screen.press_id = "shop:" .. idx
+    press_hints("Leave", "Buy", "Prev", "Next")
 end
 
 function screen.on_button(btn, pressed)
@@ -121,6 +126,11 @@ function screen.on_tap(x, y)
         end
         iy = iy + 30
     end
+end
+
+function screen.press_action(id)
+    local index = tonumber(id:match("^shop:(%d+)$"))
+    if index then idx = index; screen.on_button("confirm", true) end
 end
 
 return screen

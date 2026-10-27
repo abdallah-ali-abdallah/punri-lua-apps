@@ -12,6 +12,7 @@ local STATE_FILE = "world_clock_state.txt"
 local MAX_FAVORITES = 6
 local settings = {home = nil, use24 = true, favorites = {}}
 local screen, cursor, list_page = "setup", 1, 1
+local setup_page_size, list_page_size, favorite_page_size, chooser_page_size = 6, 5, 6, 6
 local selected_id, chooser = "cairo", nil
 local chooser_title, chooser_hint, map_frame = nil, nil, nil
 local read_only_state, state_notice = false, nil
@@ -288,10 +289,12 @@ local function draw_setup()
     top = top + ui.message(16, top, width - 32, "Device clock must show the local time in Home city.", 2) + 10
     punri.text(16, top, "Choose Home city", "ui12", "bold")
     top = top + punri.line_height("ui12") + 7
-    local per_page = 6
+    local row_height = ui.row_height(false)
+    setup_page_size = ui.rows_fit(top, bottom, row_height, 6)
+    local per_page = setup_page_size
+    list_page = math.min(list_page, math.ceil(#cities.all / per_page))
     local first = (list_page - 1) * per_page + 1
     local last = math.min(#cities.all, first + per_page - 1)
-    local row_height = ui.row_height(false)
     input.begin()
     for index = first, last do
         local city = cities.all[index]
@@ -314,17 +317,23 @@ local function draw_map()
         ui.paired_text(8, top, width - 16, punri.line_height("ui12"), selected.name,
             time.format_time(city_value.time, settings.use24), "ui12", "bold", true, true)
         top = top + punri.line_height("ui12")
-        punri.text(16, top, ui.fit(format_offset_difference(city_value, home_value) .. " vs Home", width - 32, "small", "regular"), "small")
-        top = top + punri.line_height("small")
+        if width <= height then
+            punri.text(16, top, ui.fit(format_offset_difference(city_value, home_value) .. " vs Home", width - 32, "small", "regular"), "small")
+            top = top + punri.line_height("small")
+        end
     else
         ui.centered_line(top, width, selected.name, "ui12", "bold")
         top = top + punri.line_height("ui12")
     end
     local map_instruction = map.asset_error and "Map asset unavailable; choose a time-zone region or Cities." or
         "Tap a marker or time-zone region"
+    if width > height and city_value then
+        map_instruction = format_offset_difference(city_value, home_value) .. " vs Home · " .. map_instruction
+    end
     ui.centered_line(top, width, map_instruction, "small", "regular")
     top = top + punri.line_height("small") + 4
-    map_frame = map.layout(width, height, top + 8, bottom)
+    local action_top = ui.bottom_actions(width, bottom, 3)[1].y
+    map_frame = map.layout(width, height, top + 8, action_top - 8)
     input.begin()
     map.draw(map_frame, selected_id)
     input.add("map", map_frame.x, map_frame.y, map_frame.width, map_frame.height)
@@ -342,14 +351,16 @@ end
 
 local function draw_list()
     local width, _, _, top, bottom = ui.content_bounds()
-    punri.header("Cities", string.format("%d/%d", list_page, math.ceil(#cities.all / 5)))
     top = draw_clock_problem(top)
     input.begin()
-    local per_page = 5
+    local row_height = ui.row_height(true)
+    list_page_size = ui.rows_fit(top, bottom, row_height, 5)
+    local per_page = list_page_size
+    list_page = math.min(list_page, math.ceil(#cities.all / per_page))
+    punri.header("Cities", string.format("%d/%d", list_page, math.ceil(#cities.all / per_page)))
     local first = (list_page - 1) * per_page + 1
     local last = math.min(#cities.all, first + per_page - 1)
     local home_value = city_clock(settings.home)
-    local row_height = ui.row_height(true)
     for index = first, last do
         local city = cities.all[index]
         local value = city_clock(city.id)
@@ -395,17 +406,22 @@ local function draw_favorites()
     end
     local home_value = city_clock(settings.home)
     local row_height = ui.row_height(true)
-    for index, id in ipairs(settings.favorites) do
+    favorite_page_size = ui.rows_fit(top, bottom, row_height, MAX_FAVORITES)
+    local first, last = ui.row_window(cursor, #settings.favorites, favorite_page_size)
+    for index = first, last do
+        local id = settings.favorites[index]
         local city, value = cities.get(id), city_clock(id)
         if city then
-            local y = top + (index - 1) * (row_height + 6)
+            local y = top + (index - first) * (row_height + 6)
             local secondary = value and home_value and format_offset_difference(value, home_value) or "Unavailable"
             ui.row(12, y, width - 24, row_height, city.name, index == cursor,
                 value and time.format_time(value.time, settings.use24) or "--:--", secondary)
             input.add("favorite_city:" .. id, 12, y, width - 24, row_height)
         end
     end
-    add_actions(width, bottom, {{id = "manage", label = "Manage"}, {id = "cities", label = "Cities"}})
+    local actions = {{id = "manage", label = "Manage"}, {id = "cities", label = "Cities"}}
+    if #settings.favorites > favorite_page_size then actions[#actions + 1] = {id = "favorites_next", label = "More"} end
+    add_actions(width, bottom, actions)
     punri.button_hints("Back", "Details", "Manage", "Cities")
 end
 
@@ -417,9 +433,12 @@ local function draw_manage()
     if #settings.favorites == 0 then
         ui.message(16, top + 20, width - 32, "No favorites to manage.")
     end
-    for index, id in ipairs(settings.favorites) do
+    favorite_page_size = ui.rows_fit(top, bottom, row_height, MAX_FAVORITES)
+    local first, last = ui.row_window(cursor, #settings.favorites, favorite_page_size)
+    for index = first, last do
+        local id = settings.favorites[index]
         local city = cities.get(id)
-        local y = top + (index - 1) * (row_height + 6)
+        local y = top + (index - first) * (row_height + 6)
         ui.row(12, y, width - 24, row_height, city.name, index == cursor, tostring(index))
         input.add("manage_city:" .. index, 12, y, width - 24, row_height)
     end
@@ -434,16 +453,21 @@ end
 local function draw_chooser()
     local width, _, _, top, bottom = ui.content_bounds()
     punri.header(chooser_title or "Choose city")
-    ui.message(16, top, width - 32, chooser_hint or "Markers are close together. Choose a city.")
+    top = top + ui.message(16, top, width - 32, chooser_hint or "Markers are close together. Choose a city.") + 10
     input.begin()
     local row_height = ui.row_height(false)
-    for index, id in ipairs(chooser or {}) do
+    chooser_page_size = ui.rows_fit(top, bottom, row_height)
+    local first, last = ui.row_window(cursor, #(chooser or {}), chooser_page_size)
+    for index = first, last do
+        local id = chooser[index]
         local city = cities.get(id)
-        local y = top + 45 + (index - 1) * (row_height + 6)
+        local y = top + (index - first) * (row_height + 6)
         ui.row(12, y, width - 24, row_height, city.name, index == cursor, city.zone)
         input.add("choose:" .. id, 12, y, width - 24, row_height)
     end
-    add_actions(width, bottom, {{id = "map_view", label = "Cancel"}})
+    local actions = {{id = "map_view", label = "Cancel"}}
+    if #(chooser or {}) > chooser_page_size then actions[#actions + 1] = {id = "chooser_next", label = "More cities"} end
+    add_actions(width, bottom, actions)
     punri.button_hints("Back", "Select", "Prev", "Next")
 end
 
@@ -515,10 +539,18 @@ local function handle_tap(action, x, y)
     elseif action == "details" then set_screen("detail")
     elseif action == "map_view" then set_screen("map")
     elseif action == "list_next" then
-        list_page = list_page % math.ceil(#cities.all / 5) + 1
+        list_page = list_page % math.ceil(#cities.all / list_page_size) + 1
+        cursor = (list_page - 1) * list_page_size + 1
         request_draw()
     elseif action == "setup_next" then
-        list_page = list_page % math.ceil(#cities.all / 6) + 1
+        list_page = list_page % math.ceil(#cities.all / setup_page_size) + 1
+        cursor = (list_page - 1) * setup_page_size + 1
+        request_draw()
+    elseif action == "favorites_next" then
+        cursor = ((cursor - 1) // favorite_page_size + 1) % math.ceil(#settings.favorites / favorite_page_size) * favorite_page_size + 1
+        request_draw()
+    elseif action == "chooser_next" then
+        cursor = ((cursor - 1) // chooser_page_size + 1) % math.ceil(#chooser / chooser_page_size) * chooser_page_size + 1
         request_draw()
     elseif action == "favorite" then toggle_favorite()
     elseif action == "manage" then set_screen("manage")
@@ -551,8 +583,14 @@ function on_init()
 end
 
 function on_draw()
+    ui.feedback.begin(screen)
+    ui.feedback.focus = nil
     punri.clear()
     draw_current()
+    local width, height = punri.get_bounds()
+    local bh = math.max(36, punri.get_metrics().button_hints_height or 40)
+    ui.button(3, height - bh, width // 2 - 6, bh - 3, "Back", false, "back")
+    ui.feedback.finish()
 end
 
 -- Deliberately no on_touch: LuaAppActivity currently calls on_tap(x,y) and
@@ -576,8 +614,8 @@ function on_button(button, pressed)
     end
     if screen == "setup" then
         if button == "confirm" then choose_home(cities.all[cursor].id)
-        elseif button == "left" or button == "up" or button == "page_back" then move_list_cursor(-1, 6)
-        elseif button == "right" or button == "down" or button == "page_forward" then move_list_cursor(1, 6) end
+        elseif button == "left" or button == "up" or button == "page_back" then move_list_cursor(-1, setup_page_size)
+        elseif button == "right" or button == "down" or button == "page_forward" then move_list_cursor(1, setup_page_size) end
     elseif screen == "map" then
         if button == "confirm" then set_screen("detail")
         elseif button == "left" or button == "page_back" then select_previous(-1)
@@ -586,9 +624,9 @@ function on_button(button, pressed)
         elseif button == "down" or button == "page_forward" then set_screen("list") end
     elseif screen == "list" then
         if button == "confirm" then selected_id = cities.all[cursor].id; set_screen("detail")
-        elseif button == "left" or button == "up" or button == "page_back" then move_list_cursor(-1, 5)
-        elseif button == "right" or button == "down" then move_list_cursor(1, 5)
-        elseif button == "page_forward" then list_page = list_page % math.ceil(#cities.all / 5) + 1; request_draw() end
+        elseif button == "left" or button == "up" or button == "page_back" then move_list_cursor(-1, list_page_size)
+        elseif button == "right" or button == "down" then move_list_cursor(1, list_page_size)
+        elseif button == "page_forward" then list_page = list_page % math.ceil(#cities.all / list_page_size) + 1; cursor = (list_page - 1) * list_page_size + 1; request_draw() end
     elseif screen == "detail" then
         if button == "confirm" then toggle_favorite()
         elseif button == "left" or button == "up" then set_screen("list")
@@ -617,8 +655,46 @@ function on_button(button, pressed)
 end
 
 function on_update()
+    ui.feedback.update()
     -- The activity invokes on_update frequently, but only a changed UTC minute
     -- schedules a render.  Lua requests a redraw; LuaAppActivity owns the one
     -- actual e-ink refresh after that request.
     if refresh_snapshot(false) then request_draw() end
+end
+
+-- Geometry identities match the exact row/button rectangles; map taps remain map taps.
+local input_add = input.add
+input.add = function(id, x, y, w, h)
+    ui.ids[id] = ui.key(x, y)
+    input_add(id, x, y, w, h)
+end
+local tap_now, button_now = on_tap, on_button
+function on_tap(x, y)
+    local F = ui.feedback
+    if F.busy() then return end
+    local id = F.hit(x, y)
+    if id == "back" then
+        F.defer(id, function() button_now("back", true) end)
+        return
+    end
+    local action = input.hit(x, y)
+    if not id then tap_now(x, y); return end
+    if action == "favorite" or action == "format" or action == "remove" or action == "retry_save"
+        or action == "list_next" or action == "setup_next" or (action and action:match("^manage_city:")) then
+        F.press(id); tap_now(x, y)
+    else F.defer(id, function() tap_now(x, y) end) end
+end
+function on_button(button, pressed)
+    local F = ui.feedback
+    if not pressed or F.busy() then return end
+    local id = button == "back" and "back" or nil
+    if button == "confirm" then
+        id = screen == "detail" and ui.ids.favorite or screen == "map" and ui.ids.details
+            or screen == "manage" and ui.ids.remove or F.focus
+    end
+    local immediate = screen == "detail" or screen == "manage" or screen == "save_error"
+    if id and not immediate then
+        if F.defer(id, function() button_now(button, pressed) end) then return end
+    else F.press(id) end
+    button_now(button, pressed)
 end

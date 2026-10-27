@@ -30,7 +30,7 @@ function screen.draw()
     local m = punri.get_metrics()
     punri.header("Scriptorium", "Consequence")
     local ty = m.top_padding + m.header_height + 2
-    draw_page_frame(ty, h - m.button_hints_height - 2)
+    draw_page_frame(ty, h - math.max(40, m.button_hints_height or 0) - 2)
 
     ty = draw_codex_stats(ty + 6) + 30
     draw_miniature_frame(22, ty, w - 44, 160)
@@ -45,8 +45,10 @@ function screen.draw()
 
     local bx, by = math.floor((w - 200) / 2), ty + 190
     punri.rect(bx, by, 200, 42, true)
-    punri.text(bx + 100, by + 13, "Continue", "small", "bold", "center", false)
-    punri.button_hints("Continue", "Continue", "", "")
+    local ink = press_ink("continue", bx, by, 200, 42, true, "rect", 0, true)
+    punri.text(bx + 100, by + 13, "Continue", "small", "bold", "center", ink)
+    screen.press_id = "continue"
+    press_hints("Continue", "Continue", "", "")
 end
 
 function screen.on_button(btn, pressed)
@@ -62,6 +64,10 @@ end
 
 function screen.on_tap(x, y)
     screen.on_button("confirm", true)
+end
+
+function screen.press_action(id)
+    if id == "continue" then screen.on_button("confirm", true) end
 end
 
 return screen

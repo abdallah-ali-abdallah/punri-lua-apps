@@ -10,7 +10,7 @@ end
 function screen.draw()
     local m = punri.get_metrics()
     local ty = m.top_padding + m.header_height + 2
-    local by = h - m.button_hints_height - 2
+    local by = h - math.max(40, m.button_hints_height or 0) - 2
     draw_page_frame(ty, by)
 
     local y = draw_combat_header(ty)
@@ -30,13 +30,14 @@ function screen.draw()
         local sx = math.floor((w - (cw * n)) / 2)
         for i = 1, n do
             local sel = (i == state.selectedHandIdx)
-            draw_card_item(sx + (i - 1) * cw, sel and (hy - 8) or hy, cw - 4, ch, kCards[state.hand[i] + 1], sel)
+            draw_card_item(sx + (i - 1) * cw, sel and (hy - 8) or hy, cw - 4, ch, kCards[state.hand[i] + 1], sel, "hand:" .. i)
         end
     else
         punri.centered_text(hy + 60, "(Hand empty - press End Turn)", "ui12", "regular", true)
     end
 
-    punri.button_hints("End Turn", "Play", "<", ">")
+    screen.press_id = "hand:" .. state.selectedHandIdx
+    press_hints("End Turn", "Play", "<", ">")
 end
 
 function screen.on_button(btn, pressed)
@@ -69,7 +70,7 @@ function screen.on_tap(x, y)
     local n = #state.hand
     if n == 0 then return end
     local m = punri.get_metrics()
-    local by = h - m.button_hints_height - 2
+    local by = h - math.max(40, m.button_hints_height or 0) - 2
     local cw = math.min(110, math.floor((w - 36) / n))
     local sx = math.floor((w - (cw * n)) / 2)
     local hy = by - 224
@@ -83,6 +84,14 @@ function screen.on_tap(x, y)
             end
             punri.request_update()
         end
+    end
+end
+
+function screen.press_action(id)
+    local index = tonumber(id:match("^hand:(%d+)$"))
+    if index then
+        if state.selectedHandIdx == index then play_card(index) else state.selectedHandIdx = index end
+        punri.request_update()
     end
 end
 

@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 -- Block Drop game for PUNRI (Lua)
 -- Classic falling block game with real-time gravity, 7 piece patterns, dithering & background render
 
@@ -385,7 +400,7 @@ function on_draw()
 
     local m = punri.get_metrics()
     local topBound = m.top_padding + m.header_height
-    local bottomBound = h - m.button_hints_height
+    local bottomBound = h - math.max(40, m.button_hints_height or 0)
     local availableHeight = bottomBound - topBound - 12
 
     -- 1. Fill Main Background with Light Gray Dither (Classic look restored!)
@@ -516,11 +531,11 @@ function on_draw()
 
     -- 8. Footer Button Hints
     if show_reset_confirm then
-        punri.button_hints("Cancel", "Confirm", "", "")
+        press_hints("Cancel", "Confirm", "", "")
     elseif is_game_over then
-        punri.button_hints("Back", "Restart", "", "")
+        press_hints("Back", "Restart", "", "")
     else
-        punri.button_hints("Back", "Drop", "Left", "Right")
+        press_hints("Back", "Drop", "Left", "Right")
     end
 end
 
@@ -607,7 +622,7 @@ end
 -- Touch handling for touchscreen devices
 function on_tap(x, y)
     local m = punri.get_metrics()
-    if y > h - m.button_hints_height then
+    if y > h - math.max(40, m.button_hints_height or 0) then
         if show_reset_confirm then
             if x < w / 2 then
                 on_button("back", true)
@@ -674,3 +689,10 @@ function on_tap(x, y)
         on_button("right", true)
     end
 end
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    footer_tap = true,
+    view = function() return show_reset_confirm and "confirm" or is_game_over and "over" or "game" end,
+    transition = function(id) return id == "footer:back" or show_reset_confirm or is_game_over end
+})

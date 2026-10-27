@@ -1,6 +1,6 @@
 -- One-bit presentation clicker. Drawing and hit testing share the live geometry.
 -- The bounded control/body records are allocated once and reused on every draw.
-local M = {settings_open = false, settings_focus = 1}
+local M = {settings_open = false, settings_focus = 1, feedback = punri.dofile("press_feedback.lua")}
 local layout = {controls = {{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, body = {}}
 
 local function control(index, id, label, x, y, w, h, shape)
@@ -22,7 +22,7 @@ function M.compute()
     l.small_h, l.label_h = punri.line_height("small"), punri.line_height("ui12")
     l.header_y = (metrics.top_padding or 4) + 2
     l.header_bottom = l.header_y + l.label_h + l.small_h + 16
-    l.bottom = h - (metrics.button_hints_height or 40) - 8
+    l.bottom = h - math.max(40, metrics.button_hints_height or 0) - 8
     l.landscape = w > h
     local side, gap = l.side, 10
     local content_w = w - side * 2
@@ -113,10 +113,13 @@ local function state_label(c)
     return "Not connected"
 end
 
-local function button(c, selected)
+local function button(c, selected, enabled)
     punri.rounded_rect(c.x, c.y, c.w, c.h, math.min(18, math.floor(c.h / 2)), selected, 2, true)
+    M.feedback.target(c.id, c.x, c.y, c.w, c.h, enabled, "rounded", math.min(18, c.h // 2), selected)
+    local ink = M.feedback.paint(c.id)
+    if ink == nil then ink = not selected end
     punri.text(c.x + math.floor(c.w / 2), c.y + math.floor((c.h - layout.label_h) / 2),
-        c.label, "ui12", "bold", "center", not selected)
+        c.label, "ui12", "bold", "center", ink)
 end
 
 local function key(c, controller)
@@ -127,11 +130,14 @@ local function key(c, controller)
         local cx, cy = c.x + math.floor(c.w / 2), c.y + r
         local filled = c.id == "right"
         punri.circle(cx, cy, r, filled, 2, true)
-        arrow(cx, cy, math.floor(d * 0.48), c.id, not filled)
+        M.feedback.target(c.id, cx - r, cy - r, d, d, controller.connected and controller.subscribed, "circle", r, filled)
+        local ink = M.feedback.paint(c.id)
+        if ink == nil then ink = not filled end
+        arrow(cx, cy, math.floor(d * 0.48), c.id, ink)
         if controller.pending_key == c.id then punri.circle(cx, cy, r - 5, false, 2, not filled) end
         punri.text(cx, c.y + d, c.label, prominent and "ui12" or "small", "bold", "center", true)
     else
-        button(c, controller.pending_key == c.id)
+        button(c, false, controller.connected and controller.subscribed and controller.enter_space_supported)
     end
 end
 
@@ -144,6 +150,7 @@ end
 
 function M.draw(controller)
     local l = M.compute()
+    M.feedback.begin(M.settings_open and "settings" or controller.mode)
     punri.clear()
     punri.text(l.side, l.header_y, "Presenter Remote", "ui12", "bold", "left", true)
     local label = state_label(controller)
@@ -156,7 +163,7 @@ function M.draw(controller)
     if not controller.supported then
         wrapped(l.side, l.body.y + 12, l.w - l.side * 2,
             "Presenter Remote requires X4 Pro firmware with Bluetooth HID keyboard support.", 4)
-        punri.button_hints("Exit", "", "", "")
+        M.feedback.footer({"Exit", "", "", ""}, {"exit"})
         return
     end
     if M.settings_open then
@@ -167,7 +174,7 @@ function M.draw(controller)
         button(f, M.settings_focus == 1)
         wrapped(f.x, f.y + f.h + 12, f.w, controller.notice, 3)
         button(back, M.settings_focus == 2)
-        punri.button_hints("Remote", "Select", "Up", "Down")
+        M.feedback.footer({"Remote", "", "", ""}, {"close_settings"})
         return
     end
     local b = l.body
@@ -184,7 +191,7 @@ function M.draw(controller)
     button(l.controls[2], true)
     button(l.controls[3], false)
     button(primary, false)
-    punri.button_hints("Exit", controller.connected and "Disconnect" or "Pair", "Prev", "Next")
+    M.feedback.footer({"Exit", "", "", ""}, {"exit"})
 end
 
 function M.hit(x, y, controller)

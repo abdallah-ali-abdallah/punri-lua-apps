@@ -14,7 +14,11 @@ local app = punri.dofile("app.lua")(E, Editor, Store, Tools, UI, I)
 function on_init() app:init() end
 function on_draw() app.ui.draw() end
 function on_update() app:update() end
-function on_tap(x, y) app:tap(x, y) end
+function on_tap(x, y)
+    local id = UI.feedback.hit(x, y)
+    if type(id) == "string" and id:match("^footer_") then app:button(id:sub(8), true)
+    else app:tap(x, y) end
+end
 function on_button(button, pressed) app:button(button, pressed) end
 function on_keyboard(text, cancelled) app:keyboard_result(text, cancelled) end
 function on_exit() app:exit() end

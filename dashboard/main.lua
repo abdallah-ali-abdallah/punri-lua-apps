@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 -- Desk Stand Dashboard
 -- Ambient e-ink desk clock, calendar, and overview station
 
@@ -446,7 +461,7 @@ function on_draw()
 
     if buttons_visible then
         local b2_label = is_24h and "12-Hour" or "24-Hour"
-        punri.button_hints("Exit", b2_label, "Style -", "Style +")
+        press_hints("Exit", b2_label, "Style -", "Style +")
     end
 
     if needs_full_refresh then
@@ -485,8 +500,7 @@ function on_button(btn, pressed)
     end
 end
 
-function on_touch(action, tx, ty)
-    if action ~= "tap" and action ~= "click" then return end
+function on_tap(tx, ty)
     last_interact_ms = (punri.millis and punri.millis()) or (os.time() * 1000)
     if not buttons_visible then
         buttons_visible = true
@@ -496,11 +510,12 @@ function on_touch(action, tx, ty)
 
     local w, h = 480, 800
     if punri.get_bounds then w, h = punri.get_bounds() end
-    local is_land = (theme_style >= 6 and w >= 800)
-    local in_btn_zone = is_land and (ty >= 440) or (ty >= 760)
+    local is_land = w > h
+    local metrics = punri.get_metrics()
+    local in_btn_zone = ty >= h - math.max(36, metrics.button_hints_height or 40)
 
     if in_btn_zone then
-        local b_idx = is_land and math.floor(tx / 200) + 1 or math.floor(tx / 120) + 1
+        local b_idx = math.floor(tx / (w / 4)) + 1
         if b_idx <= 1 then on_button("btn1", true)
         elseif b_idx == 2 then on_button("btn2", true)
         elseif b_idx == 3 then on_button("btn3", true)
@@ -509,8 +524,20 @@ function on_touch(action, tx, ty)
     end
 
     if is_land then
-        on_button(tx < 400 and "btn2" or "btn4", true)
+        on_button(tx < w / 2 and "btn2" or "btn4", true)
     else
         on_button(ty <= 220 and "btn2" or "btn4", true)
     end
 end
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return theme_style end,
+    transition = function(id) return id == "footer:back" or id == "footer:left" or id == "footer:right" end,
+    map_tap = function(x, y)
+        if not buttons_visible then return nil end
+        local width, height = punri.get_bounds()
+        return (theme_style >= 6 and width > height and x < width / 2 or theme_style < 6 and y <= 220)
+            and "footer:confirm" or "footer:right"
+    end
+})

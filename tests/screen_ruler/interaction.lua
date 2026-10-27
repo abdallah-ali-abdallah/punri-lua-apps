@@ -77,7 +77,12 @@ local init = APP_INIT or on_init
 init()
 draw()
 assert(observed.calibrated and not grid and px == nil)
-assert(on_touch == nil and on_update == nil, "a tap must act once without periodic redraws")
+assert(on_touch == nil and type(on_update) == "function", "one tap handler and a nonblocking feedback timer are required")
+local idle_requests, request_update = 0, punri.request_update
+punri.request_update = function() idle_requests = idle_requests + 1 end
+on_update()
+punri.request_update = request_update
+assert(idle_requests == 0, "an idle ruler must not request periodic redraws")
 
 for _, shape in ipairs({{480, 800, "portrait"}, {800, 480, "landscape"}}) do
     punri.get_bounds = function() return shape[1], shape[2] end

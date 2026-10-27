@@ -1,5 +1,5 @@
 -- Geometry is shared with hit testing. Fixed records are reused on each draw.
-local M = {}
+local M = {feedback = punri.dofile("press_feedback.lua")}
 local l = {pad = {}, clicks = {{}, {}}, speeds = {{}, {}, {}}, primary = {}, settings = {}, back = {}, forget = {}, exit = {}}
 local function box(b, x, y, w, h, id, label)
     b.x, b.y, b.w, b.h, b.id, b.label = x, y, w, h, id, label
@@ -12,7 +12,7 @@ function M.compute()
     l.small, l.label = punri.line_height("small"), punri.line_height("ui12")
     l.top = (m.top_padding or 4) + 8
     l.header = l.top + l.label + l.small + 22
-    l.bottom = h - (m.button_hints_height or 40) - 10
+    l.bottom = h - math.max(40, m.button_hints_height or 0) - 10
     local side, gap, content_w = l.side, 10, w - 2 * l.side
     local button_h, speed_h, click_h = math.max(48, l.label + 18), math.max(40, l.small + 16), math.max(60, l.label + 26)
     local top = l.header + l.small + 24
@@ -55,8 +55,11 @@ local function wrapped(x, y, width, text, lines)
 end
 local function button(b, filled, font)
     punri.rounded_rect(b.x, b.y, b.w, b.h, 12, filled, 2, true)
+    M.feedback.target(b.id, b.x, b.y, b.w, b.h, b.enabled, "rounded", 12, filled)
+    local ink = M.feedback.paint(b.id)
+    if ink == nil then ink = not filled end
     local f = font or "ui12"
-    punri.text(b.x + math.floor(b.w / 2), b.y + math.floor((b.h - punri.line_height(f)) / 2), b.label, f, "bold", "center", not filled)
+    punri.text(b.x + math.floor(b.w / 2), b.y + math.floor((b.h - punri.line_height(f)) / 2), b.label, f, "bold", "center", ink)
 end
 local function mouse_icon(cx, y, size, ink)
     local half = math.floor(size / 2)
@@ -66,6 +69,7 @@ local function mouse_icon(cx, y, size, ink)
 end
 function M.draw(c, settings)
     M.compute()
+    M.feedback.begin(settings and "settings" or "mouse")
     punri.clear()
     punri.text(l.side, l.top, "Bluetooth Mouse", "ui12", "bold", "left", true)
     local status = not c.supported and "Unavailable" or (c.ready and "Connected" or (c.connected and "Securing..." or
@@ -75,7 +79,7 @@ function M.draw(c, settings)
     punri.line(l.side, l.header + 8, l.w - l.side, l.header + 8, 1, true)
     if not c.supported then
         wrapped(l.side, l.header + 40, l.w - 2 * l.side, c.notice, 4)
-        punri.button_hints("Exit", "", "", "")
+        M.feedback.footer({"Exit", "", "", ""}, {"exit"})
         return
     end
     if settings then
@@ -86,10 +90,10 @@ function M.draw(c, settings)
         button(b, false)
         wrapped(b.x, b.y + b.h + 18, b.w, c.notice, 3)
         button(l.back, true)
-        punri.button_hints("Mouse", "", "", "")
+        M.feedback.footer({"Mouse", "", "", ""}, {"close_settings"})
         return
     end
-    punri.text(l.settings.x + l.settings.w, l.settings.y, "Settings", "small", "bold", "right", true)
+    button(l.settings, false, "small")
     local p = l.pad
     punri.text(p.x, p.y - l.small - 4, "TOUCHPAD", "small", "bold", "left", true)
     punri.rounded_rect(p.x, p.y, p.w, p.h, 18, false, 2, true)
@@ -104,13 +108,14 @@ function M.draw(c, settings)
     punri.rounded_rect(cx - 84, cy - 58, 168, 116, 16, true, 1, false)
     mouse_icon(cx, cy - 46, 34, true)
     punri.text(cx, cy + 14, "Slide to move", "small", "bold", "center", true)
+    l.clicks[1].enabled, l.clicks[2].enabled = c.ready, c.ready
     button(l.clicks[1], true, l.clicks[1].w < 160 and "small" or "ui12")
     button(l.clicks[2], false, l.clicks[2].w < 160 and "small" or "ui12")
     wrapped(l.notice_x, l.notice_y, l.notice_w, c.notice, 2)
     for i, b in ipairs(l.speeds) do button(b, i == c.speed, "small") end
     l.primary.label = (c.connected or c.state == "advertising" or c.state == "connecting") and "Disconnect" or "Pair / Connect"
     button(l.primary, false)
-    punri.button_hints("Exit", c.connected and "Disconnect" or "Pair", "Left", "Right")
+    M.feedback.footer({"Exit", "", "", ""}, {"exit"})
 end
 function M.hit(x, y, c, settings)
     M.compute()

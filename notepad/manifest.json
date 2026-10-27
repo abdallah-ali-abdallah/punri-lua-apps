@@ -1,10 +1,13 @@
 {
   "id": "notepad",
   "name": "Notepad",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "PUNRI",
   "description": "Offline notes with the system keyboard, multiline editing, paged reading and SD-card text exports.",
   "entry": "main.lua",
   "min_api": 1,
-  "capabilities": ["buttons", "storage"]
+  "capabilities": [
+    "buttons",
+    "storage"
+  ]
 }

@@ -24,10 +24,11 @@ local function draw_menu(y, by)
         local iy = y + 10 + (i - 1) * 54
         local sel = (i == menuIdx)
         punri.rect(30, iy, w - 60, 42, sel)
-        punri.text(240, iy + 12, OPTS[i], 'ui12', sel and 'bold' or 'regular', 'center', not sel)
+        local ink = press_ink("deck_menu:" .. i, 30, iy, w - 60, 42, sel, "rect", 0, true)
+        punri.text(w // 2, iy + 12, OPTS[i], 'ui12', sel and 'bold' or 'regular', 'center', ink)
     end
     punri.centered_text(by - 26, 'Auto-saved', 'small', 'regular', true)
-    punri.button_hints('Back', 'Confirm', 'Up', 'Down')
+    press_hints('Back', 'Confirm', 'Up', 'Down')
 end
 
 local function draw_list(y, by)
@@ -65,13 +66,13 @@ local function draw_list(y, by)
             punri.centered_text(by - 22, (page + 1) .. '/' .. (maxP + 1), 'small', 'bold', true)
         end
     end
-    punri.button_hints('Back', 'Tab', '<', '>')
+    press_hints('Back', 'Tab', '<', '>')
 end
 
 function screen.draw()
     local m = punri.get_metrics()
     local ty = m.top_padding + m.header_height + 2
-    local by = h - m.button_hints_height - 2
+    local by = h - math.max(40, m.button_hints_height or 0) - 2
     draw_page_frame(ty, by)
     punri.header(TABS[tab])
 
@@ -79,12 +80,14 @@ function screen.draw()
         local tx = 24 + (i - 1) * 108
         local sel = (i == tab)
         punri.rect(tx, ty + 8, 104, 28, sel)
-        punri.text(tx + 54, ty + 14, TABS[i], 'small', sel and 'bold' or 'regular', 'center', not sel)
+        local ink = press_ink("tab:" .. i, tx, ty + 8, 104, 28, sel, "rect", 0, true)
+        punri.text(tx + 54, ty + 14, TABS[i], 'small', sel and 'bold' or 'regular', 'center', ink)
     end
 
     draw_codex_divider(ty + 44, w, 24)
     local y = ty + 54
 
+    screen.press_id = tab == 4 and "deck_menu:" .. menuIdx or "tab:" .. tab
     if tab == 4 then
         draw_menu(y, by)
     else
@@ -126,6 +129,13 @@ function screen.on_tap(x, y)
         menuIdx = math.floor((y - 120) / 54) + 1
         screen.on_button('confirm', true)
     end
+end
+
+function screen.press_action(id)
+    local index = tonumber(id:match("^tab:(%d+)$"))
+    if index then tab, page, menuIdx = index, 0, 1; punri.request_update(); return end
+    index = tonumber(id:match("^deck_menu:(%d+)$"))
+    if index then menuIdx = index; screen.on_button("confirm", true) end
 end
 
 return screen

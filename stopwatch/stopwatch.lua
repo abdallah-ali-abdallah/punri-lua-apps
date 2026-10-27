@@ -33,7 +33,7 @@ end
 function Stopwatch.elapsed_delta(start_tick, current_tick)
     if current_tick >= start_tick then
         local delta = current_tick - start_tick
-        return delta <= Stopwatch.MAX_ELAPSED_MS and delta or 0
+        return delta >= 0 and delta <= Stopwatch.MAX_ELAPSED_MS and delta or 0
     end
     if start_tick < 0 or current_tick >= 0 then return 0 end
 

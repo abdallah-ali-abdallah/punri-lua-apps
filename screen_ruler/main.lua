@@ -119,14 +119,8 @@ local function cycle_orientation()
     persist(proposal)
 end
 
-local function calibration_axis_length(axis)
-    local width, height = punri.get_bounds()
-    return axis == "x" and width or height
-end
-
 local function calibration_limits(axis)
-    local length = calibration_axis_length(axis)
-    return 20, math.max(20, length - UI.safe_edge() * 2 - 20)
+    return 20, math.max(20, UI.calibration_layout(axis).maximum)
 end
 
 local function make_calibration(axis, phase, prior_scale, verification_mm)
@@ -358,6 +352,20 @@ function on_init()
     update_sleep_policy()
 end
 
+local calibration_buttons = {{}, {}, {}, {}, {}}
+local calibration_labels = {"− fine", "+ fine", "− coarse", "+ coarse", "Enter mm"}
+local function calibration_controls()
+    local w, h = UI.bounds()
+    local l = UI.calibration_layout(calibration.axis)
+    for i, b in ipairs(calibration_buttons) do
+        local columns, index = i <= 2 and 2 or 3, i <= 2 and i - 1 or i - 3
+        b.x = l.control_x + (index * l.control_w) // columns + (index > 0 and 4 or 0)
+        local right = l.control_x + ((index + 1) * l.control_w) // columns - 4
+        b.y, b.w, b.h, b.label = h - (i <= 2 and 120 or 70), right - b.x, 40, calibration_labels[i]
+    end
+    return calibration_buttons
+end
+
 function on_draw()
     punri.clear()
     if view == "ruler" then
@@ -393,36 +401,29 @@ function on_draw()
             { x = UI.safe_edge(), y = h - 64, w = w - UI.safe_edge() * 2, h = 42, label = "Back to setup" },
         })
     elseif view == "calibration" then
-        local w, h = UI.bounds()
-        local edge = UI.safe_edge()
         local horizontal = calibration.axis == "x"
         local axis_label = horizontal and "physical X: portrait horizontal" or "physical Y: portrait vertical"
         local phase_label = calibration.phase == "first" and "1. Align a real reference" or
             ("2. Verify with a different " .. calibration.target_mm .. " mm reference")
-        local start = 60
+        local layout = UI.calibration_layout(calibration.axis)
+        local start, fixed = layout.start, layout.fixed
         local end_pos = start + calibration.span
         if horizontal then
-            punri.line(start, 240, end_pos, 240, 2, true)
-            punri.line(start, 220, start, 262, 2, true)
-            punri.line(end_pos, 220, end_pos, 262, 2, true)
+            punri.line(start, fixed, end_pos, fixed, 2, true)
+            punri.line(start, fixed - 20, start, fixed + 22, 2, true)
+            punri.line(end_pos, fixed - 20, end_pos, fixed + 22, 2, true)
         else
-            punri.line(240, start, 240, end_pos, 2, true)
-            punri.line(220, start, 262, start, 2, true)
-            punri.line(220, end_pos, 262, end_pos, 2, true)
+            punri.line(fixed, start, fixed, end_pos, 2, true)
+            punri.line(fixed - 12, start, fixed + 18, start, 2, true)
+            punri.line(fixed - 12, end_pos, fixed + 18, end_pos, 2, true)
         end
-        local controls = {
-            { x = edge, y = h - 120, w = (w - edge * 2) // 2 - 4, h = 40, label = "− fine" },
-            { x = w // 2 + 4, y = h - 120, w = (w - edge * 2) // 2 - 4, h = 40, label = "+ fine" },
-            { x = edge, y = h - 70, w = (w - edge * 2) // 3 - 4, h = 40, label = "− coarse" },
-            { x = edge + (w - edge * 2) // 3 + 2, y = h - 70, w = (w - edge * 2) // 3 - 4, h = 40, label = "+ coarse" },
-            { x = edge + 2 * ((w - edge * 2) // 3) + 4, y = h - 70, w = (w - edge * 2) // 3 - 4, h = 40, label = "Enter mm" },
-        }
+        local controls = calibration_controls()
         UI.draw_message("Calibrate " .. axis_label, {
             phase_label,
             "Move the far marker until it matches a real ruler. Span: " .. calibration.span .. " pixels.",
-            "Use the firmware keyboard to enter the known length; no numeric-only keyboard API exists.",
+            "Enter the measured length in millimetres using the keyboard.",
             message,
-        }, controls)
+        }, controls, layout.text_x, layout.text_w)
     elseif view == "reset_confirm" then
         local w, h = UI.bounds()
         local automatic = Calibration.has_device_profile(state)
@@ -530,13 +531,12 @@ function on_tap(x, y)
         if y >= h - 118 and y < h - 70 then make_calibration("x", "first", nil)
         elseif y >= h - 70 then view = "ruler"; request_update() end
     elseif view == "calibration" then
-        local w, h = UI.bounds()
-        if y >= h - 120 and y < h - 78 then adjust_calibration(x < w // 2 and -1 or 1)
-        elseif y >= h - 70 then
-            if x < w // 3 then adjust_calibration(-10)
-            elseif x < 2 * w // 3 then adjust_calibration(10)
-            else request_length() end
-        end
+        local action = UI.hit(calibration_controls(), x, y)
+        if action == 1 then adjust_calibration(-1)
+        elseif action == 2 then adjust_calibration(1)
+        elseif action == 3 then adjust_calibration(-10)
+        elseif action == 4 then adjust_calibration(10)
+        elseif action == 5 then request_length() end
     elseif view == "reset_confirm" then
         local w, h = UI.bounds()
         if y >= h - 118 then
@@ -572,4 +572,72 @@ function on_exit()
     -- A failed write has a visible Retry state before this callback. Do not try
     -- a hidden final save here: the runner is about to destroy the Lua state.
     if punri.prevent_sleep then punri.prevent_sleep(false) end
+end
+
+-- Feedback targets come from UI.draw_button, so touch and painted bounds agree.
+local draw_now, tap_now, button_now = on_draw, on_tap, on_button
+function on_draw()
+    UI.feedback.begin(view)
+    UI.feedback.focus = nil
+    draw_now()
+    UI.feedback.finish()
+end
+function on_update() UI.feedback.update() end
+function on_tap(x, y)
+    local F = UI.feedback
+    if F.busy() then return end
+    local id = F.hit(x, y)
+    if not id then tap_now(x, y); return end
+    local immediate = false
+    if view == "ruler" and state.calibrated and not clean then
+        local action = UI.hit(UI.toolbar_controls(state.units, grid_enabled), x, y)
+        immediate = action == 1 or action == 2 or action == 5
+    elseif view == "calibration" then
+        local action = UI.hit(calibration_controls(), x, y)
+        immediate = action ~= nil and action <= 4
+    elseif view == "menu" then
+        local index = UI.hit(menu_controls(), x, y)
+        immediate = index == 1 or index == 2 or index == 6
+    end
+    if immediate then F.press(id); tap_now(x, y)
+    else F.defer(id, function() tap_now(x, y) end) end
+end
+function on_button(button, pressed)
+    local F = UI.feedback
+    if not pressed or F.busy() then return end
+    local id, transition
+    if view == "menu" then
+        if button == "confirm" or button == "up" or button == "down" or button == "page_back" or button == "page_forward" then
+            id = UI.key(menu_controls()[menu_index])
+            transition = menu_index == 3 or menu_index == 4 or menu_index == 5 or menu_index == 7 or menu_index == 8
+        end
+    elseif view == "ruler" then
+        if not state.calibrated then
+            id = button == "confirm" and UI.ids["Calibrate X and Y"]
+                or (button == "left" or button == "right") and UI.ids.Menu or button == "back" and UI.ids.Exit
+            transition = id ~= nil
+        else
+            id = button == "back" and UI.ids.Exit or button == "right" and UI.ids.Calibrate
+                or button == "left" and UI.ids[UI.unit_label(state.units)] or UI.ids.Mode
+            transition = button == "back" or button == "right" or button == "confirm"
+        end
+    elseif view == "foreign_notice" then
+        id = button == "confirm" and UI.ids["Verify X and Y"]
+            or (button == "left" or button == "right") and UI.ids["Back to setup"]
+        transition = id ~= nil
+    elseif view == "reset_confirm" then
+        id = (button == "confirm" or button == "right") and UI.ids[Calibration.has_device_profile(state) and "Restore auto" or "Reset scales"]
+            or button == "left" and UI.ids["Keep scales"]
+        transition = id ~= nil
+    elseif view == "retry" then
+        id = (button == "confirm" or button == "left") and UI.ids.Retry or button == "right" and UI.ids.Discard
+        transition = id ~= nil
+    elseif view == "calibration" then
+        id = button == "left" and UI.ids["− fine"] or button == "right" and UI.ids["+ fine"]
+            or (button == "up" or button == "page_back") and UI.ids["− coarse"]
+            or (button == "down" or button == "page_forward") and UI.ids["+ coarse"] or UI.ids["Enter mm"]
+        transition = button == "confirm" or button == "back"
+    else id, transition = F.focus, true end
+    if transition and F.defer(id, function() button_now(button, pressed) end) then return end
+    F.press(id); button_now(button, pressed)
 end

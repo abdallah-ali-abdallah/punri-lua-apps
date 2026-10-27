@@ -11,7 +11,7 @@ function screen.draw()
     punri.header("Codex", "Ink & Iron")
     local m = punri.get_metrics()
     local topY = m.top_padding + m.header_height + 2
-    local bottomY = h - m.button_hints_height - 2
+    local bottomY = h - math.max(40, m.button_hints_height or 0) - 2
     draw_page_frame(topY, bottomY)
 
     local y = topY + 12
@@ -51,16 +51,14 @@ function screen.draw()
     for i, opt in ipairs(options) do
         local optY = y + (i - 1) * (btnH + 10)
         local isSel = (i == title_idx)
-        if isSel then
-            punri.rect(btnX, optY, btnW, btnH, true)
-            punri.text(btnX + math.floor(btnW / 2), optY + math.floor((btnH - punri.line_height("ui12")) / 2), opt, "ui12", "bold", "center", false)
-        else
-            punri.rect(btnX, optY, btnW, btnH, false)
-            punri.text(btnX + math.floor(btnW / 2), optY + math.floor((btnH - punri.line_height("ui12")) / 2), opt, "ui12", "regular", "center", true)
-        end
+        punri.rect(btnX, optY, btnW, btnH, isSel)
+        local ink = press_ink("title:" .. i, btnX, optY, btnW, btnH, isSel, "rect", 0, true)
+        punri.text(btnX + math.floor(btnW / 2), optY + math.floor((btnH - punri.line_height("ui12")) / 2), opt,
+            "ui12", isSel and "bold" or "regular", "center", ink)
     end
 
-    punri.button_hints("Back", "Select", "Up", "Down")
+    screen.press_id = "title:" .. title_idx
+    press_hints("Back", "Select", "Up", "Down")
 end
 
 function screen.on_button(btn, pressed)
@@ -121,6 +119,11 @@ function screen.on_tap(x, y)
             return
         end
     end
+end
+
+function screen.press_action(id)
+    local index = tonumber(id:match("^title:(%d+)$"))
+    if index then title_idx = index; screen.on_button("confirm", true) end
 end
 
 return screen

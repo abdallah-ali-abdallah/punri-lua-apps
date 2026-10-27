@@ -1,5 +1,6 @@
 -- Shared, bezel-safe e-paper UI; keep both radio app copies identical.
-local U = {w = 0, h = 0, margin = 0, top = 0, bottom = 0, body = 0, row_h = 0, per_page = 0}
+local F = punri.dofile("press_feedback.lua")
+local U = {feedback = F, w = 0, h = 0, margin = 0, top = 0, bottom = 0, body = 0, row_h = 0, per_page = 0}
 local digit_masks = {63,6,91,79,102,109,125,7,127,111}
 
 function U.layout()
@@ -36,8 +37,11 @@ function U.toolbar(labels, focus)
         local x = U.margin + math.floor((i - 1) * width)
         local chosen = i == focus
         punri.rounded_rect(x + 2, U.top, math.floor(width) - 4, 40, 5, chosen)
+        F.target(i, x + 2, U.top, math.floor(width) - 4, 40, label ~= "Wait", "rounded", 5, chosen)
+        local ink = F.paint(i)
+        if ink == nil then ink = not chosen end
         punri.text(x + math.floor(width / 2), U.top + 8, U.clip(label, width - 12, "ui10"),
-            "ui10", "regular", "center", not chosen)
+            "ui10", "regular", "center", ink)
     end
 end
 
@@ -66,12 +70,15 @@ function U.networks(rows, focus)
         local row = rows[i]
         local y, chosen = U.body + (i - first) * U.row_h, focus == i + 4
         punri.rounded_rect(U.margin, y + 2, U.w - U.margin * 2, U.row_h - 4, 5, chosen)
+        F.target(i + 4, U.margin, y + 2, U.w - U.margin * 2, U.row_h - 4, true, "rounded", 5, chosen)
+        local ink = F.paint(i + 4)
+        if ink == nil then ink = not chosen end
         local name = row.name ~= "" and row.name or "(hidden SSID)"
         punri.text(U.margin + 10, y + 8, U.clip(name, U.w - U.margin * 2 - 112),
-            "ui12", "regular", "left", not chosen)
-        punri.text(U.w - U.margin - 10, y + 8, row.rssi .. " dBm", "small", "bold", "right", not chosen)
+            "ui12", "regular", "left", ink)
+        punri.text(U.w - U.margin - 10, y + 8, row.rssi .. " dBm", "small", "bold", "right", ink)
         punri.text(U.margin + 10, y + 12 + punri.line_height("ui12"),
-            row.address .. "  Ch " .. tostring(row.channel), "small", "regular", "left", not chosen)
+            row.address .. "  Ch " .. tostring(row.channel), "small", "regular", "left", ink)
     end
     if #rows == 0 then punri.centered_text(U.body + 32, "Press Scan to find networks", "ui12") end
 end

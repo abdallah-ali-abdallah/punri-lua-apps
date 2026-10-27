@@ -1,6 +1,6 @@
 -- Self-contained text input shared with Notepad; keep the packaged copies identical.
 -- The Lua sandbox has no utf8 library: move/delete at UTF-8 byte boundaries.
-local E = {}
+local E = {feedback = punri.dofile("press_feedback.lua")}
 local lower = {"qwertyuiop", "asdfghjkl", "zxcvbnm.,?"}
 local upper = {"QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM.,?"}
 local symbols = {"1234567890", "!@#$%&*()-", "+=/:;_'\"[]"}
@@ -83,7 +83,7 @@ local function geometry()
     margin = math.max(12, m.content_side_padding)
     top = m.top_padding + m.header_height + 12
     if punri.has_touch() then top = top + 44 end
-    bottom = h - m.button_hints_height - 12
+    bottom = h - math.max(40, m.button_hints_height or 0) - 12
     key_h = math.min(56, math.floor((bottom - top - 78) / 4))
     key_y = bottom - key_h * 4
 end
@@ -141,13 +141,16 @@ function E.value()
     return text
 end
 
+function E.focus_id()
+    return native_keyboard and "editor_type" or ("key:" .. row .. ":" .. col)
+end
+
 function E.draw()
     geometry()
     punri.clear()
     punri.header(title, tostring(#text) .. "/" .. tostring(limit))
     if punri.has_touch() then
-        punri.rounded_rect(margin, top - 44, 88, 34, 4, false)
-        punri.text(margin + 44, top - 39, "Cancel", "ui10", "regular", "center")
+        E.feedback.button("back", margin, top - 44, 88, 34, "Cancel", "ui10", false, true, 4)
     end
     local line_h = punri.line_height("ui12") + 2
     local available = math.max(1, math.floor((key_y - top - 34) / line_h))
@@ -161,7 +164,9 @@ function E.draw()
         punri.text(margin + 8, top + 6 + (i - 1) * line_h, line, "ui12")
     end
     if native_keyboard then
-        punri.button_hints("Cancel", "Type", "", "")
+        E.focus = "editor_type"
+        E.feedback.button("editor_type", margin, key_y, w - margin * 2, 48, "Open keyboard", "ui10", false, true, 5)
+        E.feedback.footer({"Cancel", "Type", "", ""}, {"back", "confirm", "left", "right"})
         return
     end
     punri.text(margin, key_y - 24, message ~= "" and message or
@@ -174,12 +179,17 @@ function E.draw()
             local y = key_y + (r - 1) * key_h
             local selected = row == r and col == c
             local label = r == 4 and actions[c] or letters()[r]:sub(c, c)
+            local id = "key:" .. r .. ":" .. c
+            if selected then E.focus = id end
+            E.feedback.target(id, x + 2, y + 2, math.floor(kw) - 4, key_h - 4, r ~= 4 or c ~= 5 or multiline, "rounded", 4, selected)
             punri.rounded_rect(x + 2, y + 2, math.floor(kw) - 4, key_h - 4, 4, selected)
+            local ink = E.feedback.paint(id)
+            if ink == nil then ink = not selected end
             punri.text(x + math.floor(kw / 2), y + math.floor((key_h - punri.line_height("ui10")) / 2),
-                label, "ui10", "regular", "center", not selected)
+                label, "ui10", "regular", "center", ink)
         end
     end
-    punri.button_hints("Cancel", "Type", "Left", "Right")
+    E.feedback.footer({"Cancel", "Type", "Left", "Right"}, {"back", "confirm", "left", "right"})
 end
 
 function E.button(btn)

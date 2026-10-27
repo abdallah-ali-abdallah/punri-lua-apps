@@ -7,7 +7,7 @@
     {
       "id": "dice",
       "name": "Dice Roller",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Mumfee",
       "description": "Multi-polyhedral tabletop dice simulator with running history",
       "entry": "main.lua",
@@ -21,18 +21,20 @@
         "main.lua",
         "icon.raw",
         "sprites/coin_heads.raw",
-        "sprites/coin_tails.raw"
+        "sprites/coin_tails.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 193,
-          "sha256": "193ff0e4ebf94dc6cc4edab82c00a69ef7b07af13818cf6eb365f7a040bf61bf"
+          "sha256": "bfbeb11b4b57c1cc6e02796e21b5e6c57e760816045aff14417d6fccbc1ce558"
         },
         {
           "path": "main.lua",
-          "size": 8550,
-          "sha256": "b1c0c3b7b921a3332f6fb136367a7d2b0d35139b207700d814edcc2274e12631"
+          "size": 9501,
+          "sha256": "80bf4f68c860639777d2d07a6558d586553aa213aca6fe9d32b846b79f7728af"
         },
         {
           "path": "icon.raw",
@@ -48,13 +50,23 @@
           "path": "sprites/coin_tails.raw",
           "size": 1568,
           "sha256": "ebf609ffa57e0370adf01704d4e4796cf70c638ff0b1cbca4f72ab76e12a7dbd"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "wordle",
       "name": "Wordle",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "Mumfee",
       "description": "5-letter word deduction game with on-screen keyboard and statistics",
       "entry": "main.lua",
@@ -67,18 +79,20 @@
         "manifest.json",
         "main.lua",
         "words.bin",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 196,
-          "sha256": "0fbb3659d8701fffdac723257b7e06dae669b8859304d50acf3334958d05b804"
+          "sha256": "54414ac9c68bc460f5eb16a9c4b679debb591eb54c967cf3e5ef02b0303dbf6a"
         },
         {
           "path": "main.lua",
-          "size": 19681,
-          "sha256": "065a3f51daa963421296048cf14c87be7e608b1e503d54025a36a73c32ff1f0c"
+          "size": 19170,
+          "sha256": "fc4b2835b70d08db38e685e47b423569d5e43f7ca725fd46da627f7382a30ccb"
         },
         {
           "path": "words.bin",
@@ -89,13 +103,23 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "68ea8a655aba0d4a4c522feb2eb6b74f3deedd65f4d225a5afad3874b277521f"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "2048",
       "name": "2048",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Mumfee",
       "description": "Classic 4x4 sliding tile number puzzle with high scores",
       "entry": "main.lua",
@@ -107,30 +131,42 @@
       "files": [
         "manifest.json",
         "main.lua",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 180,
-          "sha256": "3784935d2332214167f910d9e061d5151c7231469790251c62a3476b88bf0363"
+          "sha256": "e796ff8caa5d6fd05c45de4a164b8a87907c0b5358207d33101e781bbe5a8860"
         },
         {
           "path": "main.lua",
-          "size": 10311,
-          "sha256": "b311e6389664c36721dcf2bc351df0fd320a7b0fddbefa9a69697f4059643c80"
+          "size": 11259,
+          "sha256": "98e736cdcfabbe66d9ec523cc6bddeda06f9a0c753273673ec2f8ad7f1e7c074"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "b7343181a51d9d917925ff53b6734620004a4c0a9b5169ec500bf1166960dfaa"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "sudoku",
       "name": "Sudoku",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Mumfee",
       "description": "Classic 9x9 Sudoku logic puzzle with puzzle generator",
       "entry": "main.lua",
@@ -143,18 +179,20 @@
         "manifest.json",
         "main.lua",
         "generator.lua",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 182,
-          "sha256": "51d448392b6c23879b2c670d754bbf5a2511b2357956a10790712f04bbaa327a"
+          "sha256": "9e22a8f73ce4fe98bd6eae899235a5a4d0790be2e4d8fce90386e5538fc1c5be"
         },
         {
           "path": "main.lua",
-          "size": 10098,
-          "sha256": "4c4051989c956b9b2256dcbbec5209a068963ec16cb0df36e5556e84e1a2392d"
+          "size": 12161,
+          "sha256": "51779727e3f949a7c7ccb70ec5f0bb92c9e0188a5f2b2d591e4bb4f78cc07582"
         },
         {
           "path": "generator.lua",
@@ -165,13 +203,23 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "6cfaa98b280363ad377711f7460584b92306e4eeaff3e9cf2f1fc880fb4b18b2"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "blockdrop",
       "name": "Block Drop",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": "Mumfee",
       "description": "Classic falling block puzzle optimized for e-paper displays",
       "entry": "main.lua",
@@ -183,30 +231,42 @@
       "files": [
         "manifest.json",
         "main.lua",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 195,
-          "sha256": "ba93ad4b5f804b2842f15bb06bc0f00dce2c1285c511cf80c6046d911d41b1b5"
+          "sha256": "1de890a91427d936d8b8cd18299969cdd2eb641f4c9bcc71fe762e427d8839e1"
         },
         {
           "path": "main.lua",
-          "size": 21210,
-          "sha256": "104656fc22672ef88bee417291856e23af23ff5ad98644a0072fd4d7135d3778"
+          "size": 22253,
+          "sha256": "82afbb5735ebc455e3038f2fa1ef23af108d7996511c05d0e533a1c114b01290"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "2f6c5a79289e97822e3d58f6cd1ca84861ae82f4054f386bc212449fd6e9bf4f"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "codex",
       "name": "Codex: Ink & Iron",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Mumfee",
       "description": "Medieval illuminated manuscript deckbuilder with Couplet synergy and page progression",
       "entry": "main.lua",
@@ -272,13 +332,15 @@
         "sprites/relic_8.raw",
         "sprites/relic_9.raw",
         "state.lua",
-        "ui_base.lua"
+        "ui_base.lua",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "card_ui.lua",
-          "size": 3270,
-          "sha256": "d11d32bfc7f51abbda681e03fb486501922956a9752587dbfd5a449a6dfafce0"
+          "size": 3404,
+          "sha256": "caee8852bb338ed7ec2b8c5432a3f18c89cb4c37da0f39b7a2d5ab12a43d792a"
         },
         {
           "path": "cards.lua",
@@ -312,13 +374,13 @@
         },
         {
           "path": "main.lua",
-          "size": 2956,
-          "sha256": "d6f54454638bb4e8fb5a988c83af120c39da2a04bebaecb4d4b40149a62b2e2d"
+          "size": 4768,
+          "sha256": "33808fd57f9075ff820733cb3559df4123d4b4f5ab5dbb1455206da98b6ab36c"
         },
         {
           "path": "manifest.json",
           "size": 224,
-          "sha256": "4d95c009d443d7db02216951cf6718e8e058976d97b9a9952e142fbdcfe7757d"
+          "sha256": "ab8536cc70443a2bf15a8337632424e681708a4beccd31b220121580bdb2fe58"
         },
         {
           "path": "monsters.txt",
@@ -337,48 +399,48 @@
         },
         {
           "path": "screens/combat.lua",
-          "size": 2660,
-          "sha256": "e0a25276152d028d5d4be01d04b7f11858a7d850c9d0fee790b8a853d55508dd"
+          "size": 3011,
+          "sha256": "9404f6d2c0d5136b2c9712769ed553ebf2db5f780c4bfb3e2db37d8b70eecb6d"
         },
         {
           "path": "screens/deck_view.lua",
-          "size": 4527,
-          "sha256": "262f62db16889487451a00f97d09a705e5dc71e313e0d04a9918bf6fc7c0a5f4"
+          "size": 5082,
+          "sha256": "66b8172433c4f1ae18bf838b714e71fc50fe8a6e7444530c5d9aa0dbc05555e4"
         },
         {
           "path": "screens/game_over.lua",
-          "size": 836,
-          "sha256": "b659d08f9ae9284002960d38ca5e856dfa9909516f4effca07dbf9af9b0b62c1"
+          "size": 848,
+          "sha256": "616230eaeda834082f6462e302c8f66695a244abd9425becb906cefd019cb78c"
         },
         {
           "path": "screens/outcome.lua",
-          "size": 2325,
-          "sha256": "0b9d4f5b5bfc2c056e0c31ad7ad66f297c6ba9eea83e25968b1c7232c07f8bc2"
+          "size": 2551,
+          "sha256": "ce2e2fd1ddd204e2203f97458da4d3bd79e27df50262b356e383474a1c98ea43"
         },
         {
           "path": "screens/reward.lua",
-          "size": 2757,
-          "sha256": "04f3691618426a4e418358d143ff76bdc50e01a69cfd11bd955fd073b1f15f90"
+          "size": 3124,
+          "sha256": "30a8713730571ecb9b4ed3cb173b2fc99cf34a98274980a192d0ac2d4de33331"
         },
         {
           "path": "screens/scriptorium.lua",
-          "size": 3600,
-          "sha256": "e8d1a80e2e04f0c50a42e4e751a0ab7edf0fca5a28bb6968ee06d63a17b85613"
+          "size": 3910,
+          "sha256": "f9e243bb06092cf82eba4cc5792a695f46000ae766d2352e422ddafc1edd74fb"
         },
         {
           "path": "screens/shop.lua",
-          "size": 4438,
-          "sha256": "22be6ff6a9944b15feafb74373efeb9a3885da9212f150a9622064670a66cc2a"
+          "size": 5009,
+          "sha256": "e0789aebf59adcfcee5830b311192d53a06a69550585c7560f666030580b6dc2"
         },
         {
           "path": "screens/title.lua",
-          "size": 4073,
-          "sha256": "6431882e5b3e375464fc906b33a1ddaec002e63e6d37e37c4d78cad18268a913"
+          "size": 4163,
+          "sha256": "7cb7ec728453a3f1ed9c89311e9d9cce43427708938bfa01429c857b172eb6cc"
         },
         {
           "path": "screens/victory.lua",
-          "size": 855,
-          "sha256": "6eabd13be5837a89b394e5e028a11e79246eb32b2182113193bfbacc6c2b2a46"
+          "size": 867,
+          "sha256": "a8254c1cc2846fb9f7c410ebe86fb0edb3aca8d5c34548f88c433c38c376f160"
         },
         {
           "path": "sprites/event_0.raw",
@@ -559,13 +621,23 @@
           "path": "ui_base.lua",
           "size": 3774,
           "sha256": "07fe4f26dc212f834f5632cfb2d72cef2d1291872ead8f68a92d81ae7b55f0a0"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "watertracker",
       "name": "Water Tracker",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Mumfee",
       "description": "Daily hydration tracker with a cute water cup that fills as you drink",
       "entry": "main.lua",
@@ -577,30 +649,42 @@
       "files": [
         "manifest.json",
         "main.lua",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 217,
-          "sha256": "bbe8302e440f4fe3e9fd1dee614bf7384c525e14feb3db5c52c2c2b9d9e82ac6"
+          "sha256": "241001a774b9ec2d7c13ca66f40a470a0257f6d41c5d727793957c089e1ca30f"
         },
         {
           "path": "main.lua",
-          "size": 23115,
-          "sha256": "ebeba99d9320151cfed35ffc1289365e163a4961451ff6eed4961f67e91731dd"
+          "size": 25440,
+          "sha256": "8a3361f012c58890870c8f351705f1b9c9901e23fa69e04f48bda1771b71130f"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "1c225be10dfcbc59dd77e680d69f02c3e879d73d54066af7464f46233ab5a0c1"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "stopwatch",
       "name": "Stopwatch",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "Mumfee",
       "description": "Pixel cartoon stopwatch with digital display and lap split recording",
       "entry": "main.lua",
@@ -615,45 +699,51 @@
         "icon.raw",
         "stopwatch.lua",
         "ui.lua",
-        "input.lua"
+        "input.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 228,
-          "sha256": "0f08d119c308cdd12df04f08e449167a6f78ee616d762b50b404efe312c45a43"
+          "sha256": "7c9730af396702e893f02c2f6ebe3f352fb7a79da838f6fa424ac49635ba4411"
         },
         {
           "path": "main.lua",
-          "size": 1727,
-          "sha256": "73605d3713c637ebf2f73d0cc92226e7de995869dd3fbe7d9d460bd85cc7ee92"
+          "size": 1024,
+          "sha256": "06c1f55b170f2bf85c2bda5710ebefa74f76e2a45f62953b299f300e1eb6a0ce"
         },
         {
           "path": "icon.raw",
           "size": 128,
-          "sha256": "71ceca4e4e4fc84a3157d01a6fdcdffb858a04d9c181f811a71ea4e0d1186f1d"
+          "sha256": "f9be10e62a0e33b2bb48298f8e5f2464a8e7571bdbe0116ba74217b0c5e8f757"
         },
         {
           "path": "stopwatch.lua",
-          "size": 12215,
-          "sha256": "c3cd6b0e0bf6bb36145a26d7feddd428613a3f60d3ead88bb161200cb4ea48e9"
+          "size": 12230,
+          "sha256": "df8962afc52de02b7b6c3c51e9c35956a779e7d30d612efc04dcfb16ba8324d0"
         },
         {
           "path": "ui.lua",
-          "size": 14320,
-          "sha256": "c6548d3f18fd1699e309e8be57f23d2eeb67f4053e41b5c9e50c0e5da65c52e7"
+          "size": 11652,
+          "sha256": "9d0911091b2eda3087ea0f140f7d2a80b4e73f546fce68f98dbba0e255d23004"
         },
         {
           "path": "input.lua",
-          "size": 2720,
-          "sha256": "e5a462272ab9db727adaa5c2d62a4bfea784c462e5e2447eb224bbd6b0a5cc5e"
+          "size": 3430,
+          "sha256": "73bf07a3ab099ce87e98680e28c5fb54c284b4978df79510b7e6ca4ad600f782"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "dashboard",
       "name": "Desk Stand",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": "Mumfee",
       "description": "Multi-style ambient desk clock with calendar, year progress, and landscape stand",
       "entry": "main.lua",
@@ -665,30 +755,42 @@
       "files": [
         "manifest.json",
         "main.lua",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 243,
-          "sha256": "ec85ff75b63bf406eab7e90416553121f4d0218051764adbe4250928092b6524"
+          "sha256": "03ea517179ea8ad1541ed81b968d9e827b54edf996920906e0f9f3498cf5537a"
         },
         {
           "path": "main.lua",
-          "size": 23765,
-          "sha256": "d82c8f6d8366e9231923553ac8fe358d0c91b8765a6fbfc9df65db85ae9d115b"
+          "size": 24932,
+          "sha256": "66990ed2f70aad07803791a449aa8a996f99bc6ce7f79be9d72d7e4d47f0a809"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "03486e0a36f6d69c73fc32403694ac68e7ac3dffff2b596bb6a58cf35e700437"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "hourglass",
       "name": "Hourglass",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Mumfee",
       "description": "Expressive countdown timer with dynamic sand funnel physics and cute expressions",
       "entry": "main.lua",
@@ -700,30 +802,42 @@
       "files": [
         "manifest.json",
         "main.lua",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 224,
-          "sha256": "ccb8e81b9fd1b8384f083277c101d29437ec9042c84b3834c2b27e3026fc0b38"
+          "sha256": "ee778b621bf1969d3d38caf2e8151074159a0a8dfd02735dbed93b2963771f7a"
         },
         {
           "path": "main.lua",
-          "size": 27556,
-          "sha256": "6fb91fc0833b40aabe87b2946ca19777398419faa3bce300e09c6941bf02b005"
+          "size": 29036,
+          "sha256": "63c50975ad706d205cdc03bbf3c2aff6a35804009f411e0ce4342d25b54da2e3"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "cd824fdfbe3c5f0bd564e35ba5619aacf28c9286ded70190732843e11bac02c1"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "solitaire",
       "name": "Solitaire",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Mumfee",
       "description": "Classic 7-column Klondike Solitaire card game optimized for e-paper",
       "entry": "main.lua",
@@ -738,18 +852,20 @@
         "engine.lua",
         "input.lua",
         "suits.lua",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 224,
-          "sha256": "20f7dfcf282e6c0f4c905f4c55a7c88f7f9c36d64c04a2b2ec1224046f30817d"
+          "sha256": "d2644e15f53a02129d324340ad634451e1b3373905e23c77da1bee564cd32dea"
         },
         {
           "path": "main.lua",
-          "size": 7804,
-          "sha256": "a8179a71cc43a6e2ef78c64be061da3efd66759c6c1d8df6645b8e0caa239322"
+          "size": 9739,
+          "sha256": "69889c58c43e97bdffb1e1473a910ea94d14cc69916d19797667d3edb717776b"
         },
         {
           "path": "engine.lua",
@@ -758,8 +874,8 @@
         },
         {
           "path": "input.lua",
-          "size": 9404,
-          "sha256": "407501221c534d86940c53b710a6f477ae27cef4320af7b855474526cfed8887"
+          "size": 9170,
+          "sha256": "32dfb7ce4f3dec98a5217e29c1e24498b23ff0099253219bf9fe61c2e659cf26"
         },
         {
           "path": "suits.lua",
@@ -770,13 +886,23 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "44107f44072b9c6db366f7a3026544718be8108d36edd252e398f71c4039d2ff"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "chess",
       "name": "Chess",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Mumfee",
       "description": "Play chess against an onboard AI engine or locally with a friend, with crisp 1-bit pieces, move hints, and full touch & button controls",
       "entry": "main.lua",
@@ -828,18 +954,20 @@
         "sprites/wQ_b.raw",
         "sprites/wQ_m.raw",
         "sprites/wR_b.raw",
-        "sprites/wR_m.raw"
+        "sprites/wR_m.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 262,
-          "sha256": "f21e2502e1f0643cca5d9e425a3e48a1bf04a536fab77daf90ad2ed0c630920a"
+          "sha256": "9723299c68eff62308b7259b2e7c35bc8f4d40382952a8c9e532156e9fd67649"
         },
         {
           "path": "main.lua",
-          "size": 1695,
-          "sha256": "449167b499587606189083e81d5e431059e585af381bb4c7ff4c15f45f264b58"
+          "size": 2844,
+          "sha256": "817c0a22179d3ca75af6a572b25e9cbc1318bb996d1398d6b1ede8318d56610f"
         },
         {
           "path": "icon.raw",
@@ -853,8 +981,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 5449,
-          "sha256": "8e2846d8b172ba0ee341a4a8578648b78bb4ea74f7472531652d1cbc3a8b6aac"
+          "size": 5441,
+          "sha256": "21ce875511aae6479ba11df46a68a7304fb3497464647558b3c0e858712c9e25"
         },
         {
           "path": "logic.lua",
@@ -873,8 +1001,8 @@
         },
         {
           "path": "menu.lua",
-          "size": 779,
-          "sha256": "a1e6ef55bbfb64e113e65efa567875f1cda52a3a8d720d1a044e327d7df14443"
+          "size": 858,
+          "sha256": "4cedfc6e3d8b7b97581394ccebc46951da7ebc331d8fb5978b9894d75d64a5c8"
         },
         {
           "path": "new_game.lua",
@@ -1045,13 +1173,23 @@
           "path": "sprites/wR_m.raw",
           "size": 180,
           "sha256": "845092e0963ac913c055f667eb1d72c80ea5c336b5e040b8a2a007eaf87d7d2f"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "wifi_analyzer",
       "name": "Wi-Fi Analyzer",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "PUNRI",
       "description": "Wi-Fi discovery, channel charts, selected-BSSID RSSI monitoring, signal history and SD-card CSV exports.",
       "entry": "main.lua",
@@ -1068,13 +1206,14 @@
         "radio_ui.lua",
         "wifi_scan.lua",
         "wifi_ui.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 305,
-          "sha256": "3d9968670177ca41390f6280af3b2ab3d9b29173f92a5368698f1fa872711759"
+          "size": 317,
+          "sha256": "0ddfa66686501d4a776e94a20cfbbe63a1999aca0950f8755e1a9b60f4377708"
         },
         {
           "path": "main.lua",
@@ -1083,8 +1222,8 @@
         },
         {
           "path": "radio_app.lua",
-          "size": 22431,
-          "sha256": "9b3a49f0a25734256c0e2eec769a85786e010b86da4998ed4327012cb0429627"
+          "size": 22823,
+          "sha256": "115ccf3bab8b61a55f79b3ba75d2dd78aa3eeb1925a68c4c7c504deb47138c79"
         },
         {
           "path": "radio_scan.lua",
@@ -1093,8 +1232,8 @@
         },
         {
           "path": "radio_ui.lua",
-          "size": 5672,
-          "sha256": "9efa7d7d13213c21e26ef24017c483740a2d30ba4d54c33d9f0d93e84f3233b8"
+          "size": 6067,
+          "sha256": "f6c360fb6b0b921d8f96170154235413ace872d25db935849b6727e8bf92ea3e"
         },
         {
           "path": "wifi_scan.lua",
@@ -1110,13 +1249,18 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "c7031b1bf221520585e6fb7cbe9a122500c24700a8f6a8cab4b0188325b4a419"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "bluetooth_analyzer",
       "name": "Bluetooth Analyzer",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PUNRI",
       "description": "BLE discovery, advertisement details, RSSI monitoring, graphs and SD-card CSV exports. Requires BLE-enabled firmware (X4 Pro).",
       "entry": "main.lua",
@@ -1131,13 +1275,14 @@
         "radio_app.lua",
         "radio_scan.lua",
         "radio_ui.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 336,
-          "sha256": "c254dd96b005ea045ba28d36e022a5f5628ccde39ed9c53d226454006062812f"
+          "size": 348,
+          "sha256": "7afa94a430941c38cbb515100ff70bee1bcc9115a9070a5f9bbd437c3e43302f"
         },
         {
           "path": "main.lua",
@@ -1146,8 +1291,8 @@
         },
         {
           "path": "radio_app.lua",
-          "size": 22431,
-          "sha256": "9b3a49f0a25734256c0e2eec769a85786e010b86da4998ed4327012cb0429627"
+          "size": 22823,
+          "sha256": "115ccf3bab8b61a55f79b3ba75d2dd78aa3eeb1925a68c4c7c504deb47138c79"
         },
         {
           "path": "radio_scan.lua",
@@ -1156,20 +1301,25 @@
         },
         {
           "path": "radio_ui.lua",
-          "size": 5672,
-          "sha256": "9efa7d7d13213c21e26ef24017c483740a2d30ba4d54c33d9f0d93e84f3233b8"
+          "size": 6067,
+          "sha256": "f6c360fb6b0b921d8f96170154235413ace872d25db935849b6727e8bf92ea3e"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "c372a57fb2397441bfd682514da75ed8f26b3ffc4bdcfe1c3c8d32e0d85063ba"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "signal_meter",
       "name": "Signal Meter",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PUNRI",
       "description": "Measure one Wi-Fi access point with an RSSI graph, min/average/max and SD-card CSV export.",
       "entry": "main.lua",
@@ -1183,18 +1333,19 @@
         "main.lua",
         "wifi_scan.lua",
         "wifi_ui.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 288,
-          "sha256": "37ceb4688f7d3d5bcf9f52eef31633d26ec58641de36ebef4207f285b977e229"
+          "size": 300,
+          "sha256": "5310c9f1492cf0d9e0998069b880cdeb1d0b900f941a35f924382eecb30ddc92"
         },
         {
           "path": "main.lua",
-          "size": 11325,
-          "sha256": "13a11459d27d232af4424a34a3c50908f3e246ea0e60c103deeff4a297abaee0"
+          "size": 11717,
+          "sha256": "eeca037808ed4a4cea57add6b38bdb9a4fe378182013f7d41d9c1e519ef21ae1"
         },
         {
           "path": "wifi_scan.lua",
@@ -1203,20 +1354,25 @@
         },
         {
           "path": "wifi_ui.lua",
-          "size": 5149,
-          "sha256": "11a085018ea3b21660de448da8f84cd4e62c62fee22e2af28260536778aad134"
+          "size": 5544,
+          "sha256": "f6ef0565b2b3d6bda002be8ebac160367f4a7151fc269c3ced72f5ed4e2a135d"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "13d0ce234f3353cc7fed7d74243e2c14b6eb74a332ed75f9c4cf69f0b2d19032"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "notepad",
       "name": "Notepad",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": "PUNRI",
       "description": "Offline notes with the system keyboard, multiline editing, paged reading and SD-card text exports.",
       "entry": "main.lua",
@@ -1230,13 +1386,14 @@
         "main.lua",
         "icon.raw",
         "organizer.lua",
-        "text_editor.lua"
+        "text_editor.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 286,
-          "sha256": "08571edc1e8d0a75bc1b605c33ef56d71c779bbe237de5e0ca577daf954e32c7"
+          "size": 298,
+          "sha256": "01eef229f2f6e18e5908d3966d9ee7ee2453e00d72369b745e6f5b2bdf752042"
         },
         {
           "path": "main.lua",
@@ -1250,20 +1407,25 @@
         },
         {
           "path": "organizer.lua",
-          "size": 21701,
-          "sha256": "10701120a6967fb76ea8e663763c2003db20c6db47623bc65839a5232a8498bf"
+          "size": 24253,
+          "sha256": "50d541cc57f1ead5ba65601ae92688421b99ba2f5fcf28e2d016124768719abd"
         },
         {
           "path": "text_editor.lua",
-          "size": 8021,
-          "sha256": "8e8fb535241461661f9abb3f7907a078208d0c22ef01b0193bed4a4476d99863"
+          "size": 8684,
+          "sha256": "1c3be6f5ea29d9de3f5c8ce7208ffaf93b69384d66d22889a3a99934694e48ae"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "radio_scanner",
       "name": "Radio Scanner",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "PUNRI contributors",
       "description": "Foreground BLE and Wi-Fi discovery with advertisement inspection",
       "entry": "main.lua",
@@ -1275,30 +1437,36 @@
       "files": [
         "manifest.json",
         "main.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 201,
-          "sha256": "7b8873a70e8372917375ad6a05b30f6b2c8dd851ee4772f59573eabe0703c951"
+          "sha256": "326886e09c075bdf36f80865c7e2039bf2fc02345869640f66e37fc13bc021ca"
         },
         {
           "path": "main.lua",
-          "size": 3634,
-          "sha256": "622dd2f0c8ef5a60a8d7025d3670d537f53a24648f689db63730f26977a86072"
+          "size": 4041,
+          "sha256": "5d6ff08ca2f6f5b7b2da22414cb7b38bcd12313fd52e5676f15e2b95286cb98c"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "b5e5ada2bea32875c14f924ae9d55ac6ccbc7ba26122ab76a0eeeb6f8154b9d1"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "tictactoe",
       "name": "Tic-tac-toe",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PUNRI",
       "description": "Play an unbeatable device opponent or a friend on an e-paper 3x3 board.",
       "entry": "main.lua",
@@ -1310,18 +1478,20 @@
         "manifest.json",
         "main.lua",
         "engine.lua",
-        "icon.raw"
+        "icon.raw",
+        "feedback.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 254,
-          "sha256": "99f29ff24f752d9e857d22c89d8e0a8f09be3cdb29eae1f36327cbfb0a3d4fc0"
+          "size": 262,
+          "sha256": "80cb155525ca1b0c049a7e56e17fb63db17b953d9e0c6178f9ba8494af65ee0e"
         },
         {
           "path": "main.lua",
-          "size": 6943,
-          "sha256": "f904778bd444ce89383eeb6e499a903fbbbccebfc5dc43ccfac6e574aed0f648"
+          "size": 8641,
+          "sha256": "a32eff8f954974944aa1dba38480ff84039d3b54ab41526178fdeb09168149f2"
         },
         {
           "path": "engine.lua",
@@ -1332,13 +1502,23 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "07362b54e3c644e13144368e99191265147a633f2c48e000b2f1f21ba79fb336"
+        },
+        {
+          "path": "feedback.lua",
+          "size": 2707,
+          "sha256": "d9c7e94c70b03d33ad668c375bbaf31812c5b97c6b56330f1af782fbdd76a2a9"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "todo",
       "name": "To-do List",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "PUNRI",
       "description": "Offline tasks with quick actions, completion counts, on-device text entry and SD-card saving.",
       "entry": "main.lua",
@@ -1352,13 +1532,14 @@
         "main.lua",
         "icon.raw",
         "organizer.lua",
-        "text_editor.lua"
+        "text_editor.lua",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 281,
-          "sha256": "f394afadd4b7bea3c5f8cfb1a773aff59942009d6078ef78cd965cc187ed1bfd"
+          "size": 293,
+          "sha256": "a50427a56d3c0a8dc2effb11ddf80af0cf5ae8164dca8bb1f8d7b573985ab546"
         },
         {
           "path": "main.lua",
@@ -1372,20 +1553,25 @@
         },
         {
           "path": "organizer.lua",
-          "size": 21701,
-          "sha256": "10701120a6967fb76ea8e663763c2003db20c6db47623bc65839a5232a8498bf"
+          "size": 24253,
+          "sha256": "50d541cc57f1ead5ba65601ae92688421b99ba2f5fcf28e2d016124768719abd"
         },
         {
           "path": "text_editor.lua",
-          "size": 8021,
-          "sha256": "8e8fb535241461661f9abb3f7907a078208d0c22ef01b0193bed4a4476d99863"
+          "size": 8684,
+          "sha256": "1c3be6f5ea29d9de3f5c8ce7208ffaf93b69384d66d22889a3a99934694e48ae"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "daily_track",
       "name": "Daily Track",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PUNRI",
       "description": "Offline daily habits and counters with bounded history, chains and CSV export.",
       "entry": "main.lua",
@@ -1402,18 +1588,19 @@
         "storage.lua",
         "ui.lua",
         "input.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 274,
-          "sha256": "9a1e49e4f8b20811aeefdbee8198d18352f552ead30c244f0e8825133f3f2584"
+          "size": 286,
+          "sha256": "416370adb896a25ce94ba55d71619ef136a84b568e4f27d8b96d8ef14e8541ae"
         },
         {
           "path": "main.lua",
-          "size": 17825,
-          "sha256": "e0cf9e7846778f4d8f7622814a41a958716e96d545615d7261ac471c79323bb4"
+          "size": 18744,
+          "sha256": "4e0c2faa265efb4b1e339d81181fb5c843425f10391ee452df87142d0d3180d4"
         },
         {
           "path": "calendar.lua",
@@ -1432,8 +1619,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 19472,
-          "sha256": "aa0d7f28478e9291b21dc3c0aa7577ab644cc430fe49a15357372a590c1f2d7b"
+          "size": 19803,
+          "sha256": "b539b3a94010e23e019d38616ec13d29b6ce86c20fb3a162fb31c80a88d9bf38"
         },
         {
           "path": "input.lua",
@@ -1444,13 +1631,18 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "d97c4b842aebf8a69cdf1746463b06e8338dbc25b633c15cf286c21dec21df82"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "qr_cards_share",
       "name": "QR Cards Share",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "PUNRI Community",
       "description": "Create offline QR cards for links, contacts, Wi-Fi, and emergency return details.",
       "entry": "main.lua",
@@ -1468,18 +1660,19 @@
         "ui.lua",
         "input.lua",
         "icon.raw",
-        "LICENSES.md"
+        "LICENSES.md",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 293,
-          "sha256": "62de9647201620c74d5b8d090caf13715a5bf3680234e5ce70f7873bc1b5b639"
+          "size": 305,
+          "sha256": "dbde071689a4619e0d9ed495d0fd7fd066f409960ba0ef8ab4206f3521ce8775"
         },
         {
           "path": "main.lua",
-          "size": 1048,
-          "sha256": "619d81be2968de32f3486a15c25e66b069f2ac7b21bc6ec6c7940cd00cceff95"
+          "size": 2008,
+          "sha256": "19d3375f48ffbece8c89e8dc4e5c0b954444cb1bca394a7d3e1d400a8c496247"
         },
         {
           "path": "cards.lua",
@@ -1498,8 +1691,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 17733,
-          "sha256": "ec5c4d19172d5a343e39615f42d3436c3d27afbe8f441de98fa56ac196f28f28"
+          "size": 18744,
+          "sha256": "859afe15f3692046e2437be7f4401a809d94817ff58ca3b1c837d3d9b9a3df27"
         },
         {
           "path": "input.lua",
@@ -1515,13 +1708,18 @@
           "path": "LICENSES.md",
           "size": 1515,
           "sha256": "fef27007799be7933e843ffc399b0ea610c3d6954b7124ae1c7d4d5913e566e1"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "unit_convert",
       "name": "Unit Convert",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "PUNRI",
       "description": "Offline conversions for everyday length, mass, temperature, volume, speed and data units.",
       "entry": "main.lua",
@@ -1538,18 +1736,19 @@
         "format.lua",
         "ui.lua",
         "input.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 287,
-          "sha256": "2a4df603e62244c48f47d2171b027f96e9f2d2e3af9bd4742e73a409f23f0411"
+          "size": 299,
+          "sha256": "3b9bf7616495ec6a0943c50537ed635647d375c4ce43d90b4513ef17731de309"
         },
         {
           "path": "main.lua",
-          "size": 12365,
-          "sha256": "ab5eb761d8176a20bb97760a93ccc22d9b940b84a823c7410e120f61cb29982a"
+          "size": 14089,
+          "sha256": "49b9be5ca71aa481b5c8a80deb6345563bf151ee41354d715da43ac63517429d"
         },
         {
           "path": "units.lua",
@@ -1568,8 +1767,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 10371,
-          "sha256": "eef34f0774278bf72993e7cd524c83538691529461c0d46a093449df7a95eef7"
+          "size": 11659,
+          "sha256": "ea5d76a6c05badea27d7d319e26023bed3d0a8075f22033051e3beee7150b674"
         },
         {
           "path": "input.lua",
@@ -1580,13 +1779,18 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "773eca0c9a9dc3571ba20def357cc05a1222bfc23c4f1c7636caa20ed6a17063"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "screen_ruler",
       "name": "Screen Ruler",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": "PUNRI contributors",
       "description": "An offline calibrated screen ruler with independent physical X/Y scales.",
       "entry": "main.lua",
@@ -1601,18 +1805,19 @@
         "ruler.lua",
         "calibration.lua",
         "ui.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 283,
-          "sha256": "f24d5cec139f4c18684d397de4e618afa3e9e7d3e9d255633896ba11fca1dfa0"
+          "size": 295,
+          "sha256": "d3312827a7896c1e6e4ff4389ad5e90331915053a0a04fdc39fe95b8c3a3dc8b"
         },
         {
           "path": "main.lua",
-          "size": 24888,
-          "sha256": "a71de875e5e6f38a77e3418331d0095c6826f53151da0196314c1bc82a07f48d"
+          "size": 28352,
+          "sha256": "e2880fb573d75bb962457a5d4543769a7bdf0a98b8c7c21cd476d8269a1f85f5"
         },
         {
           "path": "ruler.lua",
@@ -1626,20 +1831,25 @@
         },
         {
           "path": "ui.lua",
-          "size": 14736,
-          "sha256": "bce57dc64e5a97a18b14ef6bbcc8dd70338db9045fb1533a578b6519791f047a"
+          "size": 16005,
+          "sha256": "478bc62fb8fdce6afdb439b820792a8c1bbc5978912e2fa64e13d52721acf66b"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "9c539c0de17c519f45c2a3d1d8a30c6a24b69684f3759bc38a2e6bb335eace66"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "world_clock",
       "name": "World Clock",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "PUNRI contributors",
       "description": "Offline world times with bounded IANA timezone data.",
       "entry": "main.lua",
@@ -1659,18 +1869,19 @@
         "input.lua",
         "zones.txt",
         "world.raw",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 261,
-          "sha256": "0a3d7db853a988a7e92986f4173e5f3ade66b034daee06fd681f056065b40f5f"
+          "size": 273,
+          "sha256": "6447d014ccea8540546963eba7f1f47f075a8676929d7f5dff0f9eeddb745352"
         },
         {
           "path": "main.lua",
-          "size": 26706,
-          "sha256": "222d6b59a0fa57b322cb79563f42d9d4d24d59051b8df98a0850ab4d37326f5e"
+          "size": 30670,
+          "sha256": "e0c49fcd520bb1762a613c09284777d5c5b6db04f6ce855c352e160b8bccc5f7"
         },
         {
           "path": "time_math.lua",
@@ -1694,8 +1905,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 6598,
-          "sha256": "c7c95aa5c2bb15ebed4f4b92c6a845e34f9255f57d649ba3a88229617d4745d5"
+          "size": 7671,
+          "sha256": "24c38569dfd891280c4c6c624387ad18f0f34751659d757eaf19717ad2a7426d"
         },
         {
           "path": "input.lua",
@@ -1716,13 +1927,18 @@
           "path": "icon.raw",
           "size": 128,
           "sha256": "df3d0d19e37012184053f3960aa42aa6b75e0c3137a1fb43426c589c071c66d7"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "presenter_remote",
       "name": "Presenter Remote",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": "PUNRI",
       "description": "A presentation clicker with Next, Back, arrows, Enter and Space over Bluetooth HID on X4 Pro.",
       "entry": "main.lua",
@@ -1735,18 +1951,19 @@
         "main.lua",
         "controller.lua",
         "ui.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 288,
-          "sha256": "bb54d46b10ed80d2d9d5e3f36c3d2a3b53d164c841115d8928734648b4cff7e5"
+          "size": 296,
+          "sha256": "aac598c963875ba61b0834dd3e2ea67afd410aa7de0df85ca6e209bf86cb6b90"
         },
         {
           "path": "main.lua",
-          "size": 2174,
-          "sha256": "593baa49b4e470576dfda0af4fc8ef60bf1d77d6454516432ab44d39ae3232e6"
+          "size": 3096,
+          "sha256": "d4dbde49ece6d961d4bcd2fcac176c09d3a893c4c675df90f36dadf8a1fe6ef8"
         },
         {
           "path": "controller.lua",
@@ -1755,20 +1972,25 @@
         },
         {
           "path": "ui.lua",
-          "size": 10295,
-          "sha256": "cbee086ea9dfa2e1d2133aa492cf180ff650d2dd9aebae9d5b8e992f67a75de5"
+          "size": 10857,
+          "sha256": "4d0eaf8630ac3c42748c15044c29f8b498dad0878ac95708cb43a6c8ef66e3c6"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "748f480087d794400f8c6ff19779616e808a42202b11ae6bc1b3628d1644ef8f"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "bluetooth_mouse",
       "name": "Bluetooth Mouse",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "PUNRI",
       "description": "A wireless Bluetooth mouse for X4 Pro with a grid touchpad, left/right clicks and three pointer speeds. Requires firmware API 5.",
       "entry": "main.lua",
@@ -1782,18 +2004,19 @@
         "main.lua",
         "controller.lua",
         "ui.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
           "size": 342,
-          "sha256": "3abd0ffe014e7fadbeea2e7a22f0524afec68a9278d4192c963d42ac71621727"
+          "sha256": "993ad6f82102ef59e3feca24a5424f609e4fe8a993c397677045eacb7d044cfe"
         },
         {
           "path": "main.lua",
-          "size": 1784,
-          "sha256": "ed9586fc7e9c15c066d7373ce985ce2e1e6f75bad917ee8eee58b66e126327f5"
+          "size": 2668,
+          "sha256": "14b92590489bd35fdb2d21bcb898dc9f555aea8836f5876bb82d5dc01bcee798"
         },
         {
           "path": "controller.lua",
@@ -1802,20 +2025,25 @@
         },
         {
           "path": "ui.lua",
-          "size": 7095,
-          "sha256": "cc7322bcce7692044fefc60539c69ac80f8ebf6efc9a9656257073f6a988c114"
+          "size": 7365,
+          "sha256": "a83d0c5d8c03f5abb5f3fe32289428b86cb7c7f34aa15fd6fdf97150ebb37f02"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "5d195b5b50c042139a69db5577ea1c447cd6cdf81cc6a47f047994e1d8cc70bf"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     },
     {
       "id": "calculations",
       "name": "Calculations",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": "PUNRI",
       "description": "Offline scientific calculator with natural fractions, powers, equations and linked graph/table workspaces.",
       "entry": "main.lua",
@@ -1838,18 +2066,19 @@
         "tools.lua",
         "ui.lua",
         "app.lua",
-        "icon.raw"
+        "icon.raw",
+        "press_feedback.lua"
       ],
       "file_integrity": [
         {
           "path": "manifest.json",
-          "size": 304,
-          "sha256": "e18afa6c6b8ae066fabe7c3f49ba458e1b3b41eb352cb1e89cd631c4d9cccdc3"
+          "size": 316,
+          "sha256": "9e4a7da37e00e644024b7afaca2cbe0fdd596e5519cadc521083fe40e9e6198b"
         },
         {
           "path": "main.lua",
-          "size": 908,
-          "sha256": "b68e7c31aff63bd41bcb148c34ea08b651cd5e4140bb4e55ff7fff18831d0993"
+          "size": 1044,
+          "sha256": "0d4c5afa443b2280482dd0c3cdceaaf6d5b23e7cf1c3df7b857efe8a57fda9b9"
         },
         {
           "path": "bigint.lua",
@@ -1898,18 +2127,23 @@
         },
         {
           "path": "ui.lua",
-          "size": 29682,
-          "sha256": "8fa320dd8de57ed901037cbe441893d95c47981a60f9fab5049ae8de945ae098"
+          "size": 30848,
+          "sha256": "efc8b66339f95a1fc476007ebcc75d1e34da3b35e84677abcecf4877fbb67411"
         },
         {
           "path": "app.lua",
-          "size": 26141,
-          "sha256": "96ea94e1ceb72ab731392d4e58e778e65f4cdbef5ca9e38453daa7e4fea3883b"
+          "size": 27270,
+          "sha256": "f51b69b014a2a8322af0b8d05ad4d44e7182672ab083f9be0266e96ce49dee3d"
         },
         {
           "path": "icon.raw",
           "size": 128,
           "sha256": "bd914c1c32952a7d9c93160ff0ae5221caa4a0ca6a725efef70b1fd6302650fc"
+        },
+        {
+          "path": "press_feedback.lua",
+          "size": 5998,
+          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
     }

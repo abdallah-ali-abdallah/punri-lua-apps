@@ -1,7 +1,9 @@
 -- Lua text positions are top-left positions (LuaRunner forwards them to
 -- GfxRenderer::drawText, which adds the font ascender).  All vertical layout
 -- below therefore uses the measured line height instead of a guessed baseline.
-local M = {}
+local F = punri.dofile("press_feedback.lua")
+local M = {feedback = F, ids = {}}
+function M.key(x, y) return math.floor(y) * 4096 + math.floor(x) end
 
 local HORIZONTAL_PADDING = 8
 local ROW_GAP = 8
@@ -10,7 +12,7 @@ function M.content_bounds()
     local width, height = punri.get_bounds()
     local metrics = punri.get_metrics()
     return width, height, metrics, metrics.top_padding + metrics.header_height + 8,
-        height - metrics.button_hints_height - 8
+        height - math.max(40, metrics.button_hints_height or 0) - 8
 end
 
 function M.fit(text, width, font, style)
@@ -68,7 +70,11 @@ function M.row(x, y, width, height, label, selected, detail, secondary)
     else
         punri.rounded_rect(x, y, width, height, 5, false, 1, true)
     end
-    local foreground = true
+    local id = M.key(x, y)
+    F.target(id, x, y, width, height, true, "rounded", 5, true)
+    if selected then F.focus = id end
+    local foreground = F.paint(id)
+    if foreground == nil then foreground = true end
     if secondary then
         local primary_font, secondary_font = "ui10", "small"
         local primary_height = punri.line_height(primary_font)
@@ -95,14 +101,19 @@ function M.row(x, y, width, height, label, selected, detail, secondary)
     end
 end
 
-function M.button(x, y, width, height, label, selected)
+function M.button(x, y, width, height, label, selected, feedback_id)
     if selected then
         punri.rounded_rect(x, y, width, height, 5, false, 2, true)
         punri.rounded_rect(x + 3, y + 3, width - 6, height - 6, 3, false, 1, true)
     else
         punri.rounded_rect(x, y, width, height, 5, false, 1, true)
     end
-    M.text_in_rect(x, y, width, height, label, "ui10", "bold", "center", true)
+    local id = feedback_id or M.key(x, y)
+    F.target(id, x, y, width, height, true, "rounded", 5, true)
+    if selected then F.focus = id end
+    local ink = F.paint(id)
+    if ink == nil then ink = true end
+    M.text_in_rect(x, y, width, height, label, "ui10", "bold", "center", ink)
 end
 
 function M.message(x, y, width, text, max_lines, font, style)
@@ -122,6 +133,17 @@ function M.notice(x, y, width, text, selected)
     punri.rounded_rect(x, y, width, height, 5, selected, 1, true)
     M.message(x + padding, y + math.floor((height - message_height) / 2), width - 2 * padding, text, 2, "ui10", "bold")
     return height
+end
+
+-- Rows stop before the action bar. Windowing keeps every city reachable
+-- without drawing a partially covered final row on short landscape screens.
+function M.rows_fit(top, bottom, row_height, maximum)
+    return math.max(1, math.min(maximum or 100, math.floor((bottom - 32 - 8 - top + 6) / (row_height + 6))))
+end
+
+function M.row_window(cursor, count, per_page)
+    local first = math.floor((math.max(1, cursor) - 1) / per_page) * per_page + 1
+    return first, math.min(count, first + per_page - 1)
 end
 
 function M.bottom_actions(width, bottom, count)

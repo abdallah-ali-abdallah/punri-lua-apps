@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 local w, h = 480, 800
 if punri.get_bounds then
     w, h = punri.get_bounds()
@@ -509,15 +524,13 @@ local function draw_settings_dialog(cx, w, h)
     punri.text(mx + 24, r1_y, "Top / Bottom Buttons (hardware):", 10, true, "left", true)
 
     local box1_y = r1_y + 28
+    local half = box_w // 2
     if setting_row == 1 then
-        punri.rounded_rect(box_x - 2, box1_y - 2, box_w + 4, box_h + 4, 6, true, true)
-        punri.rounded_rect(box_x, box1_y, box_w, box_h, 5, true, false)
-        punri.rounded_rect(box_x, box1_y, box_w, box_h, 5, false, true)
-        punri.text(cx, box1_y + 8, "<   " .. format_step(step_top_sec) .. "   >", 12, true, "center", true)
-    else
-        punri.rounded_rect(box_x, box1_y, box_w, box_h, 5, false, true)
-        punri.text(cx, box1_y + 8, format_step(step_top_sec), 11, false, "center", true)
+        punri.rounded_rect(box_x - 3, box1_y - 3, box_w + 6, box_h + 6, 6, false, 2, true)
     end
+    PRESS.button("step1:-", box_x, box1_y, half - 3, box_h, "- " .. format_step(step_top_sec), "small", false, true, 5)
+    PRESS.button("step1:+", box_x + half + 3, box1_y, box_w - half - 3, box_h,
+        "+ " .. format_step(step_top_sec), "small", false, true, 5)
 
     -- Divider
     punri.line(mx + 20, my + 126, mx + mw - 20, my + 126)
@@ -528,24 +541,21 @@ local function draw_settings_dialog(cx, w, h)
 
     local box2_y = r2_y + 28
     if setting_row == 2 then
-        punri.rounded_rect(box_x - 2, box2_y - 2, box_w + 4, box_h + 4, 6, true, true)
-        punri.rounded_rect(box_x, box2_y, box_w, box_h, 5, true, false)
-        punri.rounded_rect(box_x, box2_y, box_w, box_h, 5, false, true)
-        punri.text(cx, box2_y + 8, "<   " .. format_step(step_bot_sec) .. "   >", 12, true, "center", true)
-    else
-        punri.rounded_rect(box_x, box2_y, box_w, box_h, 5, false, true)
-        punri.text(cx, box2_y + 8, format_step(step_bot_sec), 11, false, "center", true)
+        punri.rounded_rect(box_x - 3, box2_y - 3, box_w + 6, box_h + 6, 6, false, 2, true)
     end
+    PRESS.button("step2:-", box_x, box2_y, half - 3, box_h, "- " .. format_step(step_bot_sec), "small", false, true, 5)
+    PRESS.button("step2:+", box_x + half + 3, box2_y, box_w - half - 3, box_h,
+        "+ " .. format_step(step_bot_sec), "small", false, true, 5)
 
     -- Divider 2
     punri.line(mx + 20, my + 210, mx + mw - 20, my + 210)
 
     -- Instructions
-    punri.text(cx, my + 224, "[Select] Switch Row   •   [-] / [+] Change", 10, false, "center", true)
-    punri.text(cx, my + 252, "Press [Done] to save & return", 10, true, "center", true)
+    punri.text(cx, my + 216, "Select a row; - / + adjust", "small", "regular", "center", true)
+    PRESS.button("done", mx + 20, my + 246, mw - 40, 38, "Done", "ui12", false, true, 5)
 
     -- Button hints for modal
-    punri.button_hints("Done", "Select", "-", "+")
+    press_hints("Done", "Select", "-", "+")
 end
 
 function on_draw()
@@ -622,15 +632,15 @@ function on_draw()
         punri.text(rx, cy_card + 60, "± " .. format_step(step_bot_sec), 11, true, "right", true)
 
         -- Subtitle prompt
-        punri.text(cx, 638, "Hold [Start] to customize step sizes", 9, false, "center", true)
+        PRESS.button("settings", card_x, 622, card_w, 36, "Adjust increments", "small", false, true, 5)
     end
 
     -- 6. Bottom Button Hints
     if not has_started then
-        punri.button_hints("Exit", "Start", "-", "+")
+        press_hints("Exit", "Start", "-", "+")
     else
         local b2_label = is_running and "Pause" or "Start"
-        punri.button_hints("Exit", b2_label, "Reset", "")
+        press_hints("Exit", b2_label, "Reset", "")
     end
 
     -- 7. Settings Modal Overlay
@@ -705,8 +715,7 @@ function on_button(btn, pressed)
     end
 end
 
-function on_touch(action, tx, ty)
-    if action ~= "tap" and action ~= "click" then return end
+function on_tap(tx, ty)
     local cx = math.floor(w / 2)
 
     if is_alarm then
@@ -766,3 +775,25 @@ function on_touch(action, tx, ty)
         return
     end
 end
+
+local press_hourglass_tap = on_tap
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return in_settings and "settings" or is_alarm and "alarm" or "timer" end,
+    transition = function(id) return id == "footer:back" or id == "settings" or id == "done" end,
+    map_tap = function(x, y)
+        local cx = w // 2
+        if not in_settings and not has_started and y >= 508 and y <= 630 then return "settings" end
+        if not in_settings and y >= 150 and y <= 510 and math.abs(x - cx) <= 120 then return "footer:confirm" end
+    end,
+    tap = function(x, y)
+        local id = PRESS.hit(x, y)
+        if id and id:sub(1, 7) == "footer:" then on_button(id:sub(8), true)
+        elseif id == "settings" then in_settings = true; punri.request_update()
+        elseif id == "done" then in_settings = false; save_data(); punri.request_update()
+        elseif id and id:sub(1, 4) == "step" then
+            setting_row = tonumber(id:sub(5, 5)); adjust_step(setting_row, id:sub(-1) == "-" and -1 or 1)
+        elseif not in_settings then press_hourglass_tap(x, y) end
+    end
+})

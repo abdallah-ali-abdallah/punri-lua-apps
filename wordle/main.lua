@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 -- Wordle game for PUNRI (Lua)
 -- Faithful reproduction of WordleActivity.h with on-screen keyboard, reset modal, auto-advance & dithering
 
@@ -395,6 +410,13 @@ function on_draw()
             punri.rect(kX, kY, keyWD, keyH, false)
             punri.text(kX + math.floor(keyWD / 2), kY + math.floor(keyH / 2) - 12, kLabel, 10, true, "center", true)
         end
+        if not show_reset_confirm then
+            local ink = press_ink("key:" .. i, kX, kY, keyWD, keyH, isSelected, "rect", 0, true)
+            if PRESS.active("key:" .. i) then
+                punri.text(kX + math.floor(keyWD / 2), kY + math.floor(keyH / 2) - 12,
+                    kLabel, 10, true, "center", ink)
+            end
+        end
     end
 
     -- Render Row 3: reset Button (matching width of clear button)
@@ -409,6 +431,14 @@ function on_draw()
     else
         punri.rect(resetX, resetY, resetW, keyH, false)
         punri.text(resetX + math.floor(resetW / 2), resetY + math.floor(keyH / 2) - 12, "reset", 10, true, "center", true)
+    end
+
+    if not show_reset_confirm then
+        local ink = press_ink("key:29", resetX, resetY, resetW, keyH, isResetSelected, "rect", 0, true)
+        if PRESS.active("key:29") then
+            punri.text(resetX + math.floor(resetW / 2), resetY + math.floor(keyH / 2) - 12,
+                "reset", 10, true, "center", ink)
+        end
     end
 
     -- Status message when game over
@@ -435,11 +465,11 @@ function on_draw()
 
     -- 3. Footer Hints
     if show_reset_confirm then
-        punri.button_hints("Cancel", "Confirm", "", "")
+        press_hints("Cancel", "Confirm", "", "")
     elseif in_game then
-        punri.button_hints("Back", "Select", "Up", "Down")
+        press_hints("Back", "Select", "Up", "Down")
     else
-        punri.button_hints("Back", "Play", "", "")
+        press_hints("Back", "Play", "", "")
     end
 end
 
@@ -545,78 +575,19 @@ function on_button(btn, pressed)
 end
 
 function on_tap(x, y)
-    if show_reset_confirm then
-        -- Tap anywhere to cancel, or top/bottom
-        show_reset_confirm = false
-        return
-    end
-
-    local m = punri.get_metrics()
-    if y > h - m.button_hints_height then
-        if x < w / 4 then
-            save_game_state()
-            punri.exit()
-        elseif x < w / 2 then
-            handle_key_action(kb_index)
-        elseif x < 3 * w / 4 then
-            on_button("up", true)
-        else
-            on_button("down", true)
-        end
-        return
-    end
-
-    local availableWidth = w - 24
-    local tilePadding = 6
-    local tileSize = math.floor((availableWidth - (tilePadding * 4)) / 5)
-    if tileSize > 54 then tileSize = 54 end
-    local gridTopY = m.top_padding + m.header_height + 8
-    local kbTopY = gridTopY + (6 * (tileSize + tilePadding)) + 12
-    local keyPad = 3
-    local keyW = math.floor((availableWidth - (9 * keyPad)) / 10)
-    local keyH = keyW
-    local kbRowWidth = (10 * keyW) + (9 * keyPad)
-    local kbStartX = math.floor((w - kbRowWidth) / 2)
-
-    -- Check reset button tap
-    local resetW = keyW * 2 + keyPad
-    local resetX = math.floor((w - resetW) / 2)
-    local resetY = kbTopY + 3 * (keyH + keyPad)
-    if x >= resetX and x <= resetX + resetW and y >= resetY and y <= resetY + keyH then
-        kb_index = 29
-        handle_key_action(29)
-        return
-    end
-
-    -- Check keyboard keys tap
-    if y >= kbTopY and y < resetY then
-        local row = math.floor((y - kbTopY) / (keyH + keyPad))
-        if row == 0 or row == 1 then
-            local col = math.floor((x - kbStartX) / (keyW + keyPad))
-            if col >= 0 and col < 10 then
-                local idx = row * 10 + col
-                kb_index = idx
-                handle_key_action(idx)
-            end
-        elseif row == 2 then
-            local okClearTotalW = 3 * keyW + 2 * keyPad
-            local okW = math.floor((okClearTotalW - keyPad) / 2)
-            local clearW = (okClearTotalW - keyPad) - okW
-            local okX = kbStartX + 7 * (keyW + keyPad)
-            local clearX = okX + okW + keyPad
-
-            if x >= kbStartX and x < kbStartX + 7 * (keyW + keyPad) then
-                local col = math.floor((x - kbStartX) / (keyW + keyPad))
-                local idx = 20 + col
-                kb_index = idx
-                handle_key_action(idx)
-            elseif x >= okX and x < okX + okW then
-                kb_index = 27
-                handle_key_action(27)
-            elseif x >= clearX and x <= clearX + clearW then
-                kb_index = 28
-                handle_key_action(28)
-            end
-        end
+    local id = PRESS.hit(x, y)
+    if not id then return end
+    if id:sub(1, 7) == "footer:" then on_button(id:sub(8), true)
+    elseif not show_reset_confirm then
+        local index = tonumber(id:match("^key:(%d+)$"))
+        if index then kb_index = index; handle_key_action(index) end
     end
 end
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return show_reset_confirm and "confirm" or "keyboard" end,
+    transition = function(id) return id == "footer:back" or id == "key:29" or show_reset_confirm or not in_game end,
+    map_button = function(button) if button == "confirm" and not show_reset_confirm then return "key:" .. kb_index end end,
+    tap = on_tap
+})

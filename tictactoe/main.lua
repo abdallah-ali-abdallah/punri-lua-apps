@@ -1,3 +1,18 @@
+-- Every visible action owns a matching press target in its app sandbox.
+PRESS_FEEDBACK = punri.dofile("press_feedback.lua")
+local PRESS = PRESS_FEEDBACK
+local PRESS_LABELS, PRESS_IDS = {}, {"footer:back", "footer:confirm", "footer:left", "footer:right"}
+function press_hints(a, b, c, d)
+    PRESS_LABELS[1], PRESS_LABELS[2], PRESS_LABELS[3], PRESS_LABELS[4] = a, b, c, d
+    PRESS.footer(PRESS_LABELS, PRESS_IDS)
+end
+function press_ink(id, x, y, width, height, dark, shape, radius, enabled)
+    PRESS.target(id, x, y, width, height, enabled, shape or "rounded", radius or 5, dark)
+    local ink = PRESS.paint(id)
+    if ink == nil then return dark ~= true end
+    return ink
+end
+
 -- Tic-tac-toe for PUNRI: play the device or pass the reader to a friend.
 local game = punri.dofile("engine.lua")
 local board = {0,0,0,0,0,0,0,0,0}
@@ -12,15 +27,14 @@ local function geometry()
     local m = punri.get_metrics()
     margin = math.max(16, m.content_side_padding)
     top = m.top_padding + m.header_height + 12
-    bottom = h - m.button_hints_height - 12
+    bottom = h - math.max(40, m.button_hints_height or 0) - 12
     cell = math.floor(math.min(w - margin * 2, bottom - top - 144) / 3)
     gx, gy = math.floor((w - cell * 3) / 2), top + 64
     action_y, action_w = gy + cell * 3 + 12, math.floor((w - margin * 2 - 12) / 2)
 end
 
-local function button(x, y, width, label, chosen)
-    punri.rounded_rect(x, y, width, 44, 6, chosen)
-    punri.text(x + math.floor(width / 2), y + 10, label, "ui12", "regular", "center", not chosen)
+local function button(id, x, y, width, label, chosen)
+    PRESS.button(id, x, y, width, 44, label, "ui12", chosen, true, 6)
 end
 
 local function new_game()
@@ -70,15 +84,15 @@ function on_draw()
     punri.clear()
     punri.header("Tic-tac-toe", screen == "game" and (mode == 1 and "Solo" or "Two players") or "New game")
     -- Touch profiles hide firmware button hints: show an explicit escape target.
-    if punri.has_touch() then button(margin, top, 80, "Back", false) end
+    if punri.has_touch() then button("back", margin, top, 80, "Back", false) end
     if screen == "mode" then
         local y = top + 64
         punri.centered_text(y, "Choose an opponent", "ui12", "bold")
         for i, label in ipairs(mode_names) do
-            button(margin, y + 44 + (i - 1) * 56, w - margin * 2, label, i == mode_selected)
+            button("mode:" .. i, margin, y + 44 + (i - 1) * 56, w - margin * 2, label, i == mode_selected)
         end
         punri.centered_text(y + 172, "Device plays O and cannot be beaten.", "small")
-        punri.button_hints("Exit", "Play", "Up", "Down")
+        press_hints("Exit", "Play", "Up", "Down")
         return
     end
     punri.text(w - margin, top + 12, status(), "small", "regular", "right")
@@ -86,12 +100,15 @@ function on_draw()
         local x = gx + ((i - 1) % 3) * cell
         local y = gy + math.floor((i - 1) / 3) * cell
         if selected == i and result == nil then punri.rect_dither(x + 5, y + 5, cell - 10, cell - 10, false) end
+        local id = "cell:" .. i
+        local ink = press_ink(id, x + 5, y + 5, cell - 10, cell - 10, false, "rect", 0,
+            (result == nil and board[i] == 0) or PRESS.active(id))
         local inset = math.floor(cell * 0.24)
         if board[i] == 1 then
-            punri.line(x + inset, y + inset, x + cell - inset, y + cell - inset, 4)
-            punri.line(x + cell - inset, y + inset, x + inset, y + cell - inset, 4)
+            punri.line(x + inset, y + inset, x + cell - inset, y + cell - inset, 4, ink)
+            punri.line(x + cell - inset, y + inset, x + inset, y + cell - inset, 4, ink)
         elseif board[i] == 2 then
-            punri.circle(x + math.floor(cell / 2), y + math.floor(cell / 2), math.floor(cell * 0.27), false, 4)
+            punri.circle(x + math.floor(cell / 2), y + math.floor(cell / 2), math.floor(cell * 0.27), false, 4, ink)
         end
     end
     for i = 0, 3 do
@@ -103,11 +120,11 @@ function on_draw()
         punri.line(gx + ((a - 1) % 3 + 0.5) * cell, gy + (math.floor((a - 1) / 3) + 0.5) * cell,
             gx + ((b - 1) % 3 + 0.5) * cell, gy + (math.floor((b - 1) / 3) + 0.5) * cell, 5)
     end
-    button(margin, action_y, action_w, "New game", selected == 10)
-    button(margin + action_w + 12, action_y, action_w, "Change mode", selected == 11)
+    button("new_game", margin, action_y, action_w, "New game", selected == 10)
+    button("mode", margin + action_w + 12, action_y, action_w, "Change mode", selected == 11)
     punri.centered_text(action_y + 50, string.format("X: %d   O: %d   Draws: %d (this session)",
         scores[1], scores[2], scores[3]), "small")
-    punri.button_hints("Back", "Select", "Prev", "Next")
+    press_hints("Back", "Select", "Prev", "Next")
 end
 
 function on_button(btn, pressed)
@@ -160,3 +177,23 @@ end
 function on_exit()
     -- Games and scores are intentionally session-only; no SD writes during play.
 end
+
+local press_tictactoe_tap = on_tap
+
+-- Keep press lifetime separate from gameplay selection and persisted state.
+punri.dofile("feedback.lua")(PRESS, {
+    view = function() return screen end,
+    transition = function(id) return id ~= "footer:left" and id ~= "footer:right" and id:sub(1, 5) ~= "cell:" end,
+    map_button = function(button)
+        if button == "back" then return "back" end
+        if button == "confirm" then
+            if screen == "mode" then return "mode:" .. mode_selected end
+            if selected == 10 then return "new_game" elseif selected == 11 then return "mode" else return "cell:" .. selected end
+        end
+    end,
+    tap = function(x, y)
+        local id = PRESS.hit(x, y)
+        if id and id:sub(1, 7) == "footer:" then on_button(id:sub(8), true)
+        else press_tictactoe_tap(x, y) end
+    end
+})

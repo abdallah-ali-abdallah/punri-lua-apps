@@ -1,10 +1,13 @@
 {
   "id": "todo",
   "name": "To-do List",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "PUNRI",
   "description": "Offline tasks with quick actions, completion counts, on-device text entry and SD-card saving.",
   "entry": "main.lua",
   "min_api": 1,
-  "capabilities": ["buttons", "storage"]
+  "capabilities": [
+    "buttons",
+    "storage"
+  ]
 }

@@ -1938,7 +1938,7 @@
     {
       "id": "presenter_remote",
       "name": "Presenter Remote",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "author": "PUNRI",
       "description": "A presentation clicker with Next, Back, arrows, Enter and Space over Bluetooth HID on X4 Pro.",
       "entry": "main.lua",
@@ -1958,12 +1958,12 @@
         {
           "path": "manifest.json",
           "size": 296,
-          "sha256": "aac598c963875ba61b0834dd3e2ea67afd410aa7de0df85ca6e209bf86cb6b90"
+          "sha256": "5a63670265327ae3c2c2f37489f245dd698379e60a7ef9b831763bde988ac9b1"
         },
         {
           "path": "main.lua",
-          "size": 3096,
-          "sha256": "d4dbde49ece6d961d4bcd2fcac176c09d3a893c4c675df90f36dadf8a1fe6ef8"
+          "size": 3151,
+          "sha256": "768955ab375534cd67a6f869154b6327fbfea32c78206b04054ac27817368acf"
         },
         {
           "path": "controller.lua",

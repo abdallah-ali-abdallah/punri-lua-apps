@@ -71,14 +71,15 @@ end
 -- on_touch callback for the same physical tap, so defining both would send
 -- a host key twice.
 function on_tap(x, y)
-    local id = UI.feedback.hit(x, y)
-    if not id and not UI.feedback.busy() then
-        local action = UI.hit(x, y, Controller)
-        if (action == "enter" or action == "space") and not Controller.enter_space_supported then feedback_action(action) end
-        return
+    if UI.feedback.busy() then return end
+    -- Input uses live controls, including arrow labels. Painted feedback targets
+    -- can still describe the frame before pairing or a mode/settings change.
+    local action = UI.hit(x, y, Controller)
+    if not action then
+        local footer = UI.settings_open and "close_settings" or "exit"
+        if UI.feedback.hit(x, y) == footer then action = footer end
     end
-    if id == "primary" then id = Controller.connected and "disconnect" or "pair" end
-    feedback_action(id)
+    feedback_action(action)
 end
 
 function on_exit()

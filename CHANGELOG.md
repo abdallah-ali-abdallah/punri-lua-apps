@@ -1,5 +1,16 @@
 # Changelog
 
+## Presenter Remote 0.2.2 — 2026-10-27
+
+### Fixed
+
+- Restore touch input for all arrows, Enter and Space immediately after pairing
+  or returning to the remote, without waiting for another screen refresh.
+- Make each arrow's full control, including its label, tappable. Keep hidden
+  arrows and Settings isolated from host key commands during screen changes.
+- Show the pairing/update notice when a key cannot be sent instead of silently
+  ignoring its tap.
+
 ## Game Boy removal — 2026-10-27
 
 ### Removed

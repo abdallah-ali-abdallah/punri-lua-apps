@@ -19,6 +19,12 @@ connection and mode controls. Pairing/Disconnect remains on the main screen;
 Forget pairing is in Settings. The header always shows connection state and
 labels simulator replay as **SIMULATION**.
 
+Version 0.2.2 restores touch handling independently of the press animation's
+last drawn targets. The whole arrow control, including its label, accepts taps;
+arrows, Enter and Space work as soon as pairing is ready, even before the next
+screen refresh. Unpaired taps show a connection notice. Unsupported Enter/Space
+commands still show the firmware-update notice.
+
 ## Hardware and compatibility
 
 - Requires firmware Lua API 4 and `radio.capabilities().hid_keyboard_peripheral`.
@@ -70,6 +76,8 @@ On an X4 Pro, verify all of the following before relying on it:
    rather than as a generic BLE service.
 2. Confirm each arrow produces one reader action. In a focused text field, verify
    Enter inserts one new line and Space inserts one space in both app modes.
+   Tap arrow labels as well as their circles. Try a key immediately after
+   pairing and after returning from Settings, without waiting for a refresh.
    Include rapid but deliberate taps and check for no stuck key after link loss.
 3. Disconnect/reconnect within 30 seconds, then test Pair again after timeout.
 4. Test Forget pairing for the currently connected host and confirm that only

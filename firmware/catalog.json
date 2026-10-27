@@ -1,30 +1,30 @@
 {
   "schema_version": 1,
-  "tag_name": "v1.0.3.14",
+  "tag_name": "v1.0.3.15",
   "assets": [
     {
-      "name": "punri-x4-pro-v1.0.3.14.bin",
-      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/31a1fb99b521150d0e662a908057606421b899ff/firmware/v1.0.3.14/punri-x4-pro-v1.0.3.14.bin",
-      "size": 5966672,
-      "sha256": "bdbfab245c94d28c97e255b04f86e6334aba911c5178cdb10174540e02772e60"
+      "name": "punri-x4-pro-v1.0.3.15.bin",
+      "browser_download_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.3.15/punri-x4-pro-v1.0.3.15.bin",
+      "size": 5966496,
+      "sha256": "e58b03ed7668d170c783460ca09e20a798ea47d1135910a4d9c236d2bba634ad"
     }
   ],
   "releases": [
     {
-      "id": "stable-1.0.3.14-x4-pro",
+      "id": "stable-1.0.3.15-x4-pro",
       "channel": "stable",
-      "name": "1.0.3.14",
-      "version": "1.0.3.14",
+      "name": "1.0.3.15",
+      "version": "1.0.3.15",
       "variant": "x4-pro",
-      "released_at": "2026-10-27T01:46:51Z",
+      "released_at": "2026-10-27T07:53:36Z",
       "notes": "Firmware updates now use the public apps repository catalog with SHA-256 verification.",
-      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/31a1fb99b521150d0e662a908057606421b899ff/firmware/v1.0.3.14/punri-x4-pro-1.0-22060.bin",
-      "firmware_sha256": "bdbfab245c94d28c97e255b04f86e6334aba911c5178cdb10174540e02772e60",
-      "size": 5966672,
+      "firmware_url": "https://raw.githubusercontent.com/abdallah-ali-abdallah/punri-lua-apps/main/firmware/v1.0.3.15/punri-x4-pro-1.0-9aeda.bin",
+      "firmware_sha256": "e58b03ed7668d170c783460ca09e20a798ea47d1135910a4d9c236d2bba634ad",
+      "size": 5966496,
       "supported_devices": [
         "x4pro"
       ],
-      "filename": "punri-x4-pro-1.0-22060.bin"
+      "filename": "punri-x4-pro-1.0-9aeda.bin"
     }
   ]
 }

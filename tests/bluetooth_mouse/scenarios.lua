@@ -55,6 +55,9 @@ elseif TEST_CASE == "clicks" then
     connect()
     tap(layout.clicks[1]); tap(layout.clicks[2]); tick(5)
     assert(table.concat(T.clicks, ",") == "left,right")
+    on_button("up", true); on_button("down", true); tick(5)
+    assert(table.concat(T.clicks, ",") == "left,right,left,right",
+        "the physical side-button names must produce left and right clicks")
     -- Only on_tap is installed: compatibility dispatch cannot duplicate clicks.
     assert(on_touch == nil)
     local n = #T.clicks
@@ -115,11 +118,43 @@ elseif TEST_CASE == "layout" then
     within(layout.pad); within(layout.primary)
     for i, b in ipairs(layout.clicks) do within(b); assert(UI.hit(b.x + 3, b.y + 3, C, false) == b.id) end
     for _, b in ipairs(layout.speeds) do within(b); tap(b) end
-    assert(C.speed == 3 and layout.pad.w == layout.pad.h)
-    assert(layout.clicks[1].y >= layout.pad.y + layout.pad.h)
+    assert(C.speed == 3)
+    assert(layout.pad.x == layout.side)
+    if layout.w <= layout.h then
+        assert(layout.pad.x + layout.pad.w == layout.w - layout.side,
+            "portrait grid must use the available screen width")
+        assert(layout.clicks[1].y + layout.clicks[1].h + 10 == layout.notice_y,
+            "portrait grid and clicks must use the space above the notice")
+    else
+        assert(layout.pad.x + layout.pad.w + 20 == layout.primary.x,
+            "landscape grid must use the space beside the control panel")
+        assert(layout.clicks[1].y + layout.clicks[1].h == layout.bottom,
+            "landscape grid and clicks must use the available height")
+    end
+    assert(layout.bottom == layout.h - 10, "the removed footer must not reserve screen space")
+    assert(layout.exit == nil, "the bottom Exit target must be removed")
+    assert(layout.clicks[1].y == layout.pad.y + layout.pad.h + 10)
     assert(layout.clicks[2].x >= layout.clicks[1].x + layout.clicks[1].w)
     assert(UI.hit(layout.pad.x + 4, layout.pad.y + 4, C, false) == nil)
-    on_draw(); tap(layout.settings); on_draw(); tap(layout.back); on_draw()
+    -- The expanded pad must accept live motion along its far edges, where
+    -- the square pad used to leave unused space. No absolute pointer jump.
+    connect()
+    local p = layout.pad
+    local x, y = p.x + p.w - 4, p.y + p.h - 4
+    C.sample(x - 10, y - 10, UI.in_pad(x - 10, y - 10))
+    C.sample(x, y, UI.in_pad(x, y)); C.sample(nil); tick(3)
+    local dx, dy = move_sum(); assert(dx == 16 and dy == 16)
+    local function no_footer()
+        on_draw()
+        for i = 1, UI.feedback.count do
+            local b = UI.feedback.targets[i]
+            assert(b.id ~= "exit", "the bottom Exit button must not be drawn or clickable")
+            assert(b.y + b.h <= layout.bottom, "a control still occupies the footer strip")
+        end
+    end
+    no_footer(); tap(layout.settings); no_footer(); on_button("back", true); no_footer()
+    on_button("back", true)
+    assert(not radio.stats().open, "the Back control must still exit and release Bluetooth")
 elseif TEST_CASE == "redraw" then
     connect(); tick(2)
     local redraws = T.redraws

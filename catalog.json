@@ -1938,7 +1938,7 @@
     {
       "id": "presenter_remote",
       "name": "Presenter Remote",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "author": "PUNRI",
       "description": "A presentation clicker with Next, Back, arrows, Enter and Space over Bluetooth HID on X4 Pro.",
       "entry": "main.lua",
@@ -1958,22 +1958,22 @@
         {
           "path": "manifest.json",
           "size": 296,
-          "sha256": "5a63670265327ae3c2c2f37489f245dd698379e60a7ef9b831763bde988ac9b1"
+          "sha256": "db679934cf21d36fc5c050d648e82e7bc410708bda40ef90c9f63c92527f7781"
         },
         {
           "path": "main.lua",
-          "size": 3151,
-          "sha256": "768955ab375534cd67a6f869154b6327fbfea32c78206b04054ac27817368acf"
+          "size": 4411,
+          "sha256": "2b26e859eb75e744575738fa831f8abb4ec2104ad76bf8b9654256afd7a18d96"
         },
         {
           "path": "controller.lua",
-          "size": 6564,
-          "sha256": "8a0d26ba63ee40cb29218031779806ed5c46aa4bbc48450b0ed95228aeac0cda"
+          "size": 6646,
+          "sha256": "26aaf51ad2b1bf4f02097a774c9da7b85f5b3bcfd8a68d72501b326ac1218e36"
         },
         {
           "path": "ui.lua",
-          "size": 10857,
-          "sha256": "4d0eaf8630ac3c42748c15044c29f8b498dad0878ac95708cb43a6c8ef66e3c6"
+          "size": 10754,
+          "sha256": "aed568f10f8d4343414faaac1d57e9f1047bd9618d7cd19d791a281c643cfd1b"
         },
         {
           "path": "icon.raw",
@@ -1990,7 +1990,7 @@
     {
       "id": "bluetooth_mouse",
       "name": "Bluetooth Mouse",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "PUNRI",
       "description": "A wireless Bluetooth mouse for X4 Pro with a grid touchpad, left/right clicks and three pointer speeds. Requires firmware API 5.",
       "entry": "main.lua",
@@ -2011,12 +2011,12 @@
         {
           "path": "manifest.json",
           "size": 342,
-          "sha256": "993ad6f82102ef59e3feca24a5424f609e4fe8a993c397677045eacb7d044cfe"
+          "sha256": "913ae63237323a417b3761734b7d740aeda8d01c85842a0e6f748e4e88829e55"
         },
         {
           "path": "main.lua",
-          "size": 2668,
-          "sha256": "14b92590489bd35fdb2d21bcb898dc9f555aea8836f5876bb82d5dc01bcee798"
+          "size": 2407,
+          "sha256": "31ebca3f72a58f1e8c84bcf0effd7d347da0fc65d6dd9d26de6d633e9af1e0a3"
         },
         {
           "path": "controller.lua",
@@ -2025,8 +2025,8 @@
         },
         {
           "path": "ui.lua",
-          "size": 7365,
-          "sha256": "a83d0c5d8c03f5abb5f3fe32289428b86cb7c7f34aa15fd6fdf97150ebb37f02"
+          "size": 6904,
+          "sha256": "082343bffd489370b6675494ca7a1118b7ee3cc9c425318d324610f9393a5065"
         },
         {
           "path": "icon.raw",

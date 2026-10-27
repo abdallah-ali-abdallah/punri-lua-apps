@@ -1,10 +1,12 @@
-# Bluetooth Mouse 0.1.1
+# Bluetooth Mouse
 
 Bluetooth Mouse turns an X4 Pro into a foreground Bluetooth LE HID mouse named
-**PUNRI Mouse**. Its mobile-style interface has a central square touchpad with a
+**PUNRI Mouse**. Its mobile-style interface has an expanded touchpad with a
 light dotted grid, large Left click and Right click buttons, Slow/Normal/Fast
 pointer speeds, and pairing settings. Portrait and landscape share the same
-layout and hit-test geometry.
+layout and hit-test geometry. The grid fills the available width and height
+around the controls, with no bottom Exit button. Use the device's Back control
+to leave the app or return from Settings.
 
 ## Requirements
 
@@ -29,8 +31,9 @@ layout and hit-test geometry.
 4. Tap **Left click** or **Right click** for one complete click. Tap the left
    button twice for a host double-click. Touching the pad itself does not click.
    Holding a click button does not drag; drag/scroll gestures are not in v0.1.0.
-5. Choose **Slow**, **Normal** or **Fast**. Physical Page Back/Left and
-   Page Forward/Right also produce left/right clicks. Confirm pairs/disconnects;
+5. Choose **Slow**, **Normal** or **Fast**. The two physical side buttons
+   produce left/right clicks; Page Back/Left and Page Forward/Right aliases
+   retain the same actions. Confirm pairs/disconnects;
    Back exits (or returns from Settings).
 6. **Disconnect** stops the session immediately, including an in-flight move.
    Leaving the app, a Lua error or sleep invokes native radio cleanup and a

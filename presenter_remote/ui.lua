@@ -130,14 +130,14 @@ local function key(c, controller)
         local cx, cy = c.x + math.floor(c.w / 2), c.y + r
         local filled = c.id == "right"
         punri.circle(cx, cy, r, filled, 2, true)
-        M.feedback.target(c.id, cx - r, cy - r, d, d, controller.connected and controller.subscribed, "circle", r, filled)
+        M.feedback.target(c.id, cx - r, cy - r, d, d, true, "circle", r, filled)
         local ink = M.feedback.paint(c.id)
         if ink == nil then ink = not filled end
         arrow(cx, cy, math.floor(d * 0.48), c.id, ink)
         if controller.pending_key == c.id then punri.circle(cx, cy, r - 5, false, 2, not filled) end
         punri.text(cx, c.y + d, c.label, prominent and "ui12" or "small", "bold", "center", true)
     else
-        button(c, false, controller.connected and controller.subscribed and controller.enter_space_supported)
+        button(c, false, true)
     end
 end
 
@@ -158,7 +158,7 @@ function M.draw(controller)
     bluetooth(l.w - l.side - label_w - 24, l.header_y)
     punri.text(l.w - l.side, l.header_y + 4, label, "small", "bold", "right", true)
     punri.text(l.side, l.header_y + l.label_h + 4,
-        controller.simulated and "SIMULATION / Bluetooth HID" or "Bluetooth HID", "small", "regular", "left", true)
+        controller.simulated and "SIMULATION / Bluetooth HID / v0.2.3" or "Bluetooth HID / v0.2.3", "small", "regular", "left", true)
     punri.line(l.side, l.header_bottom, l.w - l.side, l.header_bottom, 1, true)
     if not controller.supported then
         wrapped(l.side, l.body.y + 12, l.w - l.side * 2,

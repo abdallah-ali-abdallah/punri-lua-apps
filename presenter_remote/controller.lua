@@ -138,10 +138,11 @@ function M.update()
         elseif event.kind == "complete" then
             if event.id == M.pending_id then
                 local completed = M.pending_kind
+                local sent_key = M.pending_key
                 finish_pending(completed)
                 if completed == "key" then
                     M.sent = M.sent + 1
-                    M.notice = "Key sent."
+                    M.notice = "Key sent: " .. (sent_key or "unknown") .. "."
                 elseif completed == "stop" or completed == "forget" then
                     close_radio()
                     M.state, M.connected, M.subscribed = "ready", false, false

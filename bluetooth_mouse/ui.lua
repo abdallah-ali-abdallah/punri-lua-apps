@@ -1,6 +1,6 @@
 -- Geometry is shared with hit testing. Fixed records are reused on each draw.
 local M = {feedback = punri.dofile("press_feedback.lua")}
-local l = {pad = {}, clicks = {{}, {}}, speeds = {{}, {}, {}}, primary = {}, settings = {}, back = {}, forget = {}, exit = {}}
+local l = {pad = {}, clicks = {{}, {}}, speeds = {{}, {}, {}}, primary = {}, settings = {}, back = {}, forget = {}}
 local function box(b, x, y, w, h, id, label)
     b.x, b.y, b.w, b.h, b.id, b.label = x, y, w, h, id, label
 end
@@ -12,7 +12,7 @@ function M.compute()
     l.small, l.label = punri.line_height("small"), punri.line_height("ui12")
     l.top = (m.top_padding or 4) + 8
     l.header = l.top + l.label + l.small + 22
-    l.bottom = h - math.max(40, m.button_hints_height or 0) - 10
+    l.bottom = h - 10
     local side, gap, content_w = l.side, 10, w - 2 * l.side
     local button_h, speed_h, click_h = math.max(48, l.label + 18), math.max(40, l.small + 16), math.max(60, l.label + 26)
     local top = l.header + l.small + 24
@@ -20,16 +20,14 @@ function M.compute()
         box(l.primary, side, l.bottom - button_h, content_w, button_h, "primary", "Pair / Connect")
         l.speed_y = l.primary.y - gap - speed_h
         l.notice_y, l.notice_x, l.notice_w = l.speed_y - l.small * 2 - 16, side, content_w
-        local d = math.min(content_w - 12, l.notice_y - top - click_h - 32)
-        box(l.pad, math.floor((w - d) / 2), top, d, d)
+        box(l.pad, side, top, content_w, l.notice_y - top - click_h - gap * 2)
     else
         local panel_w = math.floor(content_w * 0.40)
         local panel_x = w - side - panel_w
         box(l.primary, panel_x, l.bottom - button_h, panel_w, button_h, "primary", "Pair / Connect")
         l.speed_y = l.primary.y - gap - speed_h
         l.notice_x, l.notice_y, l.notice_w = panel_x, top + l.small + 22, panel_w
-        local d = math.min(panel_x - side - 28, l.bottom - top - click_h - gap)
-        box(l.pad, side + math.floor((panel_x - side - 28 - d) / 2), top, d, d)
+        box(l.pad, side, top, panel_x - side - gap * 2, l.bottom - top - click_h - gap)
     end
     local p = l.pad
     local cw = math.floor((p.w - gap) / 2)
@@ -43,7 +41,6 @@ function M.compute()
     local mw = math.min(content_w, 460)
     box(l.back, math.floor((w - mw) / 2), l.bottom - button_h, mw, button_h, "close_settings", "Back to mouse")
     box(l.forget, l.back.x, top + l.label + l.small * 3 + 32, mw, button_h, "forget", "Forget current host")
-    box(l.exit, 0, h - (m.button_hints_height or 40), w, m.button_hints_height or 40, "exit", "Exit")
     return l
 end
 local function inside(x, y, b) return punri.in_rect(x, y, b.x, b.y, b.w, b.h) end
@@ -79,7 +76,6 @@ function M.draw(c, settings)
     punri.line(l.side, l.header + 8, l.w - l.side, l.header + 8, 1, true)
     if not c.supported then
         wrapped(l.side, l.header + 40, l.w - 2 * l.side, c.notice, 4)
-        M.feedback.footer({"Exit", "", "", ""}, {"exit"})
         return
     end
     if settings then
@@ -90,7 +86,6 @@ function M.draw(c, settings)
         button(b, false)
         wrapped(b.x, b.y + b.h + 18, b.w, c.notice, 3)
         button(l.back, true)
-        M.feedback.footer({"Mouse", "", "", ""}, {"close_settings"})
         return
     end
     button(l.settings, false, "small")
@@ -115,7 +110,6 @@ function M.draw(c, settings)
     for i, b in ipairs(l.speeds) do button(b, i == c.speed, "small") end
     l.primary.label = (c.connected or c.state == "advertising" or c.state == "connecting") and "Disconnect" or "Pair / Connect"
     button(l.primary, false)
-    M.feedback.footer({"Exit", "", "", ""}, {"exit"})
 end
 function M.hit(x, y, c, settings)
     M.compute()

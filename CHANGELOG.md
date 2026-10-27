@@ -1,5 +1,32 @@
 # Changelog
 
+## Presenter Remote 0.2.3 — 2026-10-27
+
+### Changed
+
+- Use the two side buttons for backward/forward navigation. Keep Up/Down arrows
+  available on the touchscreen, and show the app version and last sent key.
+
+### Fixed
+
+- Accept completed taps from live finger contact on API 5 firmware when native
+  tap callbacks are missing, using one input path to avoid duplicate commands.
+- Show the half-second key press effect even before pairing is ready, while
+  retaining secure Bluetooth checks and the connection/update notice.
+
+## Bluetooth Mouse 0.1.3 — 2026-10-27
+
+### Changed
+
+- Expand Bluetooth Mouse's grid to fill the available space in portrait and
+  landscape. Remove the bottom Exit button; the device's Back control still
+  exits the app and returns from Settings.
+
+### Fixed
+
+- Map the firmware's two side-button events to left and right mouse clicks.
+- Hit-test controls against the current layout independently of press feedback.
+
 ## Presenter Remote 0.2.2 — 2026-10-27
 
 ### Fixed

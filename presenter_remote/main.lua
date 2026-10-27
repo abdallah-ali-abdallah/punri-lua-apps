@@ -1,5 +1,8 @@
 local Controller = punri.dofile("controller.lua")
 local UI = punri.dofile("ui.lua")
+-- Persistent scalar state: no per-frame contact tables or input queue.
+local touch_x, touch_y, touch_down, touch_cancelled, touch_route
+local tap_action
 
 local function act(action)
     if action == "exit" then Controller.exit(); punri.exit()
@@ -20,12 +23,31 @@ end
 
 function on_init()
     UI.settings_open, UI.settings_focus = false, 2
+    touch_x, touch_y, touch_down, touch_cancelled, touch_route = nil, nil, false, false, nil
     Controller.init()
 end
 
 function on_update()
     UI.feedback.update()
     Controller.update()
+    -- API 5 exposes live contact independently of completed-tap delivery. Pick
+    -- one route for this session so a native release cannot repeat a fallback.
+    if type(punri.get_touch) ~= "function" or touch_route == "tap" then return end
+    local x, y = punri.get_touch()
+    if x then
+        if not touch_down then
+            touch_x, touch_y, touch_down, touch_cancelled = x, y, true, false
+        elseif math.abs(x - touch_x) >= 60 or math.abs(y - touch_y) >= 60 then
+            touch_cancelled = true
+        end
+    elseif touch_down then
+        touch_down = false
+        if not touch_cancelled then
+            if not touch_route then punri.log("Presenter Remote input: live contact fallback") end
+            touch_route = "live"
+            tap_action(touch_x, touch_y)
+        end
+    end
 end
 
 function on_draw()
@@ -58,11 +80,11 @@ function on_button(button, pressed)
         feedback_action("exit")
     elseif button == "confirm" then
         feedback_action(Controller.connected and "disconnect" or "pair")
-    elseif button == "up" or button == "down" or button == "left" or button == "right" then
+    elseif button == "left" or button == "right" then
         feedback_action(button)
-    elseif button == "page_back" then
+    elseif button == "up" or button == "page_back" then
         feedback_action("left")
-    elseif button == "page_forward" then
+    elseif button == "down" or button == "page_forward" then
         feedback_action("right")
     end
 end
@@ -70,7 +92,7 @@ end
 -- Deliberately define only on_tap: Activity dispatches a compatibility
 -- on_touch callback for the same physical tap, so defining both would send
 -- a host key twice.
-function on_tap(x, y)
+tap_action = function(x, y)
     if UI.feedback.busy() then return end
     -- Input uses live controls, including arrow labels. Painted feedback targets
     -- can still describe the frame before pairing or a mode/settings change.
@@ -80,6 +102,13 @@ function on_tap(x, y)
         if UI.feedback.hit(x, y) == footer then action = footer end
     end
     feedback_action(action)
+end
+
+function on_tap(x, y)
+    if touch_route == "live" then return end
+    if not touch_route then punri.log("Presenter Remote input: native tap") end
+    touch_route = "tap"
+    tap_action(x, y)
 end
 
 function on_exit()

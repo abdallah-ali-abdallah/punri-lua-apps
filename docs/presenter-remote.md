@@ -25,6 +25,12 @@ arrows, Enter and Space work as soon as pairing is ready, even before the next
 screen refresh. Unpaired taps show a connection notice. Unsupported Enter/Space
 commands still show the firmware-update notice.
 
+Version 0.2.3 also accepts completed live-contact taps on API 5 firmware if the
+native tap callback does not arrive. It selects one input route per session to
+avoid sending a command twice, rejects swipes, and shows key press feedback
+even while the host is still pairing. The subtitle shows the installed app
+version, and a successful command names the key in the notice.
+
 ## Hardware and compatibility
 
 - Requires firmware Lua API 4 and `radio.capabilities().hid_keyboard_peripheral`.
@@ -43,7 +49,7 @@ commands still show the firmware-update notice.
    host's encrypted, bonded HID input subscription is active.
 4. Use the large **Next** (Right) and **Back** (Left) circles, the smaller
    Up/Down controls, or **Enter** and **Space** at the bottom of the clicker. **Page turns** mode keeps Left/Right plus Enter/Space visible, while
-   physical Page Back/Page Forward keys map to Left/Right.
+   the two physical side buttons map to Backward (Left)/Forward (Right).
 5. Select **Disconnect** before pairing a different host. Open **Settings**
    for **Forget pairing**; Back returns from Settings to the remote without
    exiting or sending a host key. The hardware Confirm key selects the

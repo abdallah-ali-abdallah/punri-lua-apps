@@ -41,14 +41,8 @@ local function feedback_action(action)
     act(action)
 end
 function on_tap(x, y)
-    local id = UI.feedback.hit(x, y)
-    if not id and not Mouse.ready and not UI.feedback.busy() then
-        local action = UI.hit(x, y, Mouse, settings)
-        if action == "left" or action == "right" then feedback_action(action) end
-        return
-    end
-    if id == "primary" then id = (Mouse.connected or Mouse.state == "advertising" or Mouse.state == "connecting") and "disconnect" or "pair" end
-    feedback_action(id)
+    -- Match the current layout even before its next feedback frame is painted.
+    feedback_action(UI.hit(x, y, Mouse, settings))
 end
 
 function on_button(button, pressed)
@@ -56,8 +50,8 @@ function on_button(button, pressed)
     if button == "back" then feedback_action(settings and "close_settings" or "exit")
     elseif not settings and button == "confirm" then
         feedback_action((Mouse.connected or Mouse.state == "advertising" or Mouse.state == "connecting") and "disconnect" or "pair")
-    elseif not settings and (button == "page_back" or button == "left") then feedback_action("left")
-    elseif not settings and (button == "page_forward" or button == "right") then feedback_action("right")
+    elseif not settings and (button == "up" or button == "page_back" or button == "left") then feedback_action("left")
+    elseif not settings and (button == "down" or button == "page_forward" or button == "right") then feedback_action("right")
     end
 end
 

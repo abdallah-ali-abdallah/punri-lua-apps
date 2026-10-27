@@ -775,6 +775,7 @@ hardware-verification limits. Further local changes do not publish updates:
 
 | App ID | Name | Category | Description |
 |---|---|---|---|
+| `gameboy` | **[Game Boy](gameboy/README.md)** | Games | Local monochrome ROM library and native player with bounded CPU, memory and e-ink refresh use; requires firmware API 6. ROMs are not included. |
 | `dashboard` | **Desk Stand** | Productivity | Multi-style ambient desk clock with calendar, year progress, 12h/24h toggle, auto-sleep prevention, and 800×480 landscape stand. |
 | `hourglass` | **Hourglass** | Productivity | Expressive countdown timer with dynamic parabolic sand funnel physics, full neck passage, bottom sand accumulation mound, and auto-sleep prevention. |
 | `stopwatch` | **Stopwatch** | Productivity | Bounded stopwatch with clear Start/Stop/Lap/Reset controls, paged laps, and auto-sleep prevention only while timing. |
@@ -803,3 +804,6 @@ described in the [Counter app plan](docs/counter-plan.md); Counter is not yet im
 Lua API 5 adds native BLE HID mouse reports and `punri.get_touch()` live logical
 contact coordinates. See [Bluetooth Mouse](docs/bluetooth-mouse.md) for setup,
 compatibility and verification.
+
+Lua API 6 adds `punri.gameboy.list`, `punri.gameboy.launch` and
+`on_gameboy_result`. See the [Game Boy loader](gameboy/README.md) for installation.

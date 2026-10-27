@@ -1,5 +1,14 @@
 # Changelog
 
+## Game Boy 0.1.0 — 2026-10-27
+
+### Added
+
+- Browse local monochrome Game Boy ROMs and launch the native PUNRI engine with
+  bounded CPU, memory and e-ink refresh use. Includes subfolders, touch and
+  physical controls, visible press feedback, pause/resume and battery saves.
+  Requires firmware Lua API 6; ROMs are not included.
+
 ## Dice Roller 1.0.1 — 2026-10-27
 
 ### Changed

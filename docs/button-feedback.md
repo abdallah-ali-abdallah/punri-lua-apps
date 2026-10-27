@@ -1,6 +1,6 @@
 # Button feedback
 
-All 27 Lua apps package the same `press_feedback.lua` module. A successful
+All 28 Lua apps package the same `press_feedback.lua` module. A successful
 activation paints a light control black with white content; an already dark
 control becomes light gray with black content. The app redraws its current
 normal state after 500 ms. Selection, disabled state and operation state remain

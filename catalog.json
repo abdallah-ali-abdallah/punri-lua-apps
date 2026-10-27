@@ -2146,41 +2146,6 @@
           "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
         }
       ]
-    },
-    {
-      "id": "gameboy",
-      "name": "Game Boy",
-      "version": "0.1.0",
-      "author": "PUNRI",
-      "description": "Offline monochrome Game Boy loader with native resource limits.",
-      "entry": "main.lua",
-      "min_api": 6,
-      "capabilities": [
-        "buttons",
-        "storage"
-      ],
-      "files": [
-        "manifest.json",
-        "main.lua",
-        "press_feedback.lua"
-      ],
-      "file_integrity": [
-        {
-          "path": "manifest.json",
-          "size": 252,
-          "sha256": "62c081d72163060fb7e91eda61d6026f6dab38db5edae61a5355c23593127494"
-        },
-        {
-          "path": "main.lua",
-          "size": 4254,
-          "sha256": "f574a6569167630416af57185b310c58653b8f4a7de9ef6d0a776313a7d07bb9"
-        },
-        {
-          "path": "press_feedback.lua",
-          "size": 5998,
-          "sha256": "0b99acca329caea4dc0f1a0b56a0deb957a0211919a20bb7767d912dd771b04c"
-        }
-      ]
     }
   ]
 }

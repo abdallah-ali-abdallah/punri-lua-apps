@@ -1,5 +1,12 @@
 # Changelog
 
+## Game Boy removal — 2026-10-27
+
+### Removed
+
+- Remove the Game Boy launcher package and App Store catalog entry. Existing
+  device ROMs and saved data are not deleted.
+
 ## Game Boy 0.1.0 — 2026-10-27
 
 ### Added
